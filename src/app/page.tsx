@@ -1,65 +1,133 @@
-import Image from "next/image";
+import type { Metadata } from "next";
+import { Container, Knop, Sectie, SectieKop } from "@/components/ui";
+import { taakgesprekHref } from "@/lib/navigatie";
+import { Taakkaart } from "@/components/home/Taakkaart";
+import { Afdelingsdeuren } from "@/components/home/Afdelingsdeuren";
+import { Praktijkproblemen } from "@/components/home/Praktijkproblemen";
+import { Tijdvretermeter } from "@/components/home/Tijdvretermeter";
+import { KoerslijnStappen } from "@/components/home/KoerslijnStappen";
+
+export const metadata: Metadata = {
+  title: { absolute: "Zorgpiloten | Minder klik- en schrijfwerk op HR en Communicatie in de zorg" },
+  description:
+    "Hugo van den Berk en Nick Wildeboer beginnen bij één terugkerende taak op HR of Communicatie, nemen je team mee in veilig AI-gebruik en laten het werkend achter in jullie eigen omgeving. Plan een taakgesprek van 45 minuten.",
+  alternates: { canonical: "/" },
+};
+
+const anker = [
+  {
+    initialen: "HB",
+    naam: "Hugo van den Berk, MSc",
+    tekst: "15 jaar Directeur Marketing & Communicatie en MT-lid Catharina Ziekenhuis, MSc Organisatie- en veranderkunde (Sioo).",
+  },
+  {
+    initialen: "NW",
+    naam: "Nick Wildeboer, MSc",
+    tekst: "MSc Strategische Innovatie (Digitalisering en AI), Management in de Zorg, ervaring bij onder meer Amsterdam UMC en Nedap ONS.",
+  },
+];
 
 export default function Home() {
   return (
-    <div className="flex min-h-screen items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex min-h-screen w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
+    <>
+      {/* Hero */}
+      <section className="pb-16 pt-10 sm:pb-24 sm:pt-16">
+        <Container>
+          <div className="grid items-start gap-10 lg:grid-cols-[1fr_minmax(0,500px)] lg:gap-14">
+            <div className="lg:pt-6">
+              <h1 className="text-[34px] sm:text-[44px] lg:text-[48px]">
+                Minder klik- en schrijfwerk op HR en Communicatie. Een zorgteam dat AI veilig gebruikt.
+              </h1>
+              <p className="mt-5 max-w-xl text-[18px] text-tekst-2 sm:text-[19px]">
+                Gebouwd door mensen die de zorg van binnenuit kennen. Wij beginnen bij één terugkerende taak op je afdeling, nemen het
+                team mee en laten het werkend achter in jullie eigen omgeving.
+              </p>
+              <div className="mt-8">
+                <Knop href={taakgesprekHref()}>Plan een taakgesprek</Knop>
+              </div>
+
+              <ul className="mt-10 grid max-w-xl gap-5 border-t border-lijn pt-6" aria-label="Wie er aan tafel zit">
+                {anker.map((p) => (
+                  <li key={p.naam} className="flex gap-4">
+                    <span
+                      aria-hidden="true"
+                      className="grid h-11 w-11 flex-none place-items-center rounded-full bg-salie text-[14px] font-semibold text-tekst"
+                    >
+                      {p.initialen}
+                    </span>
+                    <div>
+                      <p className="font-medium text-tekst">{p.naam}</p>
+                      <p className="mt-0.5 text-[15px] leading-snug text-tekst-2">{p.tekst}</p>
+                    </div>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            <Taakkaart />
+          </div>
+        </Container>
+      </section>
+
+      {/* Twee afdelingsdeuren */}
+      <Sectie toon="salie">
+        <SectieKop
+          titel="Kies je afdeling"
+          intro="We beginnen bij twee afdelingen waar het zoek- en schrijfwerk zich opstapelt. Wijs een deur aan om te zien waar de tijd nu in gaat."
         />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
+        <div className="mt-10">
+          <Afdelingsdeuren />
         </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
+      </Sectie>
+
+      {/* Drie praktijkproblemen */}
+      <Sectie>
+        <SectieKop
+          titel="Waar loopt het bij jullie op vast?"
+          intro="Drie situaties uit de zorgpraktijk. Kies degene die het meest op die van jullie lijkt."
+        />
+        <div className="mt-10">
+          <Praktijkproblemen />
         </div>
-      </main>
-    </div>
+      </Sectie>
+
+      {/* Tijdvreter-meter */}
+      <Sectie toon="wolk" id="tijdvreter-meter">
+        <SectieKop
+          titel="Hoeveel tijd zit er in één taak?"
+          intro="Neem een taak in gedachten die elke week terugkomt en vul je eigen cijfers in. De meter laat zien wat die ene taak per jaar kost."
+        />
+        <div className="mt-10">
+          <Tijdvretermeter />
+        </div>
+      </Sectie>
+
+      {/* De koerslijn */}
+      <Sectie>
+        <SectieKop
+          titel="Zo verloopt een samenwerking"
+          intro="Vier stappen, van het eerste gesprek tot een team dat de taak zelf beheert. Kies een stap voor de uitleg."
+        />
+        <div className="mt-10">
+          <KoerslijnStappen />
+        </div>
+      </Sectie>
+
+      {/* Afsluitende call-to-action */}
+      <Sectie toon="salie">
+        <div className="grid items-end gap-8 md:grid-cols-[1fr_auto]">
+          <div className="max-w-2xl">
+            <h2 className="text-[32px] sm:text-[40px]">Begin bij één taak die nu te veel tijd kost</h2>
+            <p className="mt-4 text-lg text-tekst-2">
+              In een taakgesprek van 45 minuten kiezen Hugo en Nick samen met jou één terugkerende taak en rekenen die door. Daarna weet
+              je of het de moeite waard is om te starten.
+            </p>
+          </div>
+          <div>
+            <Knop href={taakgesprekHref()}>Plan een taakgesprek</Knop>
+          </div>
+        </div>
+      </Sectie>
+    </>
   );
 }

@@ -1,0 +1,73 @@
+/* Zorgpiloten, designsysteem Horizon (Nick, 21 oktober 2026).
+   Bron: het Design System-artifact "Zorgpiloten" (tokens.json en README).
+   Grond is altijd creme, tekst nachtblauw, hemelblauw als merkkleur (nooit als tekst),
+   koraal als enige accent met nachtblauwe tekst, zandgeel als zon. */
+
+:root {
+  /* Kleur */
+  --creme: #FFF8EF;
+  --wolk: #FFFFFF;
+  --lijn: #E8DCCB;
+  --nachtblauw: #1B2A4A;
+  --nachtblauw-zacht: #56617A;
+  --hemelblauw: #6AB6E2;
+  --hemel-diep: #2563A8;
+  --hemel-zacht: #DCEBFA;
+  --koraal: #FF7A59;
+  --koraal-diep: #B4432A;
+  --koraal-zacht: #FFE6DD;
+  --zandgeel: #F5D08A;
+
+  /* Rolnamen, zodat documenten en componenten merken kunnen wisselen */
+  --bg-base: var(--creme);
+  --bg-elevated: var(--wolk);
+  --bg-alt: var(--hemel-zacht);
+  --border-subtle: var(--lijn);
+  --border-strong: #D9C8B0;
+  --ink: var(--nachtblauw);
+  --ink-2: #22355C;
+  --ink-3: #2C4170;
+  --fg-primary: var(--nachtblauw);
+  --fg-secondary: var(--nachtblauw-zacht);
+  --fg-muted: var(--nachtblauw-zacht);
+  --on-ink: var(--creme);
+  --on-ink-soft: rgba(255, 248, 239, 0.82);
+  --on-ink-muted: rgba(255, 248, 239, 0.64);
+  --accent: var(--koraal);
+  --accent-ink: var(--koraal-diep);
+  --accent-soft: var(--koraal-zacht);
+  --accent-on-ink: var(--zandgeel);
+  --sage-on-ink: var(--hemelblauw);
+  --link: var(--hemel-diep);
+  --white-15: rgba(255, 255, 255, 0.15);
+
+  /* Typografie */
+  --font-display: var(--font-bricolage), "Bricolage Grotesque", "DM Sans", system-ui, sans-serif;
+  --font-body: var(--font-dmsans), "DM Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --tracking-display: -0.015em;
+  --leading-display: 1.08;
+  --leading-body: 1.6;
+
+  /* Ruimte */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 16px;
+  --space-4: 24px;
+  --space-5: 40px;
+  --space-6: 64px;
+
+  /* Vorm: rond en zacht */
+  --radius-sm: 8px;
+  --radius-md: 16px;
+  --radius: 16px;
+  --radius-lg: 32px;
+  --radius-pill: 999px;
+
+  /* De enige schaduw, voor zwevende kaarten */
+  --shadow-zacht: 0 8px 24px rgba(27, 42, 74, 0.08);
+  --shadow-card: var(--shadow-zacht);
+
+  /* De route: zandgele stippen naar het koraal doel */
+  --route-width: 2px;
+  --route-waypoint: 12px;
+}

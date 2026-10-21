@@ -1,0 +1,3 @@
+Doel: sfeerfoto voor de HR-pagina van Zorgpiloten, een adviesbureau voor AI in de zorg. Lezer: HR-manager in een zorgorganisatie.
+Beeld: documentaire foto, warm ochtendlicht door een raam, een rustige HR-werkplek in een Nederlandse zorginstelling. Op het bureau een opengeslagen ordner, een laptop van opzij (scherm niet leesbaar), een koffiemok, een plant. Alleen twee handen die een document doorbladeren, geen gezicht. Kleuren: crème, zacht hemelblauw, nachtblauw accenten. Ondiepe scherptediepte, natuurlijk, geen stockgevoel.
+Niet: tekst in beeld, logo's, gezichten, robots, hersenen, zwevende code, ziekenhuisbed.

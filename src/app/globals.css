@@ -1,26 +1,104 @@
 @import "tailwindcss";
+@import "../styles/tokens.css";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
+/* Zorgpiloten: tokens komen uit src/styles/tokens.css (kopie van 02-brand/zorgpiloten/tokens.css
+   in Business Developer). Pas kleuren daar aan, niet hier. */
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  /* Horizon. De oude klassennamen (spar, salie, framboos) wijzen naar Horizon-kleuren,
+     zodat bestaande componenten meteen meegaan. Nieuwe code gebruikt de Horizon-namen. */
+  --color-creme: var(--creme);
+  --color-wolk: var(--wolk);
+  --color-nachtblauw: var(--nachtblauw);
+  --color-nachtblauw-zacht: var(--nachtblauw-zacht);
+  --color-hemelblauw: var(--hemelblauw);
+  --color-hemel-diep: var(--hemel-diep);
+  --color-hemel-zacht: var(--hemel-zacht);
+  --color-koraal: var(--koraal);
+  --color-koraal-diep: var(--koraal-diep);
+  --color-koraal-zacht: var(--koraal-zacht);
+  --color-zandgeel: var(--zandgeel);
+
+  --color-base: var(--creme);
+  --color-salie: var(--hemel-zacht);
+  --color-spar: var(--nachtblauw);
+  --color-spar-2: var(--ink-2);
+  --color-spar-3: var(--ink-3);
+  --color-tekst: var(--nachtblauw);
+  --color-tekst-2: var(--nachtblauw-zacht);
+  --color-tekst-zacht: var(--nachtblauw-zacht);
+  --color-framboos: var(--koraal);
+  --color-framboos-ink: var(--koraal-diep);
+  --color-framboos-zacht: var(--koraal-zacht);
+  --color-framboos-op-spar: var(--zandgeel);
+  --color-salie-op-spar: var(--hemelblauw);
+  --color-lijn: var(--lijn);
+  --color-lijn-sterk: var(--border-strong);
+
+  --font-sans: var(--font-dmsans), "DM Sans", system-ui, sans-serif;
+  --font-display: var(--font-bricolage), "Bricolage Grotesque", "DM Sans", sans-serif;
+
+  --radius-kaart: var(--radius-md);
+  --radius-paneel: var(--radius-lg);
+  --shadow-kaart: var(--shadow-zacht);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html {
+  scroll-behavior: smooth;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--bg-base);
+  color: var(--fg-secondary);
+  font-family: var(--font-body);
+  font-size: 17px;
+  line-height: var(--leading-body);
+  -webkit-font-smoothing: antialiased;
+}
+
+h1, h2, h3, h4 {
+  color: var(--fg-primary);
+  font-family: var(--font-display);
+  font-weight: 700;
+  letter-spacing: var(--tracking-display);
+  line-height: var(--leading-display);
+  text-wrap: balance;
+}
+
+p { text-wrap: pretty; }
+
+::selection { background: var(--accent-soft); color: var(--fg-primary); }
+
+:focus-visible {
+  outline: 2px solid var(--hemel-diep);
+  outline-offset: 2px;
+  border-radius: 6px;
+}
+
+/* De koerslijn: 2px lijn met ronde stops van 10px */
+.koers-stop {
+  width: var(--route-waypoint);
+  height: var(--route-waypoint);
+  border-radius: 999px;
+  border: 2px solid var(--nachtblauw);
+  background: var(--wolk);
+  flex: none;
+  transition: background 0.2s ease, box-shadow 0.2s ease;
+}
+.koers-stop[data-actief="true"] {
+  background: var(--koraal);
+  border-color: var(--koraal);
+  box-shadow: 0 0 0 5px var(--koraal-zacht);
+}
+.koers-stop[data-gedaan="true"] { background: var(--zandgeel); border-color: var(--zandgeel); }
+
+/* Eyebrow volgens Horizon: label in hoofdletters, hemel-diep */
+.zp-eyebrow { font-family: var(--font-body); font-size: 13px; line-height: 16px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: var(--hemel-diep); }
+
+input[type="range"] { accent-color: var(--hemel-diep); }
+a { text-underline-offset: 4px; }
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after { transition-duration: 0.01ms !important; animation-duration: 0.01ms !important; }
 }
