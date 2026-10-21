@@ -11,23 +11,23 @@ const rollen: { waarde: Rol; label: string; icoon: IcoonNaam; zorg: string; vrag
     waarde: "afdeling",
     label: "Hoofd HR of Communicatie",
     icoon: "team",
-    zorg: "U wilt tijd terug voor uw team, zonder risico voor gegevens of kwaliteit.",
+    zorg: "Tijd terug, zonder risico voor gegevens of kwaliteit.",
     vragen: [
       {
         vraag: "Mag mijn team er nu al mee werken?",
-        antwoord: "Ja, met duidelijke spelregels. We beginnen bij voorkeur met een taak zonder persoonsgegevens, zoals het cao-loket.",
+        antwoord: "Ja, met spelregels. Bij voorkeur eerst een taak zonder persoonsgegevens.",
       },
       {
         vraag: "Wie is verantwoordelijk als het voorwerk niet klopt?",
-        antwoord: "De medewerker die aftekent. Niets gaat de deur uit zonder controle door uw team.",
+        antwoord: "De medewerker die aftekent. Niets gaat ongecontroleerd de deur uit.",
       },
       {
         vraag: "Collega's gebruiken al hun eigen ChatGPT. Wat nu?",
-        antwoord: "In de training bespreken we wat wel en niet mag. Daarna bouwen we een route in uw eigen omgeving.",
+        antwoord: "De training maakt duidelijk wat mag. Daarna bouwen we een route in uw eigen omgeving.",
       },
       {
         vraag: "Hoeveel tijd kost het mijn team?",
-        antwoord: "Per stop staat een grove indicatie op Hoe wij werken. Het meeste gebeurt tijdens het gewone werk.",
+        antwoord: "Het meeste gebeurt tijdens het gewone werk. Zie de stops op Hoe wij werken.",
       },
     ],
   },
@@ -35,11 +35,11 @@ const rollen: { waarde: Rol; label: string; icoon: IcoonNaam; zorg: string; vrag
     waarde: "bestuur",
     label: "Bestuur of MT",
     icoon: "bestuur",
-    zorg: "U wilt weten wie beslist, wie toezicht houdt en of het iets oplevert.",
+    zorg: "Wie beslist, wie houdt toezicht, wat levert het op.",
     vragen: [
       {
         vraag: "Wie beslist over de inzet van AI?",
-        antwoord: "U. Het MT bepaalt de kaders, de leidinggevende de inzet en de medewerker beslist per taak. Wij adviseren en bouwen.",
+        antwoord: "U. Het MT stelt kaders, de medewerker beslist per taak. Wij adviseren en bouwen.",
       },
       {
         vraag: "Wie houdt toezicht?",
@@ -47,11 +47,11 @@ const rollen: { waarde: Rol; label: string; icoon: IcoonNaam; zorg: string; vrag
       },
       {
         vraag: "Wat vraagt de AI-verordening van ons?",
-        antwoord: "Artikel 4 vraagt organisaties die AI inzetten om AI-geletterdheid te ondersteunen. Doe hieronder de korte check.",
+        antwoord: "Artikel 4 vraagt AI-geletterdheid te ondersteunen. Doe hieronder de check.",
       },
       {
         vraag: "Hoe voorkomen we een traject dat blijft hangen?",
-        antwoord: "Klein beginnen. Eén taak, een nulmeting en een nameting. Daarna beslist u zelf.",
+        antwoord: "Klein beginnen: één taak, een nul- en een nameting.",
       },
     ],
   },
@@ -59,23 +59,23 @@ const rollen: { waarde: Rol; label: string; icoon: IcoonNaam; zorg: string; vrag
     waarde: "fg",
     label: "FG",
     icoon: "schild",
-    zorg: "U wilt vooraf weten welke gegevens waar heen gaan, en zelf oordelen.",
+    zorg: "Vooraf weten welke gegevens waar heen gaan.",
     vragen: [
       {
         vraag: "Welke gegevens gaan waar heen?",
-        antwoord: "Voor we bouwen, zetten we de datastroom per workflow op papier. Die beschrijving krijgt u om te beoordelen.",
+        antwoord: "Per workflow krijgt u de datastroom op papier, voordat we bouwen.",
       },
       {
         vraag: "Is er een verwerkersovereenkomst nodig?",
-        antwoord: "Dat beoordeelt u. Wij leveren per dienst de informatie voor uw afweging, ook voor een DPIA.",
+        antwoord: "Dat beoordeelt u. Wij leveren de informatie, ook voor een DPIA.",
       },
       {
         vraag: "Gaan er persoonsgegevens naar een AI-dienst?",
-        antwoord: "Bij voorkeur beginnen we zonder. Zitten ze er wel in, zoals bij verzuim, dan bouwen we pas na uw akkoord.",
+        antwoord: "Bij voorkeur niet. Zitten ze erin, dan bouwen we pas na uw akkoord.",
       },
       {
         vraag: "Garandeert u dat het aan de AVG voldoet?",
-        antwoord: "Nee, dat beloven wij niet. Wij maken de opzet transparant. Het oordeel ligt bij u of uw jurist.",
+        antwoord: "Nee. Wij maken de opzet transparant, u of uw jurist oordeelt.",
       },
     ],
   },
@@ -83,23 +83,23 @@ const rollen: { waarde: Rol; label: string; icoon: IcoonNaam; zorg: string; vrag
     waarde: "ict",
     label: "ICT en informatiebeveiliging",
     icoon: "server",
-    zorg: "U wilt geen schaduw-IT en een opstelling die u zelf beheert.",
+    zorg: "Geen schaduw-IT, wel een opstelling die u zelf beheert.",
     vragen: [
       {
         vraag: "Waar draait het?",
-        antwoord: "Waar het kan in uw eigen omgeving, zoals Microsoft 365. Een externe dienst staat vooraf in de technische beschrijving.",
+        antwoord: "Waar het kan in uw eigen omgeving. Een externe dienst staat vooraf beschreven.",
       },
       {
         vraag: "Wie heeft toegang?",
-        antwoord: "Alleen de accounts die we samen afspreken, met zo min mogelijk rechten.",
+        antwoord: "Alleen afgesproken accounts, met minimale rechten.",
       },
       {
         vraag: "Hoe zetten we het stil?",
-        antwoord: "Per workflow een vaste manier, die we samen testen voor de livegang.",
+        antwoord: "Op een vaste manier, vooraf samen getest.",
       },
       {
         vraag: "Wat blijft er achter na de overdracht?",
-        antwoord: "Een werkende workflow, een werkinstructie en een technische beschrijving. U bent eigenaar.",
+        antwoord: "Workflow, werkinstructie en technische beschrijving. U bent eigenaar.",
       },
     ],
   },
@@ -113,7 +113,7 @@ export function RolWisselaar() {
     <div>
       <fieldset>
         <legend className="mb-3 text-[15px] font-semibold text-nachtblauw">Kijk mee door de bril van</legend>
-        <div className="grid grid-cols-2 gap-2 lg:grid-cols-4">
+        <div className="grid grid-cols-1 gap-2 min-[420px]:grid-cols-2 lg:grid-cols-4 [&>*]:min-w-0">
           {rollen.map((r) => {
             const actief = r.waarde === rol;
             return (

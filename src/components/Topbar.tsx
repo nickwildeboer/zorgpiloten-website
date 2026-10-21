@@ -2,15 +2,19 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { navigatie, taakgesprekHref } from "@/lib/navigatie";
 import { Knop } from "./ui";
 
 export function Topbar() {
   const pad = usePathname();
   const [open, setOpen] = useState(false);
-
-  useEffect(() => setOpen(false), [pad]);
+  const [vorigPad, setVorigPad] = useState(pad);
+  // Menu sluiten bij een andere pagina, afgeleid tijdens het renderen in plaats van in een effect.
+  if (pad !== vorigPad) {
+    setVorigPad(pad);
+    setOpen(false);
+  }
 
   return (
     <header

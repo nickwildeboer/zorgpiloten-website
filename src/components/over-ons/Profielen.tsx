@@ -19,7 +19,7 @@ export const profielen: Record<"hugo" | "nick", ProfielData> = {
     id: "hugo",
     naam: "Hugo van den Berk, MSc",
     rol: "Verandering, training en communicatie",
-    kern: "Meer dan twintig jaar in complexe organisaties. Spreekt de taal van bestuurskamer en werkvloer.",
+    kern: "Meer dan twintig jaar in complexe organisaties. Spreekt de taal van bestuur en werkvloer.",
     belofte: "Zorgt dat het team meegaat en zich eigenaar voelt.",
     portret: { src: "/fotos/hugo-portret.jpg", alt: "Portret van Hugo van den Berk", positie: "50% 40%" },
     werk: [
@@ -34,16 +34,16 @@ export const profielen: Record<"hugo" | "nick", ProfielData> = {
       },
       { titel: "MSc Organisatie- en veranderkunde", context: "Sioo", waarom: "Weet waarom verandering slaagt of vastloopt op cultuur." },
       { titel: "Certified Management Consultant (CMC)", context: "Ooa", waarom: "Een getoetste titel. Advieswerk als vak." },
-      { titel: "NIMA C (Marketing Director)", context: "NIMA", waarom: "Marketing en communicatie op directieniveau." },
+      { titel: "NIMA C (Marketing Director)", context: "", waarom: "Marketing en communicatie op directieniveau." },
       { titel: "Leadership", context: "de Baak", waarom: "Leiderschap vanuit de mens, ook voor een digitale assistent." },
-      { titel: "Oprichter van Digital Lemon", context: "Eigen bedrijf", waarom: "Geeft AI-trainingen en keynotes en bouwt zelf n8n-workflows." },
+      { titel: "Oprichter van Digital Lemon", context: "", waarom: "Geeft AI-trainingen en keynotes en bouwt zelf n8n-workflows." },
     ],
   },
   nick: {
     id: "nick",
     naam: "Nick Wildeboer, MSc",
     rol: "Proces, techniek en veilige inrichting",
-    kern: "Vertaalt het werk op de afdeling naar een veilige opstelling die echt draait.",
+    kern: "Maakt van afdelingswerk een veilige opstelling die echt draait.",
     belofte: "Zorgt dat er op maandag echt iets klaarstaat.",
     portret: { src: "/fotos/nick-portret-nick.jpg", alt: "Portret van Nick Wildeboer", positie: "50% 20%" },
     werk: [
@@ -52,14 +52,14 @@ export const profielen: Record<"hugo" | "nick", ProfielData> = {
     ],
     kwalificaties: [
       { titel: "MSc Strategische Innovatie", context: "Specialisatie digitalisering en AI", waarom: "Ziet hoe digitale vernieuwing landt in een organisatie." },
-      { titel: "Management in de Zorg", context: "Achtergrond", waarom: "Weet hoe het werk op een afdeling loopt." },
+      { titel: "Management in de Zorg", context: "", waarom: "Weet hoe het werk op een afdeling loopt." },
       {
         titel: "Zorg-ICT-, ECD- en ERP-implementaties",
         context: "Onder meer bij het Amsterdam UMC en met Nedap ONS",
         waarom: "Wat hij bouwt, past bij wat er al staat.",
       },
-      { titel: "PRINCE2", context: "Methode voor projectmanagement", waarom: "Helder begin, vaste besluitmomenten, nette overdracht." },
-      { titel: "Hands-on bouwer in n8n en Claude", context: "Procesautomatisering", waarom: "Bouwt zelf. Geen advies dat in een la verdwijnt." },
+      { titel: "PRINCE2", context: "Projectmanagement", waarom: "Helder begin, vaste besluitmomenten, nette overdracht." },
+      { titel: "Hands-on bouwer in n8n en Claude", context: "", waarom: "Bouwt zelf. Geen advies dat in een la verdwijnt." },
     ],
   },
 };
@@ -95,14 +95,14 @@ export function Profiel({ wie, spiegel = false }: { wie: "hugo" | "nick"; spiege
             {p.naam}
           </h2>
           <p className="mt-3 text-lg text-nachtblauw">{p.kern}</p>
-          <p className="mt-5 inline-flex rounded-full bg-hemel-zacht px-4 py-2 text-[15px] font-semibold text-nachtblauw">{p.belofte}</p>
+          <p className="mt-4 inline-flex rounded-full bg-hemel-zacht px-4 py-2 text-[15px] font-semibold text-nachtblauw">{p.belofte}</p>
 
           <dl className="mt-8 divide-y divide-lijn border-y border-lijn">
             {p.kwalificaties.map((k) => (
               <div key={k.titel} className="grid gap-1 py-3.5 sm:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] sm:gap-6">
                 <dt className="min-w-0">
                   <span className="block font-semibold leading-snug text-nachtblauw">{k.titel}</span>
-                  <span className="block text-sm leading-snug">{k.context}</span>
+                  {k.context && <span className="block text-sm leading-snug">{k.context}</span>}
                 </dt>
                 <dd className="text-[15px] leading-snug text-nachtblauw sm:pt-0.5">
                   <span className="sr-only">Waarom het telt: </span>

@@ -213,9 +213,6 @@ export function GeletterdheidCheck() {
                   </li>
                 ))}
               </ul>
-              <p className="mt-6 border-t border-[var(--white-15)] pt-4 text-sm" style={{ color: "var(--on-ink-muted)" }}>
-                Na vier antwoorden ziet u hier uw volgende stappen en een samenvatting om te delen.
-              </p>
             </div>
           )}
         </div>

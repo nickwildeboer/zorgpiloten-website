@@ -18,7 +18,7 @@ const stappen = [
     kort: "Op de afdeling, met het team",
     uitleg: "Wij lopen een werkdag mee en Hugo traint het team in veilig werken met AI.",
     opTafel: "Een nulmeting en afspraken over eigenaarschap.",
-    foto: { src: "/fotos/nick-workshop-locatie-2.jpg", alt: "Nick geeft een training aan een team", positie: "50% 35%" },
+    foto: { src: "/fotos/hugo-training.jpg", alt: "Hugo van den Berk geeft een training aan een team", positie: "60% 40%" },
   },
   {
     titel: "Eén taak bouwen",

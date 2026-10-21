@@ -7,7 +7,6 @@ import { Icoon } from "@/components/over-ons/Iconen";
 type Stop = {
   titel: string;
   kort: string;
-  samenvatting: string;
   hugo: string;
   nick: string;
   tijd: string;
@@ -18,7 +17,6 @@ const stops: Stop[] = [
   {
     titel: "Taakgesprek en nulmeting",
     kort: "Meekijken op een werkdag",
-    samenvatting: "We kijken een gewone werkdag mee en leggen vast wat de taak nu kost.",
     hugo: "Spreekt leidinggevende en team over tijd, eigenaarschap en verandering.",
     nick: "Loopt de taak mee en brengt systemen en gegevens in kaart.",
     tijd: "Het gesprek van 45 minuten en een dagdeel meekijken.",
@@ -27,7 +25,6 @@ const stops: Stop[] = [
   {
     titel: "Veilig inrichten en het team meenemen",
     kort: "Training en eigenaarschap",
-    samenvatting: "Het team leert veilig werken. De omgeving wordt veilig ingericht.",
     hugo: "Traint het team in veilig, mensgericht AI-gebruik en legt eigenaarschap vast.",
     nick: "Richt de omgeving veilig in en stemt de gegevensstroom af met FG en ICT.",
     tijd: "Een training van een dagdeel en kort overleg met FG en ICT.",
@@ -36,7 +33,6 @@ const stops: Stop[] = [
   {
     titel: "Het voorwerk bouwen en testen",
     kort: "Scherpstellen met twee collega's",
-    samenvatting: "Twee collega's testen mee tot het voorwerk echt werk scheelt.",
     hugo: "Begeleidt de testers en haalt op wat werkt en wat schuurt.",
     nick: "Bouwt de workflow en stelt hem na elke testronde bij.",
     tijd: "Twee collega's testen mee in hun gewone werk.",
@@ -45,7 +41,6 @@ const stops: Stop[] = [
   {
     titel: "Nameting en overdracht",
     kort: "Het verschil zwart op wit",
-    samenvatting: "De nameting naast de nulmeting, en een team dat het zelf beheerst.",
     hugo: "Borgt het eigenaarschap en spreekt af hoe u zelf blijft sturen.",
     nick: "Doet de nameting en schrijft de werkinstructie en de technische beschrijving.",
     tijd: "Nameting en overdracht, samen ongeveer een dagdeel.",
@@ -65,8 +60,8 @@ export function KoersVerloop({
   const stop = stops[actief];
 
   const rollen = [
-    { wie: "Hugo", rol: "Team en verandering", tekst: stop.hugo, portret: portretten.hugo, foto: fotos?.hugo },
-    { wie: "Nick", rol: "Proces en techniek", tekst: stop.nick, portret: portretten.nick, foto: fotos?.nick },
+    { wie: "Hugo", tekst: stop.hugo, portret: portretten.hugo, foto: fotos?.hugo },
+    { wie: "Nick", tekst: stop.nick, portret: portretten.nick, foto: fotos?.nick },
   ];
 
   return (
@@ -85,7 +80,7 @@ export function KoersVerloop({
       </p>
 
       <article className="mt-6 overflow-hidden rounded-[var(--radius-lg)] border border-lijn bg-wolk shadow-kaart" aria-labelledby="stop-titel">
-        <header className="flex items-start gap-5 px-5 py-6 sm:px-8 sm:py-7">
+        <header className="flex items-center gap-5 px-5 py-6 sm:px-8 sm:py-7">
           <span
             aria-hidden="true"
             className="grid h-14 w-14 flex-none place-items-center rounded-full bg-zandgeel font-display text-[26px] font-bold text-nachtblauw"
@@ -99,7 +94,6 @@ export function KoersVerloop({
             <h3 id="stop-titel" className="mt-0.5 text-[24px] sm:text-[28px]">
               {stop.titel}
             </h3>
-            <p className="mt-2 max-w-xl text-nachtblauw">{stop.samenvatting}</p>
           </div>
         </header>
 
@@ -110,8 +104,7 @@ export function KoersVerloop({
               <div className="flex gap-4">
                 {r.portret}
                 <div className="min-w-0">
-                  <h4 className="text-[18px]">Wat {r.wie} doet</h4>
-                  <p className="text-sm">{r.rol}</p>
+                  <h4 className="text-[18px]">{r.wie}</h4>
                   <p className="mt-2 text-nachtblauw">{r.tekst}</p>
                 </div>
               </div>

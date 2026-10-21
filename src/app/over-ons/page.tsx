@@ -77,7 +77,7 @@ export default function OverOnsPagina() {
         <SectieKop
           bovenkop="Taakgesprek"
           titel="Stel in drie klikken uw taakgesprek samen"
-          intro="Kies afdeling, taak en tijd. De agenda voor 45 minuten met Hugo en Nick staat er meteen."
+          intro="Kies afdeling, taak en tijd. De agenda staat er meteen."
         />
         <div className="mt-10">
           <Gespreksvoorbereider

@@ -120,7 +120,7 @@ export function AssistentCheck() {
         {!klaar ? (
           <div>
             <p className="text-sm">
-              Kaart {stap + 1} van {vragen.length}: {vraag.afspraak.toLowerCase()}
+              Kaart {stap + 1} van {vragen.length}
             </p>
             <h3 ref={kopRef} tabIndex={-1} className="mt-1 text-[26px] outline-none sm:text-[30px]">
               {vraag.vraag}

@@ -13,10 +13,10 @@ export const metadata: Metadata = {
 };
 
 const uitgangspunten: { icoon: IcoonNaam; titel: string; tekst: string }[] = [
-  { icoon: "klembord", titel: "Voorwerk, geen besluiten", tekst: "De assistent zet klaar. Een medewerker beslist en tekent af." },
-  { icoon: "slot", titel: "Eerst zonder persoonsgegevens", tekst: "Bij voorkeur een taak als cao-vragen of een folder op B1-niveau." },
-  { icoon: "huis", titel: "In uw eigen omgeving", tekst: "Waar het kan, bijvoorbeeld in Microsoft 365, met rechten die u zelf beheert." },
-  { icoon: "weegschaal", titel: "Uw FG of jurist beoordeelt", tekst: "Wij maken de opzet transparant. Het oordeel ligt bij u." },
+  { icoon: "klembord", titel: "Voorwerk, geen besluiten", tekst: "Een medewerker beslist en tekent af." },
+  { icoon: "slot", titel: "Eerst zonder persoonsgegevens", tekst: "Bijvoorbeeld cao-vragen of een B1-folder." },
+  { icoon: "huis", titel: "In uw eigen omgeving", tekst: "Waar het kan, zoals Microsoft 365." },
+  { icoon: "weegschaal", titel: "Uw FG of jurist beoordeelt", tekst: "Wij zijn transparant, u oordeelt." },
 ];
 
 export default function VeiligheidPagina() {
@@ -30,7 +30,7 @@ export default function VeiligheidPagina() {
               <p className="zp-eyebrow">Veiligheid en FG</p>
               <h1 className="mt-4 text-[38px] sm:text-[52px] lg:text-[56px]">Rust voor de FG, ICT en het MT. Duidelijkheid voor de werkvloer.</h1>
             </div>
-            <p className="text-lg lg:pb-2">Per rol eerlijke antwoorden over gegevens, eigen omgeving en wie er beslist.</p>
+            <p className="text-lg lg:pb-2">Eerlijke antwoorden per rol, over gegevens en wie beslist.</p>
           </div>
 
           <div className="relative mt-10 sm:mt-12">
@@ -61,12 +61,12 @@ export default function VeiligheidPagina() {
 
       {/* Per rol */}
       <Sectie toon="wolk" id="rollen" className="border-y border-lijn">
-        <SectieKop bovenkop="Per rol" titel="Elke rol heeft eigen vragen" intro="Kies uw rol, of die van de collega die u wilt overtuigen." />
+        <SectieKop bovenkop="Per rol" titel="Elke rol heeft eigen vragen" intro="Kies uw rol, of die van een collega." />
         <div className="mt-10">
           <RolWisselaar />
         </div>
         <p className="mt-8 max-w-2xl text-sm">
-          Dit is geen juridisch advies en geen garantie dat een opstelling aan de AVG voldoet. Uw FG of jurist beoordeelt wat voor uw organisatie geldt.
+          Geen juridisch advies en geen garantie dat iets aan de AVG voldoet. Uw FG of jurist beoordeelt.
         </p>
       </Sectie>
 
@@ -75,7 +75,7 @@ export default function VeiligheidPagina() {
         <SectieKop
           bovenkop="AI-geletterdheid"
           titel="Hoe staat het met AI-geletterdheid bij u?"
-          intro="Artikel 4 van de AI-verordening vraagt organisaties die AI inzetten om AI-geletterdheid te ondersteunen. Vier vragen, daarna kopieert u een samenvatting."
+          intro="Artikel 4 van de AI-verordening vraagt organisaties die AI inzetten om AI-geletterdheid te ondersteunen. Vier vragen, één samenvatting."
         />
         <div className="mt-10">
           <GeletterdheidCheck />
@@ -88,7 +88,7 @@ export default function VeiligheidPagina() {
           <div className="flex flex-col gap-6 md:flex-row md:items-center md:justify-between">
             <div className="max-w-xl">
               <h2 className="text-[32px] sm:text-[40px]">Neem uw FG of ICT mee naar het gesprek</h2>
-              <p className="mt-3 text-lg">In het taakgesprek van 45 minuten kijken we ook naar de gegevens in de taak. Iedereen die u erbij wilt, is welkom.</p>
+              <p className="mt-3 text-lg">In 45 minuten kijken we ook naar de gegevens in de taak.</p>
             </div>
             <Knop href={taakgesprekHref()} className="self-start md:self-auto">
               Plan een taakgesprek

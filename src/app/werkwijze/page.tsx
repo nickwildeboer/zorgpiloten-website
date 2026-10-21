@@ -18,12 +18,12 @@ const valkuilen = [
   {
     icoon: "persoon-weg" as const,
     titel: "Een tool zonder eigenaar",
-    tekst: "Iedereen mag het proberen, niemand is verantwoordelijk. Na een paar weken werkt de rest weer zoals altijd.",
+    tekst: "Iedereen mag het proberen, niemand is eigenaar.",
   },
   {
     icoon: "kalender-weg" as const,
     titel: "Een training zonder workflow",
-    tekst: "Het team gaat enthousiast naar huis. Op maandag staat er niets klaar en wint de oude routine.",
+    tekst: "Op maandag staat er niets klaar. De oude routine wint.",
   },
 ];
 
@@ -88,7 +88,7 @@ export default function WerkwijzePagina() {
       {/* Waarom het vaak niet landt */}
       <Sectie toon="wolk" className="border-y border-lijn">
         <div className="grid gap-10 lg:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)] lg:gap-16">
-          <SectieKop bovenkop="Valkuilen" titel="Waarom AI vaak niet landt" intro="Zelden door de techniek. Meestal op een van deze twee punten." />
+          <SectieKop bovenkop="Valkuilen" titel="Waarom AI vaak niet landt" intro="Zelden door de techniek." />
           <ul className="grid gap-4 sm:grid-cols-2">
             {valkuilen.map((v) => (
               <li key={v.titel} className="rounded-kaart border border-lijn bg-creme p-6">
@@ -154,7 +154,7 @@ export default function WerkwijzePagina() {
             }}
           />
         </div>
-        <p className="mt-6 text-sm">De tijden zijn grove indicaties. We rekenen ze samen door in het taakgesprek.</p>
+        <p className="mt-6 text-sm">Tijden zijn grove indicaties.</p>
       </Sectie>
 
       {/* De assistent als nieuwe collega */}
@@ -162,7 +162,7 @@ export default function WerkwijzePagina() {
         <SectieKop
           bovenkop="Eigenaarschap"
           titel="Wie wordt de leidinggevende van uw assistent?"
-          intro="Werk een assistent in als nieuwe collega. Drie afspraken, drie kaarten."
+          intro="Werk hem in als een nieuwe collega."
         />
         <div className="mt-10">
           <AssistentCheck />
