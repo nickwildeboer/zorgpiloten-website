@@ -7,7 +7,6 @@ export type TabTaak<S extends string> = {
   titel: string;
   /** Korte naam voor de tabrij op een smal scherm. */
   pill: string;
-  kort: string;
 };
 
 export const tabId = (prefix: string, slug: string) => `${prefix}-tab-${slug}`;
@@ -15,7 +14,7 @@ export const paneelId = (prefix: string) => `${prefix}-paneel`;
 
 /**
  * Taakkeuze als tablist. Op een smal scherm een horizontaal scrollende rij pillen,
- * vanaf lg een verticale lijst met titel en korte omschrijving.
+ * vanaf lg een verticale koerslijn met een stop per taak.
  * Pijltjestoetsen, Home en End verplaatsen de keuze (automatische activatie).
  */
 export function TaakTabs<S extends string>({
@@ -68,8 +67,10 @@ export function TaakTabs<S extends string>({
       ref={lijst}
       role="tablist"
       aria-label={label}
-      className="-mx-4 flex snap-x gap-2 overflow-x-auto px-4 pb-2 sm:-mx-6 sm:px-6 lg:mx-0 lg:flex-col lg:gap-1 lg:overflow-visible lg:px-0 lg:pb-0"
+      className="relative -mx-4 flex lg:self-start snap-x gap-2 overflow-x-auto px-4 pb-2 sm:-mx-6 sm:px-6 lg:mx-0 lg:flex-col lg:gap-0 lg:overflow-visible lg:px-0 lg:pb-0"
     >
+      {/* De koerslijn achter de stops, alleen op groot scherm */}
+      <span aria-hidden="true" className="absolute bottom-6 left-[17px] top-6 hidden w-[2px] bg-lijn lg:block" />
       {taken.map((t, i) => {
         const isActief = t.slug === actief;
         return (
@@ -86,17 +87,20 @@ export function TaakTabs<S extends string>({
             tabIndex={isActief ? 0 : -1}
             onClick={() => onKies(t.slug)}
             onKeyDown={(e) => opToets(e, i)}
-            className={`shrink-0 snap-start rounded-full border px-4 py-2 text-left text-[15px] transition-colors lg:flex lg:items-start lg:gap-3 lg:rounded-kaart lg:px-4 lg:py-3 ${
+            className={`relative min-h-11 shrink-0 snap-start rounded-full border px-4 py-2 text-left text-[15px] transition-colors lg:flex lg:items-center lg:gap-4 lg:border-0 lg:bg-transparent lg:px-3 lg:py-3 ${
               isActief
-                ? "border-nachtblauw bg-nachtblauw font-medium text-creme lg:border-lijn-sterk lg:bg-wolk lg:font-normal lg:shadow-kaart"
-                : "border-lijn bg-wolk text-nachtblauw-zacht hover:text-nachtblauw lg:border-transparent lg:bg-transparent lg:hover:bg-wolk/70"
+                ? "border-nachtblauw bg-nachtblauw font-medium text-creme"
+                : "border-lijn bg-wolk text-nachtblauw-zacht hover:text-nachtblauw"
             }`}
           >
-            <span className="koers-stop mt-[7px] hidden lg:block" data-actief={isActief} aria-hidden="true" />
-            <span className="block">
-              <span className="lg:hidden">{t.pill}</span>
-              <span className={`hidden leading-snug lg:block ${isActief ? "font-medium text-nachtblauw" : "text-nachtblauw"}`}>{t.titel}</span>
-              <span className="mt-0.5 hidden text-sm leading-snug text-nachtblauw-zacht lg:block">{t.kort}</span>
+            <span className="koers-stop hidden lg:block" data-actief={isActief} aria-hidden="true" />
+            <span className="lg:hidden">{t.pill}</span>
+            <span
+              className={`hidden leading-snug lg:block ${
+                isActief ? "font-display text-[19px] font-bold tracking-[-0.01em] text-nachtblauw" : "text-nachtblauw-zacht hover:text-nachtblauw"
+              }`}
+            >
+              {t.titel}
             </span>
           </button>
         );

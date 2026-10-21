@@ -1,21 +1,42 @@
-import { Knop } from "@/components/ui";
+import Image from "next/image";
+import { Bovenkop, Container, Knop } from "@/components/ui";
+import { Zon } from "@/components/Horizon";
 
-/** Sparrengroene band onder een taakdemo die de gekozen taak meeneemt naar het taakgesprek. */
-export function TaakCta({ taakTitel, href }: { taakTitel: string; href: string }) {
+/**
+ * De ene call-to-action-band van de pagina, op hemel-zacht.
+ * Neemt de taak mee die de bezoeker in de demo koos.
+ * Mag in een client component staan: gebruikt next/image met een bestaand pad.
+ */
+export function TaakCta({ taakTitel, href, foto }: { taakTitel: string; href: string; foto: { src: string; alt: string } }) {
   return (
-    <div className="mt-10 flex flex-col gap-6 rounded-paneel bg-nachtblauw px-6 py-8 sm:px-10 md:flex-row md:items-center md:justify-between">
-      <div className="max-w-xl">
-        <p className="text-[15px]" style={{ color: "var(--hemelblauw)" }}>
-          Je bekijkt nu
-        </p>
-        <p className="mt-1 font-display text-[24px] font-bold leading-tight tracking-[-0.015em] text-creme">{taakTitel}</p>
-        <p className="mt-3" style={{ color: "var(--on-ink-soft)" }}>
-          In een taakgesprek van 45 minuten rekenen we deze taak samen door met jullie eigen cijfers. Daarna weet je of hij de moeite waard is om aan te pakken.
-        </p>
-      </div>
-      <Knop href={href} className="self-start md:self-auto">
-        Reken deze taak samen door
-      </Knop>
-    </div>
+    <section className="relative overflow-hidden bg-hemel-zacht py-16 sm:py-24" aria-labelledby="taak-cta-kop">
+      <Container>
+        <div className="grid items-center gap-10 lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] lg:gap-16">
+          <div className="relative">
+            <Bovenkop>Taakgesprek van 45 minuten</Bovenkop>
+            <h2 id="taak-cta-kop" className="mt-3 text-[32px] sm:text-[44px]">
+              Reken deze taak samen met ons door.
+            </h2>
+            <p className="mt-5 inline-flex items-center gap-2 rounded-full bg-wolk px-4 py-1.5 text-[15px] text-nachtblauw">
+              <span className="koers-stop" data-gedaan="true" aria-hidden="true" />
+              <span>
+                <span className="sr-only">Gekozen taak: </span>
+                {taakTitel}
+              </span>
+            </p>
+            <p className="mt-4 max-w-md text-lg text-nachtblauw">Met uw eigen cijfers. Daarna weet u of de taak de moeite waard is.</p>
+            <Knop href={href} className="mt-8">
+              Plan een taakgesprek
+            </Knop>
+          </div>
+          <div className="relative">
+            <Zon className="absolute -top-10 right-10 h-20 w-40" />
+            <div className="relative aspect-[4/3] overflow-hidden rounded-[var(--radius-lg)] bg-wolk">
+              <Image src={foto.src} alt={foto.alt} fill sizes="(min-width: 1024px) 40vw, 100vw" className="object-cover" />
+            </div>
+          </div>
+        </div>
+      </Container>
+    </section>
   );
 }

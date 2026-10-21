@@ -3,11 +3,12 @@
 import { useEffect, useState } from "react";
 import { Pill } from "@/components/ui";
 import { MetPlekken } from "@/components/hr/MetPlekken";
+import { Koersbocht } from "@/components/Horizon";
 
 const handmatig = [
   "Melding komt binnen",
-  "Feiten verzamelen via telefoon en mail",
-  "Protocol en eerdere berichten opzoeken",
+  "Feiten verzamelen",
+  "Protocol opzoeken",
   "Eerste versie schrijven",
   "Rondsturen voor commentaar",
   "Versies samenvoegen",
@@ -16,8 +17,8 @@ const handmatig = [
 
 const metVoorwerk = [
   "Melding komt binnen",
-  "Concept met zeven kernzinnen staat klaar",
-  "Adviseur checkt de feiten en scherpt aan",
+  "Zeven kernzinnen klaar",
+  "Adviseur checkt en scherpt aan",
   "Akkoord van het MT",
 ];
 
@@ -25,11 +26,11 @@ const metVoorwerk = [
 const kernzinnen = [
   { zin: "Door noodweer is vannacht water binnengekomen op [afdeling] van [locatie].", herkomst: "Uit de melding" },
   { zin: "Alle patiënten zijn veilig en liggen tijdelijk op [andere afdeling].", herkomst: "Uit de melding" },
-  { zin: "Ze worden verzorgd door hun eigen team.", herkomst: "Te bevestigen door de afdeling" },
-  { zin: "Familie en naasten krijgen vandaag persoonlijk bericht van de afdeling.", herkomst: "Uit jullie crisisprotocol" },
-  { zin: "Bezoek is welkom via [ingang], de bezoektijden blijven hetzelfde.", herkomst: "Te bevestigen door de afdeling" },
-  { zin: "We verwachten dat de afdeling [verwachting van het MT] weer open is.", herkomst: "In te vullen door het MT" },
-  { zin: "Hebt u vragen, bel dan [telefoonnummer].", herkomst: "Uit jullie crisisprotocol" },
+  { zin: "Ze worden verzorgd door hun eigen team.", herkomst: "Te bevestigen" },
+  { zin: "Familie en naasten krijgen vandaag persoonlijk bericht van de afdeling.", herkomst: "Uit uw protocol" },
+  { zin: "Bezoek is welkom via [ingang], de bezoektijden blijven hetzelfde.", herkomst: "Te bevestigen" },
+  { zin: "We verwachten dat de afdeling [verwachting van het MT] weer open is.", herkomst: "Invullen door MT" },
+  { zin: "Hebt u vragen, bel dan [telefoonnummer].", herkomst: "Uit uw protocol" },
 ];
 
 const MAX = handmatig.length;
@@ -101,7 +102,7 @@ export function CrisisTijdlijn() {
   return (
     <div className="grid gap-8 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.1fr)]">
       <div>
-        <div className="rounded-kaart border border-lijn bg-creme p-4 sm:p-5">
+        <div className="rounded-kaart border border-lijn bg-wolk p-4 sm:p-5">
           <label htmlFor="crisis-moment" className="block font-medium text-nachtblauw">
             Loop door de tijdlijn
           </label>
@@ -126,7 +127,7 @@ export function CrisisTijdlijn() {
             <button
               type="button"
               onClick={() => (speelt ? setSpeelt(false) : speelAf())}
-              className="inline-flex items-center gap-2 rounded-full border border-nachtblauw px-4 py-2 text-[15px] font-medium text-nachtblauw transition-colors hover:bg-hemel-zacht"
+              className="inline-flex min-h-11 items-center gap-2 rounded-full border-2 border-nachtblauw px-4 py-2 text-[15px] font-medium text-nachtblauw transition-colors hover:bg-hemel-zacht"
             >
               {speelt ? "Pauzeer" : "Speel de tijdlijn af"}
             </button>
@@ -138,9 +139,7 @@ export function CrisisTijdlijn() {
           <Baan titel="Met voorwerk" stappen={metVoorwerk} stand={voorwerkStand} accent />
         </div>
 
-        <p className="mt-2 text-sm text-nachtblauw-zacht">
-          Een voorbeeld van hoe de stappen verschuiven, geen meting. Hoeveel tijd het bij jullie scheelt, meten we in jullie eigen praktijk.
-        </p>
+        <p className="mt-2 text-sm text-nachtblauw-zacht">Een voorbeeld, geen meting.</p>
       </div>
 
       <div>
@@ -148,12 +147,12 @@ export function CrisisTijdlijn() {
           {conceptKlaar ? `Concept kernboodschap: ${status}.` : ""}
         </p>
         {conceptKlaar ? (
-          <div className="rounded-kaart border border-lijn-sterk bg-wolk p-5 shadow-kaart transition duration-300 starting:opacity-0">
+          <div className="rounded-kaart border border-lijn bg-wolk p-5 shadow-kaart transition duration-300 starting:opacity-0">
             <div className="flex flex-wrap items-center justify-between gap-2">
               <p className="font-medium text-nachtblauw">Concept kernboodschap</p>
               <Pill toon="salie">{status}</Pill>
             </div>
-            <p className="mt-1 text-sm text-nachtblauw-zacht">Fictieve situatie: wateroverlast na noodweer</p>
+            <p className="mt-1 text-sm text-nachtblauw-zacht">Fictief: wateroverlast na noodweer</p>
             <ol className="mt-4 space-y-3">
               {kernzinnen.map((k, i) => (
                 <li key={k.zin} className="grid grid-cols-[1.5rem_1fr] gap-1 text-[15px]">
@@ -162,7 +161,7 @@ export function CrisisTijdlijn() {
                     <span className="block text-nachtblauw">
                       <MetPlekken tekst={k.zin} />
                     </span>
-                    <span className="block text-sm text-nachtblauw-zacht">{k.herkomst}</span>
+                    <span className="mt-1 inline-block rounded-full border border-lijn bg-creme px-2 py-0.5 text-xs text-nachtblauw-zacht">{k.herkomst}</span>
                   </span>
                 </li>
               ))}
@@ -172,7 +171,7 @@ export function CrisisTijdlijn() {
                 type="button"
                 onClick={() => setAdviseur(true)}
                 aria-disabled={adviseur}
-                className={`inline-flex items-center gap-2 rounded-full px-4 py-2 text-[15px] font-medium transition-colors ${
+                className={`inline-flex min-h-11 items-center gap-2 rounded-full px-4 py-2 text-[15px] font-medium transition-colors ${
                   adviseur ? "cursor-default bg-hemel-zacht text-nachtblauw" : "bg-nachtblauw text-creme hover:bg-hemel-diep"
                 }`}
               >
@@ -182,7 +181,7 @@ export function CrisisTijdlijn() {
                 type="button"
                 onClick={() => adviseur && setMt(true)}
                 aria-disabled={!adviseur || mt}
-                className={`inline-flex items-center gap-2 rounded-full px-4 py-2 text-[15px] font-medium transition-colors ${
+                className={`inline-flex min-h-11 items-center gap-2 rounded-full px-4 py-2 text-[15px] font-medium transition-colors ${
                   mt ? "cursor-default bg-hemel-zacht text-nachtblauw" : adviseur ? "bg-nachtblauw text-creme hover:bg-hemel-diep" : "cursor-not-allowed border border-lijn text-nachtblauw-zacht"
                 }`}
               >
@@ -191,13 +190,14 @@ export function CrisisTijdlijn() {
             </div>
             {mt && (
               <p className="mt-3 text-[15px] text-nachtblauw-zacht">
-                De boodschap is afgetekend door de adviseur en het MT. Pas nu gaat hij naar patiënten, familie en medewerkers.
+                Pas nu gaat de boodschap naar buiten.
               </p>
             )}
           </div>
         ) : (
-          <div className="flex h-full min-h-48 items-center rounded-kaart border border-dashed border-lijn-sterk p-5 text-[15px] text-nachtblauw-zacht">
-            <p>Het concept met zeven kernzinnen verschijnt zodra de melding is verwerkt. Schuif door de tijdlijn of speel hem af.</p>
+          <div className="flex h-full min-h-48 flex-col justify-between rounded-kaart border border-dashed border-lijn-sterk p-5 text-[15px] text-nachtblauw-zacht">
+            <p className="max-w-[16rem]">Het concept verschijnt bij moment 2. Speel de tijdlijn af.</p>
+            <Koersbocht route={false} className="ml-auto w-40 opacity-40" />
           </div>
         )}
       </div>

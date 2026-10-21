@@ -21,18 +21,18 @@ export const afdelingen: { slug: AfdelingSlug; label: string; kort: string }[] =
 
 export const takenPerAfdeling: Record<AfdelingSlug, Taak[]> = {
   hr: [
-    { slug: "cao-loket", label: "Cao-loket", kort: "Terugkerende vragen over ORT, verlof en inschaling" },
-    { slug: "verzuim", label: "Verzuim en Poortwachter", kort: "Bewaken welke stap wanneer moet en welke brief klaar moet staan" },
-    { slug: "vacatures", label: "Vacatureteksten", kort: "Van functieprofiel naar een tekst in de toon van de organisatie" },
+    { slug: "cao-loket", label: "Cao-loket", kort: "Vragen over ORT, verlof en inschaling" },
+    { slug: "verzuim-poortwachter", label: "Verzuim en Poortwachter", kort: "Welke stap wanneer, en welke brief klaar moet staan" },
+    { slug: "vacatureteksten", label: "Vacatureteksten", kort: "Van functieprofiel naar tekst in uw eigen toon" },
     { slug: "onboarding", label: "Onboarding per functie", kort: "Inwerkschema en documenten klaarzetten" },
-    { slug: "big", label: "BIG-registratie en diploma's", kort: "Tijdig signaleren en herinneren" },
+    { slug: "big-herregistratie", label: "BIG-registratie en diploma's", kort: "Tijdig signaleren en herinneren" },
   ],
   communicatie: [
-    { slug: "b1-folders", label: "Patiëntenfolders en brieven op B1", kort: "Begrijpelijke taal zonder medische feiten aan te raken" },
-    { slug: "intranet", label: "Intranet en medewerkersnieuwsbrief", kort: "Berichten en de nieuwsbrief voorbereiden" },
-    { slug: "arbeidsmarkt", label: "Arbeidsmarktcommunicatie", kort: "Wervingscampagnes en vacaturecommunicatie" },
+    { slug: "patientenfolders-b1", label: "Patiëntenfolders en brieven op B1", kort: "Begrijpelijke taal, medische feiten blijven staan" },
+    { slug: "intranet-nieuwsbrief", label: "Intranet en medewerkersnieuwsbrief", kort: "Berichten en de nieuwsbrief voorbereiden" },
+    { slug: "arbeidsmarktcommunicatie", label: "Arbeidsmarktcommunicatie", kort: "Wervingscampagnes en vacaturecommunicatie" },
     { slug: "website-faq", label: "Website en veelgestelde vragen", kort: "Pagina's actueel houden" },
-    { slug: "crisis", label: "Kernboodschap bij crisis", kort: "Snel een eerste concept om af te tekenen" },
+    { slug: "crisiscommunicatie", label: "Kernboodschap bij crisis", kort: "Snel een eerste concept om af te tekenen" },
   ],
   bestuur: [
     { slug: "rvt-stukken", label: "Stukken voor bestuur en toezicht", kort: "Vergaderstukken samenvatten" },
@@ -44,10 +44,31 @@ export const takenPerAfdeling: Record<AfdelingSlug, Taak[]> = {
 /** Taken die bij elke afdeling horen. */
 export const algemeneTaken: Taak[] = [
   { slug: "teamtraining", label: "Teamtraining veilig AI-gebruik", kort: "Het team leert veilig en praktisch werken met AI" },
-  { slug: "eigen", label: "Eigen taak invullen", kort: "Beschrijf zelf de taak die je wilt doorrekenen" },
+  { slug: "eigen", label: "Eigen taak invullen", kort: "Beschrijf zelf de taak die u wilt doorrekenen" },
 ];
 
 export const EIGEN_TAAK = "eigen";
+
+/**
+ * Oude, korte slugs blijven werken zodat bestaande links niet breken.
+ * Ze wijzen naar de slugs die ook /hr en /communicatie gebruiken.
+ */
+export const taakAliassen: Record<string, string> = {
+  verzuim: "verzuim-poortwachter",
+  vacatures: "vacatureteksten",
+  big: "big-herregistratie",
+  "b1-folders": "patientenfolders-b1",
+  intranet: "intranet-nieuwsbrief",
+  arbeidsmarkt: "arbeidsmarktcommunicatie",
+  crisis: "crisiscommunicatie",
+};
+
+/** Zet een taak-slug uit een link om naar de officiële slug (alias of al officieel). */
+export function normaliseerTaak(slug: string | null | undefined): string | null {
+  if (!slug) return null;
+  const schoon = slug.trim().toLowerCase();
+  return taakAliassen[schoon] ?? schoon;
+}
 
 export function isAfdeling(waarde: string | null | undefined): waarde is AfdelingSlug {
   return waarde === "hr" || waarde === "communicatie" || waarde === "bestuur";
@@ -58,14 +79,16 @@ export function takenVoor(afdeling: AfdelingSlug): Taak[] {
 }
 
 export function vindTaak(afdeling: AfdelingSlug, slug: string | null | undefined): Taak | undefined {
-  if (!slug) return undefined;
-  return takenVoor(afdeling).find((t) => t.slug === slug);
+  const officieel = normaliseerTaak(slug);
+  if (!officieel) return undefined;
+  return takenVoor(afdeling).find((t) => t.slug === officieel);
 }
 
 /** Zoekt bij een losse taak-slug de afdeling erbij, voor links zonder ?afdeling=. */
 export function afdelingVanTaak(slug: string | null | undefined): AfdelingSlug | undefined {
-  if (!slug) return undefined;
-  return (Object.keys(takenPerAfdeling) as AfdelingSlug[]).find((a) => takenPerAfdeling[a].some((t) => t.slug === slug));
+  const officieel = normaliseerTaak(slug);
+  if (!officieel) return undefined;
+  return (Object.keys(takenPerAfdeling) as AfdelingSlug[]).find((a) => takenPerAfdeling[a].some((t) => t.slug === officieel));
 }
 
 export function afdelingLabel(afdeling: AfdelingSlug): string {

@@ -1,50 +1,52 @@
-import { Container, Knop } from "@/components/ui";
+import { Bovenkop, Container, Knop } from "@/components/ui";
+import { Foto } from "@/components/Foto";
+import { Zon } from "@/components/Horizon";
 
 export function CommHero() {
   return (
-    <section className="pt-12 pb-16 sm:pt-20 sm:pb-24">
+    <section className="relative overflow-hidden pt-10 pb-20 sm:pt-16 sm:pb-28">
       <Container>
-        <div className="grid items-start gap-12 lg:grid-cols-[minmax(0,1.15fr)_minmax(0,0.85fr)] lg:gap-16">
+        <div className="grid items-center gap-14 lg:grid-cols-[minmax(0,5fr)_minmax(0,7fr)] lg:gap-14">
           <div>
-            <p className="text-[15px] font-medium text-nachtblauw-zacht">Communicatie</p>
-            <h1 className="mt-3 text-[36px] sm:text-[48px] lg:text-[56px]">Van jargon naar taal die patiënten en collega’s meteen begrijpen.</h1>
-            <div className="mt-6 max-w-[38rem] space-y-4 text-lg">
-              <p>
-                Hugo van den Berk was ruim 15 jaar Directeur Marketing & Communicatie en MT-lid in het Catharina Ziekenhuis. Hij weet waar een communicatieafdeling tijd verliest. Bij de folder die te moeilijk is geschreven, het intranetbericht dat uit vijf mails moet komen en de vacature die weer bij nul begint. En op de dag dat er iets misgaat, bij de eerste zeven zinnen.
-              </p>
-              <p>Het voorwerk zet de eerste versie klaar. De adviseur houdt de pen en tekent af.</p>
-            </div>
-            <div className="mt-8">
-              <Knop href="#schakelaar">Probeer de schakelaar</Knop>
-            </div>
+            <Bovenkop>Communicatie</Bovenkop>
+            <h1 className="mt-4 text-[40px] sm:text-[54px] lg:text-[60px]">Van jargon naar taal die iedereen begrijpt.</h1>
+            <p className="mt-6 max-w-[32rem] text-lg">Folders, nieuwsbrief, werving, website en crisis. De eerste versie staat klaar, de adviseur houdt de pen.</p>
+            <Knop href="#schakelaar" className="mt-8">
+              Probeer de schakelaar
+            </Knop>
           </div>
 
-          <figure className="rounded-paneel bg-hemel-zacht p-5 sm:p-6">
-            <figcaption className="text-[15px] text-nachtblauw-zacht">Eén zin uit de voorbeeldbrief verderop</figcaption>
-            <div className="mt-4 space-y-3">
-              <div className="rounded-kaart border border-lijn bg-wolk px-4 py-4">
-                <p className="text-sm text-nachtblauw-zacht">Zo stond het er</p>
-                <p className="mt-1 text-[17px] leading-snug text-nachtblauw-zacht">Na sedatie is het u niet toegestaan zelfstandig een motorvoertuig te besturen.</p>
-              </div>
-              <div className="rounded-kaart border border-lijn-sterk bg-wolk px-4 py-4 shadow-kaart">
-                <p className="text-sm text-nachtblauw-zacht">Zo staat het klaar voor de adviseur</p>
-                <p className="mt-1 text-[20px] font-medium leading-snug tracking-[-0.01em] text-nachtblauw">Krijgt u een roesje? Dan mag u daarna niet zelf autorijden.</p>
-              </div>
-            </div>
-            <p className="mt-4 text-[15px] text-nachtblauw-zacht">Korter en helderder. Het feit blijft precies hetzelfde.</p>
-          </figure>
-        </div>
+          <div className="relative pb-16 sm:pb-10">
+            <Zon className="absolute -top-12 left-[12%] h-24 w-48 sm:-top-16 sm:h-32 sm:w-64" />
+            <Foto
+              src="/fotos/sfeer/communicatie-drukproef.jpg"
+              alt="Een hand met potlood corrigeert een drukproef van een folder op tafel"
+              ratio="4/3"
+              priority
+              sizes="(min-width: 1024px) 58vw, 100vw"
+              className="relative"
+            />
 
-        <ul className="mt-14 grid gap-6 border-t border-lijn pt-8 sm:grid-cols-2 lg:max-w-[calc(57.5%-2rem)]">
-          <li>
-            <p className="font-medium text-nachtblauw">Hugo van den Berk, MSc</p>
-            <p className="mt-1 text-[15px]">Ruim 15 jaar Directeur Marketing & Communicatie en MT-lid, Catharina Ziekenhuis. Organisatie- en veranderkunde (Sioo).</p>
-          </li>
-          <li>
-            <p className="font-medium text-nachtblauw">Nick Wildeboer, MSc</p>
-            <p className="mt-1 text-[15px]">Strategische innovatie, digitalisering en AI. Bouwt het voorwerk veilig in jullie eigen omgeving.</p>
-          </li>
-        </ul>
+            {/* Eén woord uit de voorbeeldbrief verderop, voor en na */}
+            <p className="absolute right-3 top-4 z-10 inline-flex items-center gap-2 rounded-full border border-lijn bg-wolk px-4 py-2 text-[15px] shadow-kaart sm:-right-4 sm:top-8">
+              <span className="text-nachtblauw-zacht line-through decoration-nachtblauw-zacht/60">sedatie</span>
+              <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="var(--hemel-diep)" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                <path d="M3 8h10M9 4l4 4-4 4" />
+              </svg>
+              <span className="sr-only">wordt</span>
+              <span className="font-medium text-nachtblauw">roesje</span>
+            </p>
+
+            {/* Hugo als anker */}
+            <figure className="absolute bottom-0 left-3 z-10 flex max-w-[22rem] items-end gap-3 rounded-paneel border border-lijn bg-wolk p-2.5 pr-5 shadow-kaart sm:-left-6">
+              <Foto src="/fotos/hugo-portret.jpg" alt="Hugo van den Berk" ratio="4/5" sizes="96px" className="w-20 shrink-0 rounded-[var(--radius-md)] sm:w-24" />
+              <figcaption className="pb-1">
+                <span className="block font-medium text-nachtblauw">Hugo van den Berk, MSc</span>
+                <span className="mt-0.5 block text-sm leading-snug">Ruim 15 jaar Directeur Marketing & Communicatie, Catharina Ziekenhuis</span>
+              </figcaption>
+            </figure>
+          </div>
+        </div>
       </Container>
     </section>
   );

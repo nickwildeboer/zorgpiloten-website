@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
-import { Sectie, SectieKop } from "@/components/ui";
 import { CommHero } from "@/components/communicatie/CommHero";
-import { CommSchakelaar } from "@/components/communicatie/CommSchakelaar";
+import { CommDemo } from "@/components/communicatie/CommSchakelaar";
+import { Mensen } from "@/components/communicatie/Mensen";
 
 export const metadata: Metadata = {
   title: "Communicatie",
@@ -10,20 +10,12 @@ export const metadata: Metadata = {
   alternates: { canonical: "/communicatie" },
 };
 
+/* Secties: hero (creme), schakelaar (wolk), wie er aan tafel zit (creme), taakgesprek (hemel-zacht). */
 export default function CommunicatiePagina() {
   return (
     <>
       <CommHero />
-
-      <Sectie id="schakelaar" className="scroll-mt-16 border-t border-lijn">
-        <SectieKop
-          titel="Zet de schakelaar om"
-          intro="Kies een taak en zie wat er binnenkomt en wat er klaarligt. Alle voorbeelden zijn fictief. De adviseur tekent altijd af."
-        />
-        <div className="mt-10">
-          <CommSchakelaar />
-        </div>
-      </Sectie>
+      <CommDemo tussen={<Mensen />} />
     </>
   );
 }

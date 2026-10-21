@@ -1,36 +1,38 @@
 "use client";
 
+import Image from "next/image";
 import { useState } from "react";
 import { Koerslijn } from "@/components/Koerslijn";
+import styles from "./home.module.css";
 
 const stappen = [
   {
     titel: "Taakgesprek",
-    kort: "Eén taak samen doorrekenen",
-    uitleg:
-      "In 45 minuten kies je met Hugo en Nick één terugkerende taak en rekenen jullie samen door wat die nu kost. Is de taak te klein om mee te beginnen, dan zeggen we dat ook.",
-    opTafel: "Eén doorgerekende taak en een eerlijk advies om wel of niet te starten.",
+    kort: "Eén taak doorrekenen",
+    uitleg: "In 45 minuten kiest u met Hugo en Nick één taak en rekent die door. Is hij te klein, dan zeggen wij dat.",
+    opTafel: "Een doorgerekende taak en een eerlijk advies.",
+    foto: { src: "/fotos/nick-workshop-locatie-1.jpg", alt: "Een team in overleg aan tafel tijdens een workshop van Nick", positie: "45% 55%" },
   },
   {
-    titel: "Meelopen en veilig trainen",
+    titel: "Meelopen en trainen",
     kort: "Op de afdeling, met het team",
-    uitleg:
-      "We lopen een gewone werkdag mee en leggen vast hoe de taak nu verloopt. Hugo traint het team in veilig en mensgericht werken met AI, en samen spreken jullie af wie het voorwerk nakijkt.",
-    opTafel: "Een nulmeting en heldere afspraken over eigenaarschap.",
+    uitleg: "Wij lopen een werkdag mee en Hugo traint het team in veilig werken met AI.",
+    opTafel: "Een nulmeting en afspraken over eigenaarschap.",
+    foto: { src: "/fotos/nick-workshop-locatie-2.jpg", alt: "Nick geeft een training aan een team", positie: "50% 35%" },
   },
   {
-    titel: "Eén taak werkend bouwen",
-    kort: "Testen met twee collega's",
-    uitleg:
-      "Nick bouwt het voorwerk in jullie eigen omgeving. Twee collega's gebruiken het in hun echte werk en we stellen bij tot het past bij hoe jullie werken.",
-    opTafel: "Een werkende opstelling die door je eigen collega's is getest.",
+    titel: "Eén taak bouwen",
+    kort: "Getest door twee collega's",
+    uitleg: "Nick bouwt het voorwerk in uw eigen omgeving. Twee collega's testen het in hun echte werk.",
+    opTafel: "Een werkende opstelling die past bij uw team.",
+    foto: { src: "/fotos/sfeer/overleg-whiteboard.jpg", alt: "Collega's zetten werkstappen op een whiteboard", positie: "50% 40%" },
   },
   {
     titel: "Nameting en overdracht",
     kort: "Het verschil zwart op wit",
-    uitleg:
-      "We meten opnieuw en leggen het verschil naast de nulmeting. Je team krijgt een heldere werkinstructie en beheert de taak daarna zelf.",
-    opTafel: "Het gemeten verschil, een werkinstructie en een team dat het zelf kan.",
+    uitleg: "Wij meten opnieuw. Daarna beheert uw team de taak zelf.",
+    opTafel: "Het gemeten verschil en een werkinstructie.",
+    foto: { src: "/fotos/sfeer/zorg-gang-ochtend.jpg", alt: "Een zorggang in ochtendlicht", positie: "30% 50%" },
   },
 ];
 
@@ -47,35 +49,50 @@ export function KoerslijnStappen() {
         onKies={setActief}
       />
 
-      <div className="mt-8 rounded-kaart border border-lijn bg-wolk p-5 shadow-kaart sm:p-8" aria-live="polite">
-        <p className="text-[15px] text-tekst-zacht">
-          Stap {actief + 1} van {stappen.length}
-        </p>
-        <h3 className="mt-1 text-[24px] sm:text-[28px]">{stap.titel}</h3>
-        <div className="mt-4 grid gap-6 md:grid-cols-[1.4fr_1fr] md:gap-10">
-          <p className="max-w-prose text-tekst-2">{stap.uitleg}</p>
-          <div className="rounded-kaart bg-salie p-4">
-            <p className="text-[15px] font-medium text-tekst">Wat er aan het eind op tafel ligt</p>
-            <p className="mt-1 text-[15px] text-tekst-2">{stap.opTafel}</p>
-          </div>
+      <div className="mt-8 grid overflow-hidden rounded-paneel border border-lijn bg-creme md:grid-cols-[minmax(0,6fr)_minmax(0,5fr)]">
+        <div className="relative aspect-[16/10] md:aspect-auto md:min-h-[340px]">
+          <Image
+            key={stap.foto.src}
+            src={stap.foto.src}
+            alt={stap.foto.alt}
+            fill
+            sizes="(min-width: 768px) 620px, 100vw"
+            className={`${styles.stapFoto} object-cover`}
+            style={{ objectPosition: stap.foto.positie }}
+          />
         </div>
-        <div className="mt-6 flex flex-wrap gap-2">
-          <button
-            type="button"
-            onClick={() => setActief((a) => Math.max(0, a - 1))}
-            disabled={actief === 0}
-            className="rounded-full border border-lijn-sterk px-4 py-2 text-[15px] text-tekst transition-colors hover:bg-salie disabled:opacity-40 disabled:hover:bg-transparent"
-          >
-            Vorige stap
-          </button>
-          <button
-            type="button"
-            onClick={() => setActief((a) => Math.min(stappen.length - 1, a + 1))}
-            disabled={actief === stappen.length - 1}
-            className="rounded-full border border-lijn-sterk px-4 py-2 text-[15px] text-tekst transition-colors hover:bg-salie disabled:opacity-40 disabled:hover:bg-transparent"
-          >
-            Volgende stap
-          </button>
+
+        <div className="flex flex-col p-5 sm:p-8" aria-live="polite">
+          <p className="zp-eyebrow">
+            Stap {actief + 1} van {stappen.length}
+          </p>
+          <h3 className="mt-2 text-[26px] sm:text-[30px]">{stap.titel}</h3>
+          <p className="mt-3 text-[17px]">{stap.uitleg}</p>
+          <div className="mt-5 flex gap-3 rounded-kaart bg-hemel-zacht p-4">
+            <span aria-hidden="true" className="mt-1.5 h-3 w-3 flex-none rounded-full bg-zandgeel" />
+            <p className="text-[15px] text-nachtblauw">
+              <span className="font-semibold">Op tafel: </span>
+              {stap.opTafel}
+            </p>
+          </div>
+          <div className="mt-auto flex flex-wrap gap-2 pt-6">
+            <button
+              type="button"
+              onClick={() => setActief((a) => Math.max(0, a - 1))}
+              disabled={actief === 0}
+              className="min-h-11 rounded-full border-2 border-nachtblauw px-4 py-2 text-[15px] font-semibold text-nachtblauw transition-colors hover:bg-hemel-zacht disabled:border-lijn disabled:text-nachtblauw-zacht disabled:hover:bg-transparent"
+            >
+              Vorige stap
+            </button>
+            <button
+              type="button"
+              onClick={() => setActief((a) => Math.min(stappen.length - 1, a + 1))}
+              disabled={actief === stappen.length - 1}
+              className="min-h-11 rounded-full border-2 border-nachtblauw px-4 py-2 text-[15px] font-semibold text-nachtblauw transition-colors hover:bg-hemel-zacht disabled:border-lijn disabled:text-nachtblauw-zacht disabled:hover:bg-transparent"
+            >
+              Volgende stap
+            </button>
+          </div>
         </div>
       </div>
     </div>

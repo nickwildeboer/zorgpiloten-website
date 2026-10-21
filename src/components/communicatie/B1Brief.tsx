@@ -69,16 +69,13 @@ const woordenlijst = [
   ["anticoagulantia", "bloedverdunners"],
   ["sedatie", "roesje"],
   ["motorvoertuig besturen", "autorijden"],
-  ["teneinde", "alleen dan"],
   ["conform", "volg daarbij"],
 ];
 
 const controlepunten = [
-  "Datum, tijd, middel en telefoonnummer zijn letterlijk overgenomen.",
-  "‘Op tijd’ bij bloedverdunners is geen termijn. Vraag de afdeling om een concreet aantal dagen.",
-  "Voorbeelden van vezelrijk eten staan niet in het origineel en zijn dus niet toegevoegd. Wil je ze erbij, overleg dan met de afdeling.",
-  "Check of ‘roesje’ het woord is dat jullie afdeling gebruikt voor sedatie.",
-  "Laat een verpleegkundige van de afdeling de brief nalezen voor hij de deur uitgaat.",
+  "Datum, tijd, middel en telefoonnummer staan er letterlijk in.",
+  "‘Op tijd’ is geen termijn. Vraag de afdeling om een aantal dagen.",
+  "Een verpleegkundige van de afdeling leest mee.",
 ];
 
 const alleZinnen = alineas.flat();
@@ -188,28 +185,49 @@ export function B1Brief() {
         </p>
       </div>
 
-      <div className="space-y-6">
-        <div className="rounded-kaart bg-hemel-zacht p-5">
-          <p className="font-medium text-nachtblauw">Gemiddelde zinslengte in deze brief</p>
-          <div className="mt-3 grid grid-cols-2 gap-4">
-            <div>
-              <p className={`font-display text-[32px] font-bold leading-none tracking-[-0.015em] ${versie === "origineel" ? "text-nachtblauw" : "text-nachtblauw-zacht"}`}>{zinslengte.origineel}</p>
-              <p className="mt-1 text-sm">woorden, origineel</p>
-            </div>
-            <div>
-              <p className={`font-display text-[32px] font-bold leading-none tracking-[-0.015em] ${versie === "b1" ? "text-nachtblauw" : "text-nachtblauw-zacht"}`}>{zinslengte.b1}</p>
-              <p className="mt-1 text-sm">woorden, B1-versie</p>
-            </div>
+      <div className="space-y-8">
+        <div>
+          <p className="font-medium text-nachtblauw">Gemiddelde zinslengte</p>
+          <div className="mt-3 space-y-3" aria-label="Gemiddelde zinslengte in deze voorbeeldbrief">
+            {(["origineel", "b1"] as const).map((v) => (
+              <div key={v}>
+                <div className="flex items-baseline justify-between text-sm">
+                  <span className={versie === v ? "font-medium text-nachtblauw" : ""}>{v === "origineel" ? "Origineel" : "B1-versie"}</span>
+                  <span className={versie === v ? "font-medium text-nachtblauw" : ""}>{zinslengte[v]} woorden</span>
+                </div>
+                <div className="mt-1.5 h-3 overflow-hidden rounded-full border border-lijn bg-wolk">
+                  <div
+                    className={`h-full rounded-full transition-colors duration-300 ${v === "b1" ? "bg-hemelblauw" : "bg-nachtblauw-zacht/40"}`}
+                    style={{ width: `${Math.round((zinslengte[v] / zinslengte.origineel) * 100)}%` }}
+                  />
+                </div>
+              </div>
+            ))}
           </div>
-          <p className="mt-3 text-sm text-nachtblauw-zacht">Geteld in de voorbeeldbrief hiernaast, niet in een echte brief.</p>
         </div>
 
         <div>
-          <p className="font-medium text-nachtblauw">Controlepunten voor de adviseur</p>
-          <ul className="mt-3 space-y-3">
+          <p className="font-medium text-nachtblauw">Woorden die verschuiven</p>
+          <ul className="mt-3 flex flex-wrap gap-2">
+            {woordenlijst.map(([oud, nieuw]) => (
+              <li key={oud} className="inline-flex items-center gap-1.5 rounded-full border border-lijn bg-wolk px-3 py-1 text-sm">
+                <span className="text-nachtblauw-zacht line-through decoration-nachtblauw-zacht/50">{oud}</span>
+                <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="var(--hemel-diep)" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                  <path d="M3 8h10M9 4l4 4-4 4" />
+                </svg>
+                <span className="sr-only">wordt</span>
+                <span className="font-medium text-nachtblauw">{nieuw}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        <div>
+          <p className="font-medium text-nachtblauw">De adviseur checkt</p>
+          <ul className="mt-3 space-y-2.5">
             {controlepunten.map((punt) => (
-              <li key={punt} className="flex gap-3 text-[15px] leading-snug">
-                <svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="currentColor" strokeWidth="1.6" aria-hidden="true" className="mt-0.5 shrink-0 text-hemel-diep">
+              <li key={punt} className="flex gap-2.5 text-[15px] leading-snug">
+                <svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="var(--hemel-diep)" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true" className="mt-0.5 shrink-0">
                   <rect x="2.5" y="2.5" width="13" height="13" rx="3" />
                   <path d="m5.8 9.2 2.2 2.2 4.4-4.6" />
                 </svg>
@@ -217,27 +235,6 @@ export function B1Brief() {
               </li>
             ))}
           </ul>
-        </div>
-
-        <div>
-          <p className="font-medium text-nachtblauw">Woorden die verschuiven</p>
-          <table className="mt-3 w-full text-left text-[15px]">
-            <caption className="sr-only">Woorden uit de oorspronkelijke brief en hun vervanging in de B1-versie</caption>
-            <thead>
-              <tr className="text-sm text-nachtblauw-zacht">
-                <th scope="col" className="pb-2 font-normal">Origineel</th>
-                <th scope="col" className="pb-2 font-normal">B1-versie</th>
-              </tr>
-            </thead>
-            <tbody className="divide-y divide-lijn border-t border-lijn">
-              {woordenlijst.map(([oud, nieuw]) => (
-                <tr key={oud}>
-                  <td className="py-2 pr-4">{oud}</td>
-                  <td className="py-2 text-nachtblauw">{nieuw}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
         </div>
       </div>
     </div>
