@@ -1,15 +1,14 @@
 import type { Metadata } from "next";
-import { Container, Knop, Sectie, SectieKop } from "@/components/ui";
+import { Container, Knop, Sectie } from "@/components/ui";
 import { Foto } from "@/components/Foto";
 import { Zon, Wolk } from "@/components/Horizon";
 import { Profiel } from "@/components/over-ons/Profielen";
-import { Gespreksvoorbereider } from "@/components/over-ons/Gespreksvoorbereider";
 import { Portret } from "@/components/over-ons/Portret";
+import { taakgesprek, taakgesprekHref } from "@/lib/navigatie";
 
 export const metadata: Metadata = {
-  title: "Over ons en taakgesprek plannen",
-  description:
-    "Hugo van den Berk, MSc en Nick Wildeboer, MSc. Bestuurservaring uit het ziekenhuis, gekoppeld aan zorg-ICT en bouwkracht. Stel in drie klikken uw taakgesprek van 45 minuten samen.",
+  title: "Over ons",
+  description: `Hugo van den Berk, MSc en Nick Wildeboer, MSc. Bestuurservaring uit het ziekenhuis, gekoppeld aan zorg-ICT en bouwkracht. Plan een taakgesprek van ${taakgesprek.minuten} minuten.`,
 };
 
 const duo = [
@@ -29,8 +28,8 @@ export default function OverOnsPagina() {
               <h1 className="mt-4 text-[38px] sm:text-[52px] lg:text-[56px]">Bestuurservaring uit het ziekenhuis, gekoppeld aan zorg-ICT en bouwkracht.</h1>
               <p className="mt-5 max-w-lg text-lg">Twee academisch opgeleide specialisten uit de zorg zelf.</p>
               <div className="mt-8 flex flex-wrap gap-3">
-                <Knop href="#taakgesprek" variant="secundair">
-                  Stel uw taakgesprek samen
+                <Knop href={taakgesprekHref()} variant="secundair">
+                  Plan een taakgesprek
                 </Knop>
               </div>
             </div>
@@ -72,24 +71,26 @@ export default function OverOnsPagina() {
         <Profiel wie="nick" spiegel />
       </Sectie>
 
-      {/* Gespreksvoorbereider als call-to-action-band */}
-      <Sectie id="taakgesprek" className="scroll-mt-16 bg-hemel-zacht">
-        <SectieKop
-          bovenkop="Taakgesprek"
-          titel="Stel in drie klikken uw taakgesprek samen"
-          intro="Kies afdeling, taak en tijd. De agenda staat er meteen."
-        />
-        <div className="mt-10">
-          <Gespreksvoorbereider
-            portretten={
-              <span className="flex -space-x-3">
-                <Portret wie="hugo" className="h-12 w-12" tekstClass="text-[14px]" />
-                <Portret wie="nick" className="h-12 w-12" tekstClass="text-[14px]" />
+      {/* Call-to-action-band. Het anker blijft voor oude links naar /over-ons#taakgesprek. */}
+      <section id="taakgesprek" className="scroll-mt-16 bg-hemel-zacht py-14 sm:py-20">
+        <Container>
+          <div className="flex flex-col gap-6 md:flex-row md:items-center md:justify-between">
+            <div className="flex max-w-xl items-start gap-5">
+              <span className="hidden flex-none -space-x-3 sm:flex">
+                <Portret wie="hugo" className="h-14 w-14" tekstClass="text-[15px]" />
+                <Portret wie="nick" className="h-14 w-14" tekstClass="text-[15px]" />
               </span>
-            }
-          />
-        </div>
-      </Sectie>
+              <div>
+                <h2 className="text-[32px] sm:text-[40px]">Aan tafel met Hugo en Nick</h2>
+                <p className="mt-3 text-lg text-nachtblauw">In {taakgesprek.minuten} minuten kiezen we samen één taak en rekenen we die door.</p>
+              </div>
+            </div>
+            <Knop href={taakgesprekHref()} className="self-start md:self-auto">
+              Plan een taakgesprek
+            </Knop>
+          </div>
+        </Container>
+      </section>
     </>
   );
 }

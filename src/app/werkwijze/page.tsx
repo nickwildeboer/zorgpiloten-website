@@ -6,7 +6,7 @@ import { KoersVerloop } from "@/components/werkwijze/KoersVerloop";
 import { AssistentCheck } from "@/components/werkwijze/AssistentCheck";
 import { Icoon } from "@/components/over-ons/Iconen";
 import { Portret } from "@/components/over-ons/Portret";
-import { taakgesprekHref } from "@/lib/navigatie";
+import { taakgesprek, taakgesprekHref } from "@/lib/navigatie";
 
 export const metadata: Metadata = {
   title: "Hoe wij werken",
@@ -175,7 +175,7 @@ export default function WerkwijzePagina() {
           <div className="flex flex-col gap-6 md:flex-row md:items-center md:justify-between">
             <div className="max-w-xl">
               <h2 className="text-[32px] sm:text-[40px]">Begin bij stop 1</h2>
-              <p className="mt-3 text-lg">In 45 minuten kiezen we samen één taak en rekenen we door wat die nu kost.</p>
+              <p className="mt-3 text-lg">In {taakgesprek.minuten} minuten kiezen we samen één taak en rekenen we door wat die nu kost.</p>
             </div>
             <Knop href={taakgesprekHref()} className="self-start md:self-auto">
               Plan een taakgesprek

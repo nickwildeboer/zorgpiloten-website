@@ -1,20 +1,18 @@
 import type { Metadata } from "next";
 import { Bovenkop, Container, Knop } from "@/components/ui";
 import { Wolk, Zon } from "@/components/Horizon";
-import { taakgesprekHref } from "@/lib/navigatie";
+import { taakgesprek, taakgesprekHref } from "@/lib/navigatie";
 import { Foto } from "@/components/Foto";
 import { HeroCollage } from "@/components/home/HeroCollage";
 import { Portret } from "@/components/home/Portret";
 import { Taakkaart } from "@/components/home/Taakkaart";
 import { Afdelingsdeuren } from "@/components/home/Afdelingsdeuren";
-import { Praktijkproblemen } from "@/components/home/Praktijkproblemen";
 import { Tijdvretermeter } from "@/components/home/Tijdvretermeter";
-import { KoerslijnStappen } from "@/components/home/KoerslijnStappen";
 
 export const metadata: Metadata = {
   title: { absolute: "Zorgpiloten | Uw copilot voor HR en Communicatie in de zorg" },
   description:
-    "Hugo van den Berk en Nick Wildeboer zetten AI in als copilot voor HR en Communicatie in de zorg. Wij beginnen bij één terugkerende taak en laten die werkend achter in uw eigen omgeving. Plan een taakgesprek van 45 minuten.",
+    `Hugo van den Berk en Nick Wildeboer zetten AI in als copilot voor HR en Communicatie in de zorg. Wij beginnen bij één terugkerende taak en laten die werkend achter in uw eigen omgeving. Plan een taakgesprek van ${taakgesprek.minuten} minuten.`,
   alternates: { canonical: "/" },
 };
 
@@ -101,32 +99,12 @@ export default function Home() {
         </Container>
       </section>
 
-      {/* Drie praktijkproblemen */}
-      <section className="bg-wolk py-16 sm:py-24">
-        <Container>
-          <Kop titel="Herkent u dit?" intro="Kies wat het meest op uw situatie lijkt." />
-          <div className="mt-8 sm:mt-10">
-            <Praktijkproblemen />
-          </div>
-        </Container>
-      </section>
-
       {/* Tijdvreter-meter */}
-      <section id="tijdvreter-meter" className="scroll-mt-20 py-16 sm:py-24">
+      <section id="tijdvreter-meter" className="scroll-mt-20 bg-wolk py-16 sm:py-24">
         <Container>
           <Kop titel="Wat kost één taak per jaar?" intro="Vul uw eigen cijfers in." />
           <div className="mt-8 sm:mt-10">
             <Tijdvretermeter />
-          </div>
-        </Container>
-      </section>
-
-      {/* De koerslijn */}
-      <section className="bg-wolk py-16 sm:py-24">
-        <Container>
-          <Kop titel="Zo verloopt een samenwerking" intro="Vier stappen, van gesprek tot een team dat het zelf kan." />
-          <div className="mt-8 sm:mt-10">
-            <KoerslijnStappen />
           </div>
         </Container>
       </section>
@@ -141,7 +119,7 @@ export default function Home() {
                 <Portret src="/fotos/nick-portret-nick.jpg" naam="Nick Wildeboer" initialen="NW" grootte={56} rand="hemel-zacht" />
               </div>
               <h2 className="mt-5 text-[30px] sm:text-[40px]">Begin bij één taak die te veel tijd kost</h2>
-              <p className="mt-3 text-[17px] text-nachtblauw sm:text-lg">In 45 minuten kiest u met Hugo en Nick één taak en rekent die samen door.</p>
+              <p className="mt-3 text-[17px] text-nachtblauw sm:text-lg">In {taakgesprek.minuten} minuten kiest u met Hugo en Nick één taak en rekent die samen door.</p>
               <div className="mt-7">
                 <Knop href={taakgesprekHref()}>Plan een taakgesprek</Knop>
               </div>

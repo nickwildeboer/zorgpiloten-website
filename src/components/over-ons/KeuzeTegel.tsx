@@ -25,7 +25,7 @@ export function KeuzeTegel({
 }) {
   return (
     <label
-      className={`group relative flex min-h-[48px] cursor-pointer items-start gap-3 rounded-kaart border transition-colors ${compact ? "px-4 py-3" : "px-4 py-4"} ${
+      className={`group relative flex min-h-[48px] cursor-pointer items-start gap-3 rounded-kaart border transition-colors ${icoon ? "sm:flex-col" : ""} ${compact ? "px-4 py-3" : "px-4 py-4"} ${
         gekozen ? "border-nachtblauw bg-hemel-zacht" : "border-lijn bg-wolk hover:border-lijn-sterk hover:bg-creme"
       } has-[:focus-visible]:outline-2 has-[:focus-visible]:outline-offset-2 has-[:focus-visible]:outline-hemel-diep`}
     >
@@ -45,7 +45,7 @@ export function KeuzeTegel({
           {gekozen && <span className="h-2 w-2 rounded-full bg-nachtblauw" />}
         </span>
       )}
-      <span className={`min-w-0 ${icoon ? "self-center" : ""}`}>
+      <span className={`min-w-0 ${icoon ? "self-center sm:self-start" : ""}`}>
         <span className={`block text-[16px] leading-snug text-nachtblauw ${gekozen ? "font-semibold" : ""}`}>{titel}</span>
         {toelichting && <span className="mt-0.5 block text-sm leading-snug text-nachtblauw-zacht">{toelichting}</span>}
       </span>

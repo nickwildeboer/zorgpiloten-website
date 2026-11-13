@@ -16,4 +16,14 @@ Website van Zorgpiloten, de samenwerking van Hugo van den Berk en Nick Wildeboer
 - Live zetten en het domein regelt Nick. Commit naar `main`, stage gericht.
 
 ## Bouwstenen
-`src/components/ui.tsx` (Knop, Container, Sectie, SectieKop, Kaart, Pill, Schakelaar), `src/components/Koerslijn.tsx`, `src/lib/navigatie.ts` (taakgesprekHref), `src/components/Foto.tsx` (foto met Horizon-plaatsvervanger als het bestand nog ontbreekt), `src/components/Horizon.tsx` (Koersbocht, Zon, Wolk, HorizonBand).
+`src/components/ui.tsx` (Knop, Container, Sectie, SectieKop, Kaart, Pill, Schakelaar), `src/components/Koerslijn.tsx`, `src/lib/navigatie.ts` (taakgesprekHref naar /taakgesprek, en `taakgesprek`: duur en Cal.com-link op één plek), `src/components/Foto.tsx` (foto met Horizon-plaatsvervanger als het bestand nog ontbreekt), `src/components/Horizon.tsx` (Koersbocht, Zon, Wolk, HorizonBand).
+
+<!-- BEGIN:nextjs-agent-rules -->
+
+## This is NOT the Next.js you know
+
+This version has breaking changes — APIs, conventions, and file structure may all differ from your training data. Read the relevant guide in `node_modules/next/dist/docs/` (resolved from this file's directory; in monorepos the `next` package may not be visible from the repo root) before writing any code. Heed deprecation notices.
+
+This block is written and re-added by `next dev` — verify at `node_modules/next/dist/server/lib/generate-agent-files.js`. Removing it from a diff only re-creates the uncommitted change; committing it with your work keeps the tree clean.
+
+<!-- END:nextjs-agent-rules -->

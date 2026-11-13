@@ -3,6 +3,7 @@
 import { useState, type ReactNode } from "react";
 import { Koerslijn } from "@/components/Koerslijn";
 import { Icoon } from "@/components/over-ons/Iconen";
+import { taakgesprek } from "@/lib/navigatie";
 
 type Stop = {
   titel: string;
@@ -19,7 +20,7 @@ const stops: Stop[] = [
     kort: "Meekijken op een werkdag",
     hugo: "Spreekt leidinggevende en team over tijd, eigenaarschap en verandering.",
     nick: "Loopt de taak mee en brengt systemen en gegevens in kaart.",
-    tijd: "Het gesprek van 45 minuten en een dagdeel meekijken.",
+    tijd: `Het gesprek van ${taakgesprek.minuten} minuten en een dagdeel meekijken.`,
     opTafel: "Een nulmeting en welk deel voorwerk kan worden.",
   },
   {

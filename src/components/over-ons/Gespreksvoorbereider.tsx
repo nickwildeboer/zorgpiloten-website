@@ -1,7 +1,9 @@
 "use client";
 
-import { Suspense, useId, useState, type FormEvent, type ReactNode } from "react";
+import { Suspense, useCallback, useEffect, useId, useState, type FormEvent, type ReactNode } from "react";
 import { useSearchParams } from "next/navigation";
+import { getCalApi } from "@calcom/embed-react";
+import { taakgesprek } from "@/lib/navigatie";
 import { KeuzeTegel } from "./KeuzeTegel";
 import { kopieerTekst } from "./kopieer";
 import { Icoon, type IcoonNaam } from "./Iconen";
@@ -19,7 +21,35 @@ import {
   type UrenWaarde,
 } from "./taken";
 
-const ontvanger = process.env.NEXT_PUBLIC_TAAKGESPREK_EMAIL;
+const CAL_NAMESPACE = "taakgesprek";
+
+/** Directe Cal.com-link met de gesprekskaart vooringevuld. Terugval als het agendavenster niet opent. */
+function agendaUrl(velden: { name: string; email: string; notes: string }) {
+  const params = new URLSearchParams(velden);
+  return `https://cal.com/${taakgesprek.calLink}?${params.toString()}`;
+}
+
+/** Laadt Cal.com één keer en zet de agenda in de Horizon-kleuren. */
+function useAgenda(opGepland: () => void) {
+  useEffect(() => {
+    let actief = true;
+    getCalApi({ namespace: CAL_NAMESPACE })
+      .then((cal) => {
+        if (!actief) return;
+        cal("ui", {
+          theme: "light",
+          hideEventTypeDetails: false,
+          layout: "month_view",
+          cssVarsPerTheme: { light: { "cal-brand": "#1B2A4A" }, dark: { "cal-brand": "#FFF8EF" } },
+        });
+        cal("on", { action: "bookingSuccessful", callback: opGepland });
+      })
+      .catch(() => {});
+    return () => {
+      actief = false;
+    };
+  }, [opGepland]);
+}
 
 const DREMPEL = "Onder de 4 uur per week raden wij geen apart automatiseringstraject aan. Kies een grotere tijdvreter of begin met een praktische teamtraining.";
 
@@ -65,7 +95,7 @@ function maakAgenda(k: Keuzes): string[] {
 function maakTekst(k: Keuzes, aanvrager?: { naam: string; organisatie: string; email: string }): string {
   const uren = urenOpties.find((u) => u.waarde === k.uren);
   const regels = [
-    "Taakgesprek met Hugo en Nick (45 minuten)",
+    `Taakgesprek met Hugo en Nick (${taakgesprek.minuten} minuten)`,
     "",
     `Afdeling: ${k.afdeling ? afdelingLabel(k.afdeling) : "nog niet gekozen"}`,
     `Taak: ${taakOmschrijving(k) ?? "nog niet gekozen"}`,
@@ -118,7 +148,15 @@ function Voorbereider({ begin, portretten }: { begin: Keuzes; portretten?: React
   const [email, setEmail] = useState("");
   const [melding, setMelding] = useState("");
   const [fout, setFout] = useState("");
+  const [terugval, setTerugval] = useState<string | null>(null);
+  const [gepland, setGepland] = useState(false);
   const id = useId();
+  // Na een geboekt gesprek wisselt de kaart naar de bevestiging.
+  const opGepland = useCallback(() => {
+    setGepland(true);
+    setMelding("");
+  }, []);
+  useAgenda(opGepland);
 
   const taken = keuzes.afdeling ? takenVoor(keuzes.afdeling) : [];
   const agenda = maakAgenda(keuzes);
@@ -138,19 +176,28 @@ function Voorbereider({ begin, portretten }: { begin: Keuzes; portretten?: React
     setMelding(gelukt ? "Gesprekskaart gekopieerd. Plak hem in een mail of document." : "Kopiëren lukte niet. Selecteer de tekst van de kaart en kopieer hem zelf.");
   }
 
-  function verstuur(e: FormEvent<HTMLFormElement>) {
+  async function planIn(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    if (!ontvanger) return;
     if (!keuzes.afdeling || !taakTekst) {
       setMelding("");
       setFout(keuzes.taak === EIGEN_TAAK ? "Beschrijf eerst uw eigen taak in stap 2." : "Kies eerst een afdeling en een taak.");
       return;
     }
     setFout("");
-    const onderwerp = `Taakgesprek: ${taakTekst}`;
-    const body = maakTekst(keuzes, { naam, organisatie, email }).replace(/\n/g, "\r\n");
-    window.location.href = `mailto:${ontvanger}?subject=${encodeURIComponent(onderwerp)}&body=${encodeURIComponent(body)}`;
-    setMelding("Uw mailprogramma opent met de gesprekskaart. Verstuur de mail om het gesprek aan te vragen.");
+    const velden = { name: naam.trim(), email: email.trim(), notes: maakTekst(keuzes, { naam, organisatie, email }) };
+    const url = agendaUrl(velden);
+    setTerugval(url);
+    try {
+      const cal = await Promise.race([
+        getCalApi({ namespace: CAL_NAMESPACE }),
+        new Promise<never>((_, nee) => setTimeout(() => nee(new Error("timeout")), 5000)),
+      ]);
+      cal("modal", { calLink: taakgesprek.calLink, config: { ...velden, layout: "month_view" } });
+      setMelding("De agenda staat open. Kies een moment dat u past.");
+    } catch {
+      window.open(url, "_blank", "noopener");
+      setMelding("De agenda opent in een nieuw tabblad.");
+    }
   }
 
   const veld =
@@ -243,7 +290,7 @@ function Voorbereider({ begin, portretten }: { begin: Keuzes; portretten?: React
       </div>
 
       <div className="lg:sticky lg:top-24 lg:self-start">
-        <form onSubmit={verstuur} className="overflow-hidden rounded-[var(--radius-lg)] border border-lijn bg-wolk shadow-kaart" aria-labelledby={`${id}-kaart`}>
+        <form onSubmit={planIn} className="overflow-hidden rounded-[var(--radius-lg)] border border-lijn bg-wolk shadow-kaart" aria-labelledby={`${id}-kaart`}>
           <div className="bg-nachtblauw px-5 pb-5 pt-6 sm:px-7">
             <div className="flex items-center gap-4">
               {portretten}
@@ -253,7 +300,7 @@ function Voorbereider({ begin, portretten }: { begin: Keuzes; portretten?: React
                 </h3>
                 <p className="flex items-center gap-1.5 text-[15px]" style={{ color: "var(--on-ink-soft)" }}>
                   <Icoon naam="klok" className="h-4 w-4 text-zandgeel" />
-                  45 minuten met Hugo en Nick
+                  {taakgesprek.minuten} minuten met Hugo en Nick
                 </p>
               </div>
             </div>
@@ -310,32 +357,42 @@ function Voorbereider({ begin, portretten }: { begin: Keuzes; portretten?: React
               </div>
             </div>
 
-            <div className="flex flex-col gap-2 pt-1 sm:flex-row">
-              <button
-                type="submit"
-                disabled={!ontvanger}
-                aria-describedby={!ontvanger ? `${id}-geen-adres` : undefined}
-                className="inline-flex min-h-[44px] items-center justify-center gap-2 rounded-full bg-koraal px-5 py-2.5 text-[15px] font-semibold text-nachtblauw hover:bg-zandgeel disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:bg-koraal"
-              >
-                <Icoon naam="mail" className="h-[18px] w-[18px]" />
-                Verstuur via e-mail
-              </button>
-              <button
-                type="button"
-                onClick={kopieer}
-                className="inline-flex min-h-[44px] items-center justify-center gap-2 rounded-full border-2 border-nachtblauw px-5 py-2 text-[15px] font-semibold text-nachtblauw hover:bg-hemel-zacht"
-              >
-                <Icoon naam="kopieer" className="h-[18px] w-[18px]" />
-                Kopieer gesprekskaart
-              </button>
-            </div>
-            {!ontvanger && (
-              <p id={`${id}-geen-adres`} className="text-sm">
-                Het mailadres wordt nog ingesteld. Kopieer zolang de gesprekskaart.
-              </p>
+            {gepland ? (
+              <div className="rounded-kaart bg-hemel-zacht px-4 py-3 text-[15px] text-nachtblauw">
+                <p className="flex items-center gap-2 font-semibold">
+                  <Icoon naam="vink" className="h-[18px] w-[18px]" />
+                  Uw taakgesprek staat gepland
+                </p>
+                <p className="mt-1">U krijgt de uitnodiging per mail, met uw gesprekskaart erbij.</p>
+              </div>
+            ) : (
+              <div className="flex flex-col gap-3 pt-1">
+                <button
+                  type="submit"
+                  className="inline-flex min-h-[48px] items-center justify-center gap-2 rounded-full bg-koraal px-6 py-3 text-[16px] font-semibold text-nachtblauw hover:bg-zandgeel"
+                >
+                  <Icoon naam="kalender" className="h-[18px] w-[18px]" />
+                  Kies een moment in de agenda
+                </button>
+                <button
+                  type="button"
+                  onClick={kopieer}
+                  className="inline-flex min-h-[44px] items-center justify-center self-center rounded-full px-3 text-[15px] font-semibold text-hemel-diep underline-offset-4 hover:underline"
+                >
+                  Eerst intern overleggen? Kopieer de kaart
+                </button>
+              </div>
             )}
             <p role="status" className="min-h-[1.25em] text-[15px] text-nachtblauw">
               {melding}
+              {terugval && !gepland && (
+                <>
+                  {" "}
+                  <a href={terugval} target="_blank" rel="noopener" className="font-semibold text-hemel-diep underline underline-offset-4">
+                    Opent er niets? Open de agenda in een nieuw tabblad.
+                  </a>
+                </>
+              )}
             </p>
             {fout && (
               <p role="alert" className="text-[15px] font-semibold text-koraal-diep">

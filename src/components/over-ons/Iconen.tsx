@@ -19,6 +19,7 @@ export type IcoonNaam =
   | "vink"
   | "mail"
   | "klok"
+  | "kalender"
   | "pijl"
   | "persoon-weg"
   | "kalender-weg"
@@ -106,6 +107,14 @@ const paden: Record<IcoonNaam, ReactNode> = {
     <>
       <circle cx="12" cy="12" r="10" />
       <path d="M12 6v6l4 2" />
+    </>
+  ),
+  kalender: (
+    <>
+      <path d="M8 2v4" />
+      <path d="M16 2v4" />
+      <rect width="18" height="18" x="3" y="4" rx="2" />
+      <path d="M3 10h18" />
     </>
   ),
   pijl: (

@@ -1,6 +1,7 @@
 import Image from "next/image";
 import { Bovenkop, Container, Knop } from "@/components/ui";
 import { Zon } from "@/components/Horizon";
+import { taakgesprek } from "@/lib/navigatie";
 
 /**
  * De ene call-to-action-band van de pagina, op hemel-zacht.
@@ -13,7 +14,7 @@ export function TaakCta({ taakTitel, href, foto }: { taakTitel: string; href: st
       <Container>
         <div className="grid items-center gap-10 lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] lg:gap-16">
           <div className="relative">
-            <Bovenkop>Taakgesprek van 45 minuten</Bovenkop>
+            <Bovenkop>Taakgesprek van {taakgesprek.minuten} minuten</Bovenkop>
             <h2 id="taak-cta-kop" className="mt-3 text-[32px] sm:text-[44px]">
               Reken deze taak samen met ons door.
             </h2>
