@@ -225,6 +225,85 @@ export const home = {
   }
 } as const;
 
+/**
+ * Tekst voor de beeldgedragen homepage (prototypes 1, 2 en 5, gekozen door Nick op 19 november 2026).
+ * Woordelijk overgenomen uit de prototypes; niets nieuws geschreven.
+ */
+export const homeBeeld = {
+  hero: {
+    zin: "Wij helpen zorgteams werken met Copilot en AI.",
+    mensen: "Hugo van den Berk en Nick Wildeboer",
+  },
+  /** De korte regel per pijler, in de volgorde van home.doen.pijlers. */
+  pijlerRegels: [
+    "Ontdek wat AI kan betekenen voor de zorg",
+    "Leer veilig werken met Copilot en AI",
+    "Ontdek waar u veilig met AI kunt beginnen",
+    "Test in vier weken wat AI bij één taak op uw afdeling oplevert.",
+  ],
+  beslist: {
+    kop: "De professional beslist",
+    regel: "AI doet het voorwerk. De professional controleert, beslist en tekent af.",
+    foto: "Hugo van den Berk geeft een training aan een team bij het whiteboard",
+    rollen: [
+      { wie: "De assistent", wat: "zoekt, ordent, zet klaar" },
+      { wie: "Uw medewerker", wat: "controleert, beslist, tekent af" },
+    ],
+  },
+  /** Het deel van home.oprichtersKort dat zwaarder gezet wordt. */
+  nadruk: {
+    hugo: "15,5 jaar",
+    nick: "bouwt zelf agents en automatiseringen.",
+  },
+  werkblad: {
+    label: "Voorbeeld: een agent doet het voorwerk, de professional tekent af",
+    tabsLabel: "Voorbeelden",
+    pauzeer: "Pauzeer",
+    speelAf: "Speel af",
+    concept: "Concept",
+    afgetekend: "Afgetekend",
+    voorbeelden: [
+      {
+        tab: "Patiëntenbrief",
+        titel: "Voorbereiding darmonderzoek",
+        meta: "Taalniveau B1",
+        aftekenaar: "De professional",
+        regels: [
+          {
+            soort: "tekst",
+            origineel: "Teneinde een adequate visualisatie van het darmslijmvlies te bewerkstelligen, dient de darm volledig gereinigd te zijn.",
+            tekst: "Uw darm moet helemaal schoon zijn. Alleen dan kan de arts de binnenkant van uw darm goed zien.",
+          },
+          {
+            soort: "tekst",
+            origineel: "Gedurende drie dagen voorafgaand aan het onderzoek dient u een vezelarm dieet aan te houden.",
+            tekst: "Eet de drie dagen voor het onderzoek vezelarm.",
+          },
+          {
+            soort: "tekst",
+            origineel: "Indien u anticoagulantia gebruikt, dient u tijdig contact op te nemen met de polikliniek.",
+            tekst: "Gebruikt u bloedverdunners? Bel dan op tijd de polikliniek.",
+          },
+        ],
+      },
+      {
+        tab: "Verzuimdossier",
+        titel: "Verzuimdossier",
+        meta: "Plan van aanpak",
+        aftekenaar: "Nalezen, aanpassen en doorzetten",
+        regels: [
+          { soort: "stap", tekst: "Termijnen in de verzuimlijst nagaan" },
+          { soort: "stap", tekst: "Probleemanalyse van de bedrijfsarts zoeken" },
+          { soort: "stap", tekst: "Verslagen uit mail en dossier verzamelen" },
+          { soort: "stap", tekst: "Plan van aanpak uitschrijven" },
+          { soort: "stap", tekst: "Dossier op volledigheid controleren" },
+          { soort: "resultaat", tekst: "Plan van aanpak in concept, elke zin met bron." },
+        ],
+      },
+    ],
+  },
+} as const;
+
 export const diensten = {
   "meta": {
     "titel": "Copilot en AI voor de zorg",

@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { AfsluitBand, Bovenkop, Container, PijlLink } from "@/components/ui";
+import { AfsluitBand, Container, PijlLink } from "@/components/ui";
 import { Foto } from "@/components/Foto";
 import { kennismaking, kennismakingHref, metMinuten } from "@/lib/navigatie";
 import { dienstSlugs, diensten, pijlerIndeling, plannerOnderwerp } from "@/content/site";
@@ -22,14 +22,13 @@ export default function DienstenPagina() {
         <Container>
           <div className="grid gap-x-16 gap-y-12 lg:grid-cols-12 lg:items-end">
             <div className="lg:col-span-8">
-              <Bovenkop>{hero.bovenkop}</Bovenkop>
-              <h1 className="mt-6 text-[clamp(2.4rem,4.8vw,3.75rem)] leading-[1.05]">{hero.kop}</h1>
+              <h1 className="text-[clamp(2.4rem,4.8vw,3.75rem)] leading-[1.05]">{hero.kop}</h1>
               <p className="mt-6 max-w-[38rem] text-[19px] leading-[1.6]">{hero.intro}</p>
             </div>
             <nav aria-label="Op deze pagina" className="lg:col-span-4">
-              <ul className="border-t border-lijn">
+              <ul className="border-t border-lijn-koel">
                 {pijlers.map((p) => (
-                  <li key={p.naam} className="border-b border-lijn">
+                  <li key={p.naam} className="border-b border-lijn-koel">
                     <a href={`#${p.naam.toLowerCase()}`} className="group flex items-center justify-between py-3.5 font-display text-[20px] font-semibold text-nachtblauw hover:text-hemel-diep">
                       {p.naam}
                       <svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true" className="transition-transform duration-200 group-hover:translate-y-0.5">
@@ -46,7 +45,7 @@ export default function DienstenPagina() {
 
       {/* De vier dingen die wij doen, met de diensten eronder */}
       {pijlers.map((p, i) => (
-        <section key={p.naam} id={p.naam.toLowerCase()} className={`scroll-mt-20 border-t border-lijn py-20 sm:py-24 ${i % 2 === 0 ? "bg-wolk" : ""}`}>
+        <section key={p.naam} id={p.naam.toLowerCase()} className={`scroll-mt-20 border-t border-lijn-koel py-20 sm:py-24 ${i % 2 === 0 ? "bg-creme" : ""}`}>
           <Container>
             <div className="grid gap-x-14 gap-y-10 lg:grid-cols-12">
               <div className="lg:col-span-4">
@@ -60,7 +59,7 @@ export default function DienstenPagina() {
                   const d = lijst[n];
                   const slug = dienstSlugs[n];
                   return (
-                    <article key={slug} id={slug} className={`scroll-mt-28 ${j > 0 ? "mt-12 border-t border-lijn pt-12" : ""}`}>
+                    <article key={slug} id={slug} className={`scroll-mt-28 ${j > 0 ? "mt-12 border-t border-lijn-koel pt-12" : ""}`}>
                       <h3 className="text-[26px] leading-[1.15] sm:text-[30px]">{d.dienst}</h3>
                       <p className="mt-3 max-w-[38rem] text-[18px] leading-[1.55] text-nachtblauw">{d.belofte}</p>
                       <dl className="mt-8 grid gap-x-12 gap-y-7 sm:grid-cols-[minmax(0,1.35fr)_minmax(0,1fr)]">
@@ -101,7 +100,7 @@ export default function DienstenPagina() {
       ))}
 
       {/* Voorbeelden: de twee afdelingspagina's */}
-      <section className="border-t border-lijn py-20 sm:py-24">
+      <section className="border-t border-lijn-koel py-20 sm:py-24">
         <Container>
           <div className="max-w-2xl">
             <h2 className="text-[32px] leading-[1.1] sm:text-[42px]">{voorbeelden.kop}</h2>
@@ -118,9 +117,6 @@ export default function DienstenPagina() {
                 <p className="mt-2 max-w-md text-[16.5px]">{v.tekst}</p>
                 <span className="zp-pijl mt-4">
                   {voorbeelden.linktekst}
-                  <svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true">
-                    <path d="M2.5 8h10M8.5 4l4 4-4 4" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round" />
-                  </svg>
                 </span>
               </Link>
             ))}

@@ -29,17 +29,16 @@ export function Profiel({ wie, spiegel = false }: { wie: "hugo" | "nick"; spiege
         </div>
 
         <div>
-          <p className="zp-eyebrow">{p.rol}</p>
-          <h2 id={`profiel-${wie}`} className="mt-4 text-[32px] leading-[1.1] sm:text-[42px]">
+          <h2 id={`profiel-${wie}`} className="text-[32px] leading-[1.1] sm:text-[42px]">
             {m.naam}
           </h2>
           <p className="mt-5 text-[19px] leading-[1.55] text-nachtblauw">{p.kern}</p>
           <p className="mt-5 text-[17px]">{p.verhaal}</p>
           <p className="mt-7 border-l-0 font-display text-[20px] font-semibold leading-snug text-nachtblauw">{p.belofte}</p>
 
-          <dl className="mt-9 border-t border-lijn">
+          <dl className="mt-9 border-t border-lijn-koel">
             {m.achtergrond.map((k) => (
-              <div key={k.titel} className="border-b border-lijn py-3.5">
+              <div key={k.titel} className="border-b border-lijn-koel py-3.5">
                 <dt className="font-semibold leading-snug text-nachtblauw">{k.titel}</dt>
                 {k.context && <dd className="mt-0.5 text-[15px] leading-snug">{k.context}</dd>}
               </div>

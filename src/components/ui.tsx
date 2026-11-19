@@ -34,14 +34,11 @@ export function Knop({ href, onClick, variant = "primair", className = "", child
   );
 }
 
-/** De rustige tweede actie: tekst met een pijl die bij hover een stap vooruit zet. */
+/** De rustige tweede actie: een dun onderstreepte tekstlink in nachtblauw. */
 export function PijlLink({ href, children, opNacht = false, className = "" }: { href: string; children: ReactNode; opNacht?: boolean; className?: string }) {
   return (
     <Link href={href} className={`zp-pijl ${className}`} data-op={opNacht ? "nacht" : undefined}>
       {children}
-      <svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true">
-        <path d="M2.5 8h10M8.5 4l4 4-4 4" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round" />
-      </svg>
     </Link>
   );
 }
@@ -79,11 +76,11 @@ export function Bovenkop({ children, opNacht = false }: { children: ReactNode; o
   );
 }
 
-export function SectieKop({ bovenkop, titel, intro, className = "" }: { bovenkop?: string; titel: string; intro?: ReactNode; className?: string }) {
+/** Sectiekop. De prop bovenkop blijft bestaan voor oude aanroepen, maar wordt niet meer getoond: de kop draagt zichzelf. */
+export function SectieKop({ titel, intro, className = "" }: { bovenkop?: string; titel: string; intro?: ReactNode; className?: string }) {
   return (
     <div className={`max-w-2xl ${className}`}>
-      {bovenkop && <Bovenkop>{bovenkop}</Bovenkop>}
-      <h2 className={`${bovenkop ? "mt-4" : ""} text-[32px] leading-[1.1] sm:text-[42px]`}>{titel}</h2>
+      <h2 className="text-[32px] leading-[1.1] sm:text-[42px]">{titel}</h2>
       {intro && <div className="mt-5 text-[18px] leading-[1.6] text-tekst-2">{intro}</div>}
     </div>
   );

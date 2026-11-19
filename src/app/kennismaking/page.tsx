@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Bovenkop, Container } from "@/components/ui";
+import { Container } from "@/components/ui";
 import { Gespreksvoorbereider } from "@/components/over-ons/Gespreksvoorbereider";
 import { Portret } from "@/components/over-ons/Portret";
 import { metMinuten } from "@/lib/navigatie";
@@ -17,8 +17,7 @@ export default function KennismakingPagina() {
     <section className="bg-hemel-zacht pb-20 pt-14 sm:pb-28 sm:pt-20">
       <Container>
         <div className="max-w-2xl">
-          <Bovenkop>{hero.bovenkop}</Bovenkop>
-          <h1 className="mt-6 text-[clamp(2.3rem,4.4vw,3.4rem)] leading-[1.05]">{hero.kop}</h1>
+          <h1 className="text-[clamp(2.3rem,4.4vw,3.4rem)] leading-[1.05]">{hero.kop}</h1>
           <p className="mt-6 text-[19px] leading-[1.6] text-nachtblauw">{metMinuten(hero.intro)}</p>
           <ol className="mt-8 flex flex-wrap gap-x-7 gap-y-3 text-[15px] text-nachtblauw">
             {hero.stappen.map((stap, i) => (

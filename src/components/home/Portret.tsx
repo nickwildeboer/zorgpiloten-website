@@ -18,10 +18,10 @@ export function Portret({
   initialen: string;
   grootte?: number;
   /** Kleur van de dunne rand, gelijk aan het vlak eronder. */
-  rand?: "creme" | "hemel-zacht";
+  rand?: "creme" | "hemel-zacht" | "wit";
 }) {
   const bestaat = existsSync(join(process.cwd(), "public", src));
-  const ring = rand === "creme" ? "ring-creme" : "ring-hemel-zacht";
+  const ring = { creme: "ring-creme", "hemel-zacht": "ring-hemel-zacht", wit: "ring-wolk" }[rand];
   return (
     <span
       className={`relative block flex-none overflow-hidden rounded-full ring-[3px] ${ring} ${bestaat ? "bg-hemel-zacht" : "bg-wolk"}`}

@@ -19,7 +19,7 @@
   --color-koraal-zacht: var(--koraal-zacht);
   --color-zandgeel: var(--zandgeel);
 
-  --color-base: var(--creme);
+  --color-base: var(--bg-base);
   --color-salie: var(--hemel-zacht);
   --color-spar: var(--nachtblauw);
   --color-spar-2: var(--ink-2);
@@ -33,6 +33,7 @@
   --color-framboos-op-spar: var(--zandgeel);
   --color-salie-op-spar: var(--hemelblauw);
   --color-lijn: var(--lijn);
+  --color-lijn-koel: var(--lijn-koel);
   --color-lijn-sterk: var(--border-strong);
 
   --font-sans: var(--font-dmsans), "DM Sans", system-ui, sans-serif;
@@ -99,11 +100,34 @@ p { text-wrap: pretty; }
 .zp-eyebrow { font-family: var(--font-body); font-size: 12.5px; line-height: 16px; font-weight: 600; letter-spacing: 0.09em; text-transform: uppercase; color: var(--hemel-diep); }
 .zp-eyebrow[data-op="nacht"] { color: var(--zandgeel); }
 
-/* Tekstlink met pijl: de rustige tweede actie naast de koraal knop */
-.zp-pijl { display: inline-flex; align-items: center; gap: 8px; font-weight: 600; font-size: 15px; color: var(--nachtblauw); text-decoration: none; }
-.zp-pijl svg { transition: transform 0.25s cubic-bezier(0.22, 1, 0.36, 1); }
-.zp-pijl:hover svg { transform: translateX(4px); }
+/* Tekstlink: de rustige tweede actie naast de koraal knop. Dun onderstreept, geen pijl. */
+.zp-pijl {
+  display: inline-flex; align-items: center; font-weight: 600; font-size: 15px; color: var(--nachtblauw);
+  text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 4px;
+  transition: color 0.2s ease;
+}
+.zp-pijl:hover { color: var(--hemel-diep); }
 .zp-pijl[data-op="nacht"] { color: var(--creme); }
+.zp-pijl[data-op="nacht"]:hover { color: var(--creme); text-decoration-thickness: 2px; }
+
+/* Duotoon: grijswaarden, dan nachtblauw naar creme via het SVG-filter uit Foto.tsx */
+.zp-duotoon { filter: brightness(1.08) contrast(1.04) url(#zp-duotoon); }
+
+/* Scrim vanuit nachtblauw voor tekst op een foto: links dicht, rechts open. Onder 1024px van onder. */
+.zp-scrim {
+  background: linear-gradient(to top,
+    color-mix(in oklab, var(--nachtblauw) 100%, transparent) 0%,
+    color-mix(in oklab, var(--nachtblauw) 0%, transparent) 45%);
+}
+@media (min-width: 1024px) {
+  .zp-scrim {
+    background: linear-gradient(to right,
+      color-mix(in oklab, var(--nachtblauw) 94%, transparent) 0%,
+      color-mix(in oklab, var(--nachtblauw) 88%, transparent) 30%,
+      color-mix(in oklab, var(--nachtblauw) 55%, transparent) 46%,
+      color-mix(in oklab, var(--nachtblauw) 0%, transparent) 64%);
+  }
+}
 
 /* De koers als rustige lijn met stops (statisch, voor de aanpak) */
 .zp-koers { position: relative; }
