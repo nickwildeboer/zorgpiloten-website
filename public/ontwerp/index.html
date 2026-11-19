@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="nl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Zorgpiloten: vijf richtingen</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..800&family=DM+Sans:opsz,wght@9..40,400..700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="./tokens.css">
+<link rel="stylesheet" href="./base.css">
+<style>
+  .kop { padding-block: var(--space-3xl) var(--space-2xl); }
+  .kop h1 { font-size: var(--text-display-s); max-width: 18ch; }
+  .kop p { margin-top: var(--space-lg); color: var(--color-muted); }
+  .lijst { list-style: none; margin: 0; padding: 0 0 var(--space-4xl); display: grid; gap: var(--space-2xl); }
+  .richting { display: grid; grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); gap: var(--space-2xl); align-items: center; text-decoration: none; border-top: var(--rule-hair) solid var(--color-rule); padding-top: var(--space-2xl); }
+  .richting img { width: 100%; aspect-ratio: 16 / 10; object-fit: cover; object-position: top; border-radius: var(--radius-card); outline: 1px solid color-mix(in oklab, var(--color-ink) 10%, transparent); outline-offset: -1px; transition: transform var(--dur-short) var(--ease-out); }
+  .richting:hover img { transform: translateY(-4px); }
+  .richting h2 { font-size: var(--text-2xl); }
+  .richting .nr { font-family: var(--font-display); font-weight: 600; font-size: var(--text-lg); color: var(--color-sky-deep); }
+  .richting p { margin-top: var(--space-sm); color: var(--color-muted); }
+  .richting dl { margin: var(--space-lg) 0 0; display: grid; grid-template-columns: auto minmax(0, 1fr); gap: var(--space-2xs) var(--space-md); font-size: var(--text-sm); }
+  .richting dt { color: var(--color-muted); }
+  .richting dd { margin: 0; }
+  @media (max-width: 60rem) { .richting { grid-template-columns: minmax(0, 1fr); gap: var(--space-lg); } }
+</style>
+</head>
+<body>
+<main class="container">
+  <header class="kop">
+    <h1>Vijf richtingen voor zorgpiloten.nl</h1>
+    <p class="lead">Zelfde merk, zelfde woorden, vijf manieren om de waarde te laten zien zonder veel tekst. Klik er een open, scrol hem door en wissel rechtsonder naar de volgende.</p>
+  </header>
+  <ol class="lijst">
+    <li><a class="richting" href="./1/index.html"><img src="./schermen/v1.jpg" alt="Schermafbeelding van richting 1" loading="lazy"><div><span class="nr">Richting 1</span><h2>De copiloot aan het werk</h2><p>De hero toont een agent die een patiëntenbrief voorbereidt en een professional die aftekent.</p><dl><dt>Wat het draagt</dt><dd>Het werk zelf, bewegend</dd><dt>Foto's</dt><dd>Alleen twee portretten</dd></dl></div></a></li>
+    <li><a class="richting" href="./2/index.html"><img src="./schermen/v2.jpg" alt="Schermafbeelding van richting 2" loading="lazy"><div><span class="nr">Richting 2</span><h2>Twee mensen uit de zorg</h2><p>Hugo en Nick als tweeluik in één merkkleur, elk met één zwaar feit.</p><dl><dt>Wat het draagt</dt><dd>De mensen en hun achtergrond</dd><dt>Foto's</dt><dd>Portretten in duotoon</dd></dl></div></a></li>
+    <li><a class="richting" href="./3/index.html"><img src="./schermen/v3.jpg" alt="Schermafbeelding van richting 3" loading="lazy"><div><span class="nr">Richting 3</span><h2>De koers</h2><p>Eén lijn loopt door de hele pagina en tekent zich bij het scrollen. Woorden, iconen, lucht.</p><dl><dt>Wat het draagt</dt><dd>Het merk en de route</dd><dt>Foto's</dt><dd>Geen</dd></dl></div></a></li>
+    <li><a class="richting" href="./4/index.html"><img src="./schermen/v4.jpg" alt="Schermafbeelding van richting 4" loading="lazy"><div><span class="nr">Richting 4</span><h2>Voor en na</h2><p>Eén schakelaar: zes stappen handwerk vallen samen tot voorwerk klaar en aftekenen.</p><dl><dt>Wat het draagt</dt><dd>Iets om zelf te doen</dd><dt>Foto's</dt><dd>Alleen twee portretten</dd></dl></div></a></li>
+    <li><a class="richting" href="./5/index.html"><img src="./schermen/v5.jpg" alt="Schermafbeelding van richting 5" loading="lazy"><div><span class="nr">Richting 5</span><h2>Aan het werk</h2><p>Echte foto's van echte sessies, groot en in één merkbehandeling. Eén zin per scherm.</p><dl><dt>Wat het draagt</dt><dd>Beeld van het werk</dd><dt>Foto's</dt><dd>Eigen foto's in duotoon</dd></dl></div></a></li>
+  </ol>
+</main>
+</body>
+</html>
