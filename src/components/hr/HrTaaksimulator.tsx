@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState, type ReactNode } from "react";
-import { taakgesprekHref } from "@/lib/navigatie";
+import { kennismakingHref } from "@/lib/navigatie";
 import { Container, Pill } from "@/components/ui";
 import { Koersbocht } from "@/components/Horizon";
 import { TaakTabs, paneelId, tabId } from "./TaakTabs";
@@ -40,7 +40,7 @@ export function HrDemo({ tussen }: { tussen?: ReactNode }) {
       {tussen}
       <TaakCta
         taakTitel={taak.titel}
-        href={taakgesprekHref("hr", taak.slug)}
+        href={kennismakingHref("hr", taak.slug)}
         foto={{ src: "/fotos/nick-workshop-locatie-1.jpg", alt: "Nick Wildeboer tijdens een werksessie met een klein team" }}
       />
     </>

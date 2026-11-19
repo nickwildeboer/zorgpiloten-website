@@ -3,6 +3,7 @@ import { Bricolage_Grotesque, DM_Sans } from "next/font/google";
 import "./globals.css";
 import { Topbar } from "@/components/Topbar";
 import { Footer } from "@/components/Footer";
+import { home } from "@/content/site";
 
 const bricolage = Bricolage_Grotesque({ subsets: ["latin"], variable: "--font-bricolage", display: "swap" });
 const dmSans = DM_Sans({ subsets: ["latin"], variable: "--font-dmsans", display: "swap" });
@@ -10,17 +11,16 @@ const dmSans = DM_Sans({ subsets: ["latin"], variable: "--font-dmsans", display:
 export const metadata: Metadata = {
   metadataBase: new URL("https://zorgpiloten.nl"),
   title: {
-    default: "Zorgpiloten | Uw copilot in de zorg",
+    default: home.meta.titel,
     template: "%s | Zorgpiloten",
   },
-  description:
-    "Minder klik- en schrijfwerk op HR en Communicatie. Hugo van den Berk en Nick Wildeboer beginnen bij één terugkerende taak, nemen het team mee en laten het werkend achter in jullie eigen omgeving.",
+  description: home.meta.beschrijving,
   openGraph: { locale: "nl_NL", siteName: "Zorgpiloten", type: "website" },
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="nl" className={`${bricolage.variable} ${dmSans.variable}`}>
+    <html lang="nl" data-scroll-behavior="smooth" className={`${bricolage.variable} ${dmSans.variable}`}>
       <body className="min-h-screen flex flex-col">
         <a
           href="#inhoud"

@@ -2,11 +2,12 @@ import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
   async redirects() {
-    // Oude links naar de gesprekskaart op /over-ons met een vooringevulde afdeling of taak.
-    // De querystring gaat automatisch mee.
+    // Oude adressen blijven werken. De querystring gaat automatisch mee.
     return [
-      { source: "/over-ons", has: [{ type: "query", key: "afdeling" }], destination: "/taakgesprek", permanent: true },
-      { source: "/over-ons", has: [{ type: "query", key: "taak" }], destination: "/taakgesprek", permanent: true },
+      { source: "/taakgesprek", destination: "/kennismaking", permanent: true },
+      { source: "/werkwijze", destination: "/aanpak", permanent: true },
+      { source: "/over-ons", has: [{ type: "query", key: "afdeling" }], destination: "/kennismaking", permanent: true },
+      { source: "/over-ons", has: [{ type: "query", key: "taak" }], destination: "/kennismaking", permanent: true },
     ];
   },
 };

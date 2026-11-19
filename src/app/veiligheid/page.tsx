@@ -4,7 +4,7 @@ import { Foto } from "@/components/Foto";
 import { RolWisselaar } from "@/components/veiligheid/RolWisselaar";
 import { GeletterdheidCheck } from "@/components/veiligheid/GeletterdheidCheck";
 import { Icoon, type IcoonNaam } from "@/components/over-ons/Iconen";
-import { taakgesprek, taakgesprekHref } from "@/lib/navigatie";
+import { kennismaking, kennismakingHref } from "@/lib/navigatie";
 
 export const metadata: Metadata = {
   title: "Veiligheid, AVG en AI-geletterdheid",
@@ -88,10 +88,10 @@ export default function VeiligheidPagina() {
           <div className="flex flex-col gap-6 md:flex-row md:items-center md:justify-between">
             <div className="max-w-xl">
               <h2 className="text-[32px] sm:text-[40px]">Neem uw FG of ICT mee naar het gesprek</h2>
-              <p className="mt-3 text-lg">In {taakgesprek.minuten} minuten kijken we ook naar de gegevens in de taak.</p>
+              <p className="mt-3 text-lg">In {kennismaking.minuten} minuten kijken we ook naar de gegevens in de taak.</p>
             </div>
-            <Knop href={taakgesprekHref()} className="self-start md:self-auto">
-              Plan een taakgesprek
+            <Knop href={kennismakingHref()} className="self-start md:self-auto">
+              {kennismaking.knop}
             </Knop>
           </div>
         </Container>

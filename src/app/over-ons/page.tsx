@@ -1,96 +1,86 @@
 import type { Metadata } from "next";
-import { Container, Knop, Sectie } from "@/components/ui";
+import { AfsluitBand, Bovenkop, Container } from "@/components/ui";
 import { Foto } from "@/components/Foto";
-import { Zon, Wolk } from "@/components/Horizon";
 import { Profiel } from "@/components/over-ons/Profielen";
-import { Portret } from "@/components/over-ons/Portret";
-import { taakgesprek, taakgesprekHref } from "@/lib/navigatie";
+import { Portret } from "@/components/home/Portret";
+import { kennismakingHref, metMinuten } from "@/lib/navigatie";
+import { mensen, over } from "@/content/site";
 
 export const metadata: Metadata = {
-  title: "Over ons",
-  description: `Hugo van den Berk, MSc en Nick Wildeboer, MSc. Bestuurservaring uit het ziekenhuis, gekoppeld aan zorg-ICT en bouwkracht. Plan een taakgesprek van ${taakgesprek.minuten} minuten.`,
+  title: over.meta.titel,
+  description: over.meta.beschrijving,
+  alternates: { canonical: "/over-ons" },
 };
 
-const duo = [
-  { naam: "Hugo van den Berk", src: "/fotos/hugo-portret.jpg", positie: "50% 30%", rol: "Team en verandering", href: "#hugo" },
-  { naam: "Nick Wildeboer", src: "/fotos/nick-portret-nick.jpg", positie: "50% 20%", rol: "Proces en techniek", href: "#nick" },
-];
-
 export default function OverOnsPagina() {
+  const { hero, verhaal, cta } = over;
   return (
     <>
       {/* Hero: wie er aan tafel zit */}
-      <section className="overflow-hidden pb-16 pt-12 sm:pb-24 sm:pt-16">
+      <section className="pb-20 pt-14 sm:pb-28 sm:pt-20">
         <Container>
-          <div className="grid items-center gap-12 lg:grid-cols-[minmax(0,1.05fr)_minmax(0,1fr)] lg:gap-16">
+          <div className="grid items-center gap-x-16 gap-y-12 lg:grid-cols-[minmax(0,1.05fr)_minmax(0,1fr)]">
             <div>
-              <p className="zp-eyebrow">Over ons</p>
-              <h1 className="mt-4 text-[38px] sm:text-[52px] lg:text-[56px]">Bestuurservaring uit het ziekenhuis, gekoppeld aan zorg-ICT en bouwkracht.</h1>
-              <p className="mt-5 max-w-lg text-lg">Twee academisch opgeleide specialisten uit de zorg zelf.</p>
-              <div className="mt-8 flex flex-wrap gap-3">
-                <Knop href={taakgesprekHref()} variant="secundair">
-                  Plan een taakgesprek
-                </Knop>
-              </div>
+              <Bovenkop>{hero.bovenkop}</Bovenkop>
+              <h1 className="mt-6 text-[clamp(2.4rem,4.8vw,3.75rem)] leading-[1.05]">{hero.kop}</h1>
+              <p className="mt-6 max-w-[36rem] text-[19px] leading-[1.6]">{hero.intro}</p>
             </div>
-
-            <div className="relative">
-              <Zon className="absolute -top-6 left-1/2 h-28 w-56 -translate-x-1/2 sm:h-36 sm:w-72" />
-              <Wolk className="absolute left-0 top-16 h-5 w-28" kleur="var(--wolk)" />
-              <ul className="relative grid grid-cols-2 gap-4 pt-10 sm:gap-6">
-                {duo.map((m, i) => (
-                  <li key={m.naam} className={i === 1 ? "translate-y-10" : ""}>
-                    <a href={m.href} className="group block rounded-[var(--radius-lg)]">
-                      <Foto
-                        src={m.src}
-                        alt={`Portret van ${m.naam}`}
-                        ratio="3/4"
-                        priority
-                        sizes="(min-width: 1024px) 260px, 45vw"
-                        positie={m.positie}
-                        className="shadow-kaart"
-                      />
-                      <span className="mt-3 block font-display text-[18px] font-bold leading-tight text-nachtblauw group-hover:text-hemel-diep sm:text-[20px]">
-                        {m.naam}
-                      </span>
-                      <span className="block text-sm">{m.rol}</span>
-                    </a>
-                  </li>
-                ))}
-              </ul>
-            </div>
+            <ul className="grid grid-cols-2 items-start gap-4 sm:gap-5">
+              {(["hugo", "nick"] as const).map((k, i) => (
+                <li key={k} className={i === 1 ? "mt-10 sm:mt-14" : ""}>
+                  <a href={`#${k}`} className="group block rounded-[var(--radius-lg)]">
+                    <Foto src={mensen[k].portret} alt={`Portret van ${mensen[k].naam}`} ratio="4/5" priority sizes="(min-width: 1024px) 270px, 46vw" positie={mensen[k].positie} />
+                    <span className="mt-4 block text-[15px] font-semibold text-nachtblauw group-hover:text-hemel-diep">{mensen[k].naam}</span>
+                    <span className="mt-1 block text-[14px] leading-snug">{over[k].rol}</span>
+                  </a>
+                </li>
+              ))}
+            </ul>
           </div>
         </Container>
       </section>
 
-      <Sectie toon="wolk" className="border-y border-lijn">
-        <Profiel wie="hugo" />
-      </Sectie>
-
-      <Sectie>
-        <Profiel wie="nick" spiegel />
-      </Sectie>
-
-      {/* Call-to-action-band. Het anker blijft voor oude links naar /over-ons#taakgesprek. */}
-      <section id="taakgesprek" className="scroll-mt-16 bg-hemel-zacht py-14 sm:py-20">
+      {/* Ons verhaal, met het beeldmerk dat de naam uitlegt */}
+      <section className="border-y border-lijn bg-wolk py-20 sm:py-28">
         <Container>
-          <div className="flex flex-col gap-6 md:flex-row md:items-center md:justify-between">
-            <div className="flex max-w-xl items-start gap-5">
-              <span className="hidden flex-none -space-x-3 sm:flex">
-                <Portret wie="hugo" className="h-14 w-14" tekstClass="text-[15px]" />
-                <Portret wie="nick" className="h-14 w-14" tekstClass="text-[15px]" />
-              </span>
-              <div>
-                <h2 className="text-[32px] sm:text-[40px]">Aan tafel met Hugo en Nick</h2>
-                <p className="mt-3 text-lg text-nachtblauw">In {taakgesprek.minuten} minuten kiezen we samen één taak en rekenen we die door.</p>
+          <div className="grid gap-x-14 gap-y-10 lg:grid-cols-12">
+            <div className="lg:col-span-4">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img src="/logo/horizon/zorgpiloten-beeldmerk-kleur.svg" alt="" className="h-24 w-auto sm:h-28" />
+            </div>
+            <div className="lg:col-span-8">
+              <Bovenkop>{verhaal.bovenkop}</Bovenkop>
+              <h2 className="mt-4 max-w-[20ch] text-[32px] leading-[1.1] sm:text-[42px]">{verhaal.kop}</h2>
+              <div className="mt-8 max-w-[38rem] space-y-5 text-[18px] leading-[1.65]">
+                {verhaal.tekst.map((alinea, i) => (
+                  <p key={i} className={i === 0 ? "text-nachtblauw" : ""}>
+                    {alinea}
+                  </p>
+                ))}
               </div>
             </div>
-            <Knop href={taakgesprekHref()} className="self-start md:self-auto">
-              Plan een taakgesprek
-            </Knop>
           </div>
         </Container>
       </section>
+
+      <section className="py-20 sm:py-28">
+        <Container>
+          <Profiel wie="hugo" />
+        </Container>
+      </section>
+
+      <section className="border-t border-lijn bg-wolk py-20 sm:py-28">
+        <Container>
+          <Profiel wie="nick" spiegel />
+        </Container>
+      </section>
+
+      <AfsluitBand kop={cta.kop} tekst={metMinuten(cta.tekst)} knop={cta.knop} href={kennismakingHref()}>
+        <div className="mb-7 flex -space-x-3">
+          <Portret src={mensen.hugo.portret} naam={mensen.hugo.naam} initialen="HB" grootte={56} rand="hemel-zacht" />
+          <Portret src={mensen.nick.portret} naam={mensen.nick.naam} initialen="NW" grootte={56} rand="hemel-zacht" />
+        </div>
+      </AfsluitBand>
     </>
   );
 }
