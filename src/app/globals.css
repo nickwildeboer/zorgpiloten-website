@@ -19,7 +19,7 @@
   --color-koraal-zacht: var(--koraal-zacht);
   --color-zandgeel: var(--zandgeel);
 
-  --color-base: var(--creme);
+  --color-base: var(--bg-base);
   --color-salie: var(--hemel-zacht);
   --color-spar: var(--nachtblauw);
   --color-spar-2: var(--ink-2);
@@ -33,6 +33,7 @@
   --color-framboos-op-spar: var(--zandgeel);
   --color-salie-op-spar: var(--hemelblauw);
   --color-lijn: var(--lijn);
+  --color-lijn-koel: var(--lijn-koel);
   --color-lijn-sterk: var(--border-strong);
 
   --font-sans: var(--font-dmsans), "DM Sans", system-ui, sans-serif;
@@ -60,11 +61,12 @@ body {
 h1, h2, h3, h4 {
   color: var(--fg-primary);
   font-family: var(--font-display);
-  font-weight: 700;
+  font-weight: 600;
   letter-spacing: var(--tracking-display);
   line-height: var(--leading-display);
   text-wrap: balance;
 }
+h1 { letter-spacing: -0.025em; }
 
 p { text-wrap: pretty; }
 
@@ -95,7 +97,53 @@ p { text-wrap: pretty; }
 .koers-stop[data-gedaan="true"] { background: var(--zandgeel); border-color: var(--zandgeel); }
 
 /* Eyebrow volgens Horizon: label in hoofdletters, hemel-diep */
-.zp-eyebrow { font-family: var(--font-body); font-size: 13px; line-height: 16px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: var(--hemel-diep); }
+.zp-eyebrow { font-family: var(--font-body); font-size: 12.5px; line-height: 16px; font-weight: 600; letter-spacing: 0.09em; text-transform: uppercase; color: var(--hemel-diep); }
+.zp-eyebrow[data-op="nacht"] { color: var(--zandgeel); }
+
+/* Tekstlink: de rustige tweede actie naast de koraal knop. Dun onderstreept, geen pijl. */
+.zp-pijl {
+  display: inline-flex; align-items: center; font-weight: 600; font-size: 15px; color: var(--nachtblauw);
+  text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 4px;
+  transition: color 0.2s ease;
+}
+.zp-pijl:hover { color: var(--hemel-diep); }
+.zp-pijl[data-op="nacht"] { color: var(--creme); }
+.zp-pijl[data-op="nacht"]:hover { color: var(--creme); text-decoration-thickness: 2px; }
+
+/* Duotoon: grijswaarden, dan nachtblauw naar creme via het SVG-filter uit Foto.tsx */
+.zp-duotoon { filter: brightness(1.08) contrast(1.04) url(#zp-duotoon); }
+
+/* Scrim vanuit nachtblauw voor tekst op een foto: links dicht, rechts open. Onder 1024px van onder. */
+.zp-scrim {
+  background: linear-gradient(to top,
+    color-mix(in oklab, var(--nachtblauw) 100%, transparent) 0%,
+    color-mix(in oklab, var(--nachtblauw) 0%, transparent) 45%);
+}
+@media (min-width: 1024px) {
+  .zp-scrim {
+    background: linear-gradient(to right,
+      color-mix(in oklab, var(--nachtblauw) 94%, transparent) 0%,
+      color-mix(in oklab, var(--nachtblauw) 88%, transparent) 30%,
+      color-mix(in oklab, var(--nachtblauw) 55%, transparent) 46%,
+      color-mix(in oklab, var(--nachtblauw) 0%, transparent) 64%);
+  }
+}
+
+/* De koers als rustige lijn met stops (statisch, voor de aanpak) */
+.zp-koers { position: relative; }
+.zp-stop { width: 13px; height: 13px; border-radius: 999px; border: 2px solid var(--nachtblauw); background: var(--bg-base); flex: none; }
+.zp-stop[data-doel="true"] { background: var(--koraal); border-color: var(--koraal); }
+
+/* Het ene bewegende moment: het licht komt op in het beeld bij onze visie */
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .zp-opkomst { animation: zp-opkomst linear both; animation-timeline: view(); animation-range: entry 10% cover 42%; }
+    @keyframes zp-opkomst {
+      from { clip-path: inset(22% 0 0 0 round var(--radius-lg)); transform: translateY(18px); }
+      to { clip-path: inset(0 0 0 0 round var(--radius-lg)); transform: translateY(0); }
+    }
+  }
+}
 
 input[type="range"] { accent-color: var(--hemel-diep); }
 a { text-underline-offset: 4px; }
@@ -103,4 +151,18 @@ a { text-underline-offset: 4px; }
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   *, *::before, *::after { transition-duration: 0.01ms !important; animation-duration: 0.01ms !important; }
+}
+
+/* De aanpak als koers: vijf stops op één lijn. Staand op mobiel, liggend vanaf desktop. */
+.zp-koers-rij { display: grid; gap: 32px; }
+.zp-koers-rij > li { position: relative; padding-left: 36px; }
+.zp-koers-rij > li::before { content: ""; position: absolute; left: 5.5px; top: 18px; bottom: -32px; width: 2px; background: var(--border-strong); }
+.zp-koers-rij > li:last-child::before { display: none; }
+.zp-koers-rij .zp-stop { position: absolute; left: 0; top: 5px; background: var(--zp-vlak, var(--bg-base)); }
+.zp-koers-rij .zp-stop[data-doel="true"] { background: var(--koraal); }
+@media (min-width: 1024px) {
+  .zp-koers-rij[data-liggend="true"] { grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 0 28px; }
+  .zp-koers-rij[data-liggend="true"] > li { padding-left: 0; padding-top: 38px; }
+  .zp-koers-rij[data-liggend="true"] > li::before { left: 13px; right: -28px; top: 5.5px; bottom: auto; width: auto; height: 2px; }
+  .zp-koers-rij[data-liggend="true"] .zp-stop { top: 0; }
 }

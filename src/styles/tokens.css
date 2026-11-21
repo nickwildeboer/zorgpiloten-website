@@ -1,6 +1,6 @@
 /* Zorgpiloten, designsysteem Horizon (Nick, 21 oktober 2026).
    Bron: het Design System-artifact "Zorgpiloten" (tokens.json en README).
-   Grond is altijd creme, tekst nachtblauw, hemelblauw als merkkleur (nooit als tekst),
+   Grond is wit, creme is de zachte band. Tekst nachtblauw, hemelblauw als merkkleur (nooit als tekst),
    koraal als enige accent met nachtblauwe tekst, zandgeel als zon. */
 
 :root {
@@ -8,18 +8,22 @@
   --creme: #FFF8EF;
   --wolk: #FFFFFF;
   --lijn: #E8DCCB;
+  /* Koele haarlijn voor lijnen op wit: nachtblauw op 12% */
+  --lijn-koel: rgba(27, 42, 74, 0.12);
   --nachtblauw: #1B2A4A;
   --nachtblauw-zacht: #56617A;
   --hemelblauw: #6AB6E2;
   --hemel-diep: #2563A8;
   --hemel-zacht: #DCEBFA;
   --koraal: #FF7A59;
+  --koraal-hover: #FF6B47;
   --koraal-diep: #B4432A;
   --koraal-zacht: #FFE6DD;
   --zandgeel: #F5D08A;
 
   /* Rolnamen, zodat documenten en componenten merken kunnen wisselen */
-  --bg-base: var(--creme);
+  --bg-base: var(--wolk);
+  --bg-zacht: var(--creme);
   --bg-elevated: var(--wolk);
   --bg-alt: var(--hemel-zacht);
   --border-subtle: var(--lijn);

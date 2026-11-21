@@ -1,10 +1,12 @@
+import { planner } from "@/content/site";
+
 /**
- * Gedeelde lijst met afdelingen en taken voor de gespreksvoorbereider op /over-ons.
- * Andere pagina's (/hr, /communicatie, home) kunnen deze slugs gebruiken met
- * taakgesprekHref(afdeling, taak) uit src/lib/navigatie.ts.
+ * Gedeelde lijst met afdelingen en onderwerpen voor de planner op /kennismaking.
+ * Andere pagina's (/hr, /communicatie, /diensten) kunnen deze slugs gebruiken met
+ * kennismakingHref(afdeling, taak) uit src/lib/navigatie.ts.
  */
 
-export type AfdelingSlug = "hr" | "communicatie" | "bestuur";
+export type AfdelingSlug = "hr" | "communicatie" | "bestuur" | "anders";
 
 export type Taak = {
   slug: string;
@@ -16,7 +18,8 @@ export type Taak = {
 export const afdelingen: { slug: AfdelingSlug; label: string; kort: string }[] = [
   { slug: "hr", label: "HR & P&O", kort: "Cao-vragen, verzuim, werving en onboarding" },
   { slug: "communicatie", label: "Communicatie", kort: "B1-teksten, intranet, werving en crisis" },
-  { slug: "bestuur", label: "Bestuur of overkoepelend", kort: "Stukken, actiepunten en AI-beleid" },
+  { slug: "bestuur", label: "Bestuur en directie", kort: "Stukken, actiepunten en AI-beleid" },
+  { slug: "anders", label: "Andere afdeling", kort: "" },
 ];
 
 export const takenPerAfdeling: Record<AfdelingSlug, Taak[]> = {
@@ -39,13 +42,14 @@ export const takenPerAfdeling: Record<AfdelingSlug, Taak[]> = {
     { slug: "actiepunten", label: "Actiepunten bewaken", kort: "Actiepuntenlijsten over vergaderingen heen bijhouden" },
     { slug: "ai-beleid", label: "Van AI-beleid naar de werkvloer", kort: "Beleid dat er ligt laten landen in het werk" },
   ],
+  anders: [],
 };
 
-/** Taken die bij elke afdeling horen. */
-export const algemeneTaken: Taak[] = [
-  { slug: "teamtraining", label: "Teamtraining veilig AI-gebruik", kort: "Het team leert veilig en praktisch werken met AI" },
-  { slug: "eigen", label: "Eigen taak invullen", kort: "Beschrijf zelf de taak die u wilt doorrekenen" },
-];
+/** Onderwerpen die bij elke afdeling te kiezen zijn: de diensten en een eigen vraag of taak. */
+export const algemeneTaken: Taak[] = planner.onderwerpen.map((o) => ({ slug: o.slug, label: o.label, kort: o.kort }));
+
+/** Onderwerpen die over een sessie of verkenning gaan en niet over één taak doorrekenen. */
+export const SESSIE_ONDERWERPEN: readonly string[] = ["keynote", "koerssessie", "teamtraining", "masterclass", "kansenoverzicht"];
 
 export const EIGEN_TAAK = "eigen";
 
@@ -71,7 +75,7 @@ export function normaliseerTaak(slug: string | null | undefined): string | null 
 }
 
 export function isAfdeling(waarde: string | null | undefined): waarde is AfdelingSlug {
-  return waarde === "hr" || waarde === "communicatie" || waarde === "bestuur";
+  return waarde === "hr" || waarde === "communicatie" || waarde === "bestuur" || waarde === "anders";
 }
 
 export function takenVoor(afdeling: AfdelingSlug): Taak[] {
@@ -88,7 +92,9 @@ export function vindTaak(afdeling: AfdelingSlug, slug: string | null | undefined
 export function afdelingVanTaak(slug: string | null | undefined): AfdelingSlug | undefined {
   const officieel = normaliseerTaak(slug);
   if (!officieel) return undefined;
-  return (Object.keys(takenPerAfdeling) as AfdelingSlug[]).find((a) => takenPerAfdeling[a].some((t) => t.slug === officieel));
+  const gevonden = (Object.keys(takenPerAfdeling) as AfdelingSlug[]).find((a) => takenPerAfdeling[a].some((t) => t.slug === officieel));
+  // Een dienst of eigen vraag hoort bij elke afdeling: zonder afdeling in de link kiezen we "Andere afdeling".
+  return gevonden ?? (algemeneTaken.some((t) => t.slug === officieel) ? "anders" : undefined);
 }
 
 export function afdelingLabel(afdeling: AfdelingSlug): string {

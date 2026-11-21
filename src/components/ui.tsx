@@ -10,13 +10,13 @@ type KnopProps = {
   type?: "button" | "submit";
 };
 
-/** Primair = framboos (één per vlak), secundair = spar omlijnd, tekst = link met pijl. */
+/** Primair = koraal (één per vlak), secundair = dun omlijnd, tekst = onderstreepte link. */
 export function Knop({ href, onClick, variant = "primair", className = "", children, type = "button" }: KnopProps) {
   const basis =
-    "inline-flex items-center gap-2 whitespace-nowrap rounded-full text-[15px] font-medium transition-colors focus-visible:outline-2 disabled:opacity-50";
+    "inline-flex items-center gap-2 whitespace-nowrap rounded-full text-[15px] font-medium transition-colors duration-200 focus-visible:outline-2 disabled:opacity-50";
   const stijl = {
-    primair: "bg-koraal text-nachtblauw font-semibold px-5 py-2.5 hover:bg-zandgeel",
-    secundair: "border-2 border-nachtblauw text-nachtblauw font-semibold px-5 py-2 hover:bg-hemel-zacht",
+    primair: "bg-koraal text-nachtblauw font-semibold px-6 py-3 hover:bg-[var(--koraal-hover)]",
+    secundair: "border border-nachtblauw/30 text-nachtblauw font-semibold px-6 py-[11px] hover:border-nachtblauw",
     tekst: "text-hemel-diep underline underline-offset-4 hover:text-nachtblauw",
   }[variant];
   const cls = `${basis} ${stijl} ${className}`;
@@ -34,8 +34,17 @@ export function Knop({ href, onClick, variant = "primair", className = "", child
   );
 }
 
+/** De rustige tweede actie: een dun onderstreepte tekstlink in nachtblauw. */
+export function PijlLink({ href, children, opNacht = false, className = "" }: { href: string; children: ReactNode; opNacht?: boolean; className?: string }) {
+  return (
+    <Link href={href} className={`zp-pijl ${className}`} data-op={opNacht ? "nacht" : undefined}>
+      {children}
+    </Link>
+  );
+}
+
 export function Container({ children, className = "" }: { children: ReactNode; className?: string }) {
-  return <div className={`mx-auto max-w-6xl px-4 sm:px-6 ${className}`}>{children}</div>;
+  return <div className={`mx-auto max-w-6xl px-5 sm:px-8 ${className}`}>{children}</div>;
 }
 
 /** Sectie met ruime verticale ruimte. toon="salie" geeft een rustig vlak. */
@@ -52,24 +61,48 @@ export function Sectie({
 }) {
   const bg = { base: "", salie: "bg-salie", wolk: "bg-wolk" }[toon];
   return (
-    <section id={id} className={`py-16 sm:py-24 ${bg} ${className}`}>
+    <section id={id} className={`py-20 sm:py-28 ${bg} ${className}`}>
       <Container>{children}</Container>
     </section>
   );
 }
 
-/** Kleine kop boven een titel, in gewone schrijfwijze. */
-export function Bovenkop({ children }: { children: ReactNode }) {
-  return <p className="zp-eyebrow">{children}</p>;
+/** Kort label boven een titel. */
+export function Bovenkop({ children, opNacht = false }: { children: ReactNode; opNacht?: boolean }) {
+  return (
+    <p className="zp-eyebrow" data-op={opNacht ? "nacht" : undefined}>
+      {children}
+    </p>
+  );
 }
 
-export function SectieKop({ bovenkop, titel, intro, className = "" }: { bovenkop?: string; titel: string; intro?: ReactNode; className?: string }) {
+/** Sectiekop. De prop bovenkop blijft bestaan voor oude aanroepen, maar wordt niet meer getoond: de kop draagt zichzelf. */
+export function SectieKop({ titel, intro, className = "" }: { bovenkop?: string; titel: string; intro?: ReactNode; className?: string }) {
   return (
     <div className={`max-w-2xl ${className}`}>
-      {bovenkop && <Bovenkop>{bovenkop}</Bovenkop>}
-      <h2 className="mt-3 text-[34px] sm:text-[44px]">{titel}</h2>
-      {intro && <div className="mt-4 text-lg text-tekst-2">{intro}</div>}
+      <h2 className="text-[32px] leading-[1.1] sm:text-[42px]">{titel}</h2>
+      {intro && <div className="mt-5 text-[18px] leading-[1.6] text-tekst-2">{intro}</div>}
     </div>
+  );
+}
+
+/** De afsluitende band op elke pagina: één kop, één zin, één knop. */
+export function AfsluitBand({ kop, tekst, knop, href, children }: { kop: string; tekst: string; knop: string; href: string; children?: ReactNode }) {
+  return (
+    <section className="bg-hemel-zacht py-20 sm:py-24">
+      <Container>
+        <div className="flex flex-col gap-8 md:flex-row md:items-end md:justify-between md:gap-16">
+          <div className="max-w-2xl">
+            {children}
+            <h2 className="text-[32px] leading-[1.1] sm:text-[42px]">{kop}</h2>
+            <p className="mt-4 max-w-xl text-[18px] leading-[1.6] text-nachtblauw">{tekst}</p>
+          </div>
+          <Knop href={href} className="self-start md:self-auto">
+            {knop}
+          </Knop>
+        </div>
+      </Container>
+    </section>
   );
 }
 

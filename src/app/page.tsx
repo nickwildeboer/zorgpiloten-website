@@ -1,81 +1,148 @@
 import type { Metadata } from "next";
-import { Bovenkop, Container, Knop } from "@/components/ui";
-import { Wolk, Zon } from "@/components/Horizon";
-import { taakgesprekHref } from "@/lib/navigatie";
-import { Foto } from "@/components/Foto";
-import { HeroCollage } from "@/components/home/HeroCollage";
+import Image from "next/image";
+import Link from "next/link";
+import { AfsluitBand, Container, Knop, PijlLink, SectieKop } from "@/components/ui";
+import { DuotoonFilter, Foto } from "@/components/Foto";
 import { Portret } from "@/components/home/Portret";
-import { Taakkaart } from "@/components/home/Taakkaart";
-import { Afdelingsdeuren } from "@/components/home/Afdelingsdeuren";
-import { Praktijkproblemen } from "@/components/home/Praktijkproblemen";
-import { Tijdvretermeter } from "@/components/home/Tijdvretermeter";
-import { KoerslijnStappen } from "@/components/home/KoerslijnStappen";
+import { Icoon, type IcoonNaam } from "@/components/home/Iconen";
+import { Werkblad } from "@/components/home/Werkblad";
+import { kennismakingHref, metMinuten } from "@/lib/navigatie";
+import { dienstSlugs, home, homeBeeld, mensen, pijlerIndeling } from "@/content/site";
 
 export const metadata: Metadata = {
-  title: { absolute: "Zorgpiloten | Uw copilot voor HR en Communicatie in de zorg" },
-  description:
-    "Hugo van den Berk en Nick Wildeboer zetten AI in als copilot voor HR en Communicatie in de zorg. Wij beginnen bij één terugkerende taak en laten die werkend achter in uw eigen omgeving. Plan een taakgesprek van 45 minuten.",
+  title: { absolute: home.meta.titel },
+  description: home.meta.beschrijving,
   alternates: { canonical: "/" },
 };
 
-const duo = [
-  {
-    src: "/fotos/hugo-portret.jpg",
-    initialen: "HB",
-    naam: "Hugo van den Berk, MSc",
-    tekst: "15 jaar Directeur Marketing & Communicatie en MT-lid Catharina Ziekenhuis, MSc Organisatie- en veranderkunde (Sioo).",
-  },
-  {
-    src: "/fotos/nick-portret-nick.jpg",
-    initialen: "NW",
-    naam: "Nick Wildeboer, MSc",
-    tekst: "MSc Strategische Innovatie (Digitalisering en AI), Management in de Zorg, ervaring bij onder meer Amsterdam UMC en Nedap ONS.",
-  },
-];
+const herkenningIconen: IcoonNaam[] = ["aan", "plakken", "document"];
+const pijlerIconen: IcoonNaam[] = ["lamp", "muts", "kompas", "bot"];
+const rolIconen: IcoonNaam[] = ["assistent", "aftekenen"];
 
-function Kop({ titel, intro }: { titel: string; intro?: string }) {
+/** Zet één deel van een zin zwaarder, zonder de tekst zelf te veranderen. */
+function metNadruk(tekst: string, deel: string) {
+  const i = tekst.indexOf(deel);
+  if (i < 0) return tekst;
   return (
-    <div className="max-w-xl">
-      <h2 className="text-[30px] sm:text-[40px]">{titel}</h2>
-      {intro && <p className="mt-3 text-[17px] sm:text-lg">{intro}</p>}
-    </div>
+    <>
+      {tekst.slice(0, i)}
+      <strong className="font-semibold">{deel}</strong>
+      {tekst.slice(i + deel.length)}
+    </>
   );
 }
 
 export default function Home() {
+  const { hero, oprichtersKort, herkenning, doen, wie, aanpak, cta } = home;
+  const { beslist } = homeBeeld;
   return (
     <>
-      {/* Hero: het merkmoment */}
-      <section className="overflow-hidden pb-16 pt-8 sm:pb-24 sm:pt-14">
+      <DuotoonFilter />
+
+      {/* Hero: de belofte links, het werkblad met de demo rechts */}
+      <section className="pb-16 pt-10 sm:pb-24 lg:pt-12">
         <Container>
-          <div className="grid gap-x-12 gap-y-10 lg:grid-cols-[minmax(0,5fr)_minmax(0,6fr)] lg:grid-rows-[auto_auto]">
-            <div className="lg:self-end">
-              <Bovenkop>HR en Communicatie in de zorg</Bovenkop>
-              <h1 className="mt-4 text-[44px] leading-[1.02] sm:text-[60px] lg:text-[68px]">Laat AI vliegen, houd zelf de koers.</h1>
-              <p className="mt-5 max-w-[30rem] text-[18px] sm:text-[19px]">
-                AI zet het voorwerk klaar, uw team controleert en beslist. Wij beginnen bij één taak.
-              </p>
-              <div className="mt-7 flex flex-wrap items-center gap-3">
-                <Knop href={taakgesprekHref()}>Plan een taakgesprek</Knop>
-                <Knop href="#tijdvreter-meter" variant="secundair">
-                  Reken uw taak door
-                </Knop>
+          <div className="grid items-center gap-x-12 gap-y-12 lg:grid-cols-[minmax(0,5fr)_minmax(0,7fr)]">
+            <div>
+              <h1 className="max-w-[12ch] text-[clamp(2.6rem,4.8vw,3.9rem)] leading-[1.03]">{hero.kop}</h1>
+              <p className="mt-6 max-w-[30rem] text-[20px] leading-[1.5] text-nachtblauw">{homeBeeld.hero.zin}</p>
+              <div className="mt-8 flex flex-wrap items-center gap-x-8 gap-y-4">
+                <Knop href={kennismakingHref()}>{hero.knop}</Knop>
+                <PijlLink href="/diensten">{hero.tweedeLink}</PijlLink>
+              </div>
+              <div className="mt-10 flex items-center gap-4">
+                <div className="flex -space-x-3">
+                  <Portret src={mensen.hugo.portret} naam={mensen.hugo.naam} initialen="HB" grootte={48} rand="wit" />
+                  <Portret src={mensen.nick.portret} naam={mensen.nick.naam} initialen="NW" grootte={48} rand="wit" />
+                </div>
+                <p className="text-[15px] text-nachtblauw">{homeBeeld.hero.mensen}</p>
               </div>
             </div>
 
-            <div className="lg:col-start-2 lg:row-span-2 lg:row-start-1 lg:self-center">
-              <HeroCollage />
+            <div className="relative overflow-hidden rounded-[var(--radius-lg)] bg-creme px-3 pb-3 pt-14 sm:px-8 sm:pb-8 sm:pt-20 lg:px-10 lg:pb-10">
+              <span aria-hidden="true" className="absolute right-8 top-6 aspect-[2/1] w-[180px] rounded-t-full bg-zandgeel sm:right-14 sm:w-[240px]" />
+              <Werkblad />
             </div>
+          </div>
+        </Container>
+      </section>
 
-            <div className="lg:self-start">
-              <ul className="grid gap-4 border-t border-lijn pt-6" aria-label="Wie er aan tafel zit">
-                {duo.map((p) => (
-                  <li key={p.naam} className="flex items-start gap-3.5">
-                    <Portret src={p.src} naam={p.naam} initialen={p.initialen} grootte={48} />
-                    <div className="min-w-0">
-                      <p className="text-[15px] font-semibold text-nachtblauw">{p.naam}</p>
-                      <p className="mt-0.5 text-[14px] leading-snug">{p.tekst}</p>
-                    </div>
+      {/* Herkenning: drie situaties, elk met een icoon */}
+      <section className="pb-20 pt-4 sm:pb-28">
+        <Container>
+          <SectieKop titel={herkenning.kop} />
+          <ul className="mt-12 grid gap-x-10 gap-y-10 md:grid-cols-3">
+            {herkenning.situaties.map((s, i) => (
+              <li key={s.situatie} className="border-t border-lijn-koel pt-7 text-nachtblauw">
+                <Icoon naam={herkenningIconen[i]} grootte={32} />
+                <p className="mt-5 max-w-[24ch] font-display text-[21px] font-semibold leading-snug">{s.situatie}</p>
+              </li>
+            ))}
+          </ul>
+        </Container>
+      </section>
+
+      {/* Wat wij doen: vier pijlers, met de diensten eronder */}
+      <section className="bg-creme py-20 sm:py-28">
+        <Container>
+          <SectieKop titel={doen.kop} />
+          <div className="mt-14 grid gap-x-10 gap-y-14 sm:grid-cols-2 lg:grid-cols-4">
+            {doen.pijlers.map((p, i) => (
+              <div key={p.naam} className="flex flex-col">
+                <Icoon naam={pijlerIconen[i]} grootte={32} className="text-nachtblauw" />
+                <h3 className="mt-5 text-[26px]">{p.naam}</h3>
+                <p className="mt-2 text-[16px] leading-[1.5]">{homeBeeld.pijlerRegels[i]}</p>
+                <ul className="mt-6 space-y-3 border-t border-lijn-koel pt-5 text-[15px]">
+                  {pijlerIndeling[i].map((n) => (
+                    <li key={dienstSlugs[n]}>
+                      <Link
+                        href={`/diensten#${dienstSlugs[n]}`}
+                        className="font-semibold text-nachtblauw underline decoration-lijn-koel decoration-1 underline-offset-4 transition-colors hover:text-hemel-diep hover:decoration-current"
+                      >
+                        {doen.diensten[n].naam}
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ))}
+          </div>
+          <PijlLink href="/diensten" className="mt-14">
+            {doen.link}
+          </PijlLink>
+        </Container>
+      </section>
+
+      {/* De professional beslist: de werkfoto in duotoon met de werkregel */}
+      <section className="py-20 sm:py-28">
+        <Container>
+          <div className="relative overflow-hidden rounded-[var(--radius-lg)] bg-nachtblauw lg:flex lg:min-h-[540px] lg:items-center">
+            <div className="relative aspect-[3/2] lg:absolute lg:inset-0 lg:aspect-auto">
+              <Image
+                src="/fotos/hugo-training.jpg"
+                alt={beslist.foto}
+                fill
+                sizes="(min-width: 1152px) 1088px, 100vw"
+                className="zp-duotoon object-cover"
+                style={{ objectPosition: "68% 35%" }}
+              />
+              <div aria-hidden="true" className="zp-scrim absolute inset-0" />
+            </div>
+            <div className="relative px-6 pb-9 pt-2 sm:px-10 sm:pb-12 lg:max-w-[33rem] lg:px-14 lg:py-16">
+              <h2 className="text-[34px] leading-[1.06] sm:text-[48px]" style={{ color: "var(--on-ink)" }}>
+                {beslist.kop}
+              </h2>
+              <p className="mt-5 max-w-[28ch] text-[20px] leading-[1.5]" style={{ color: "var(--on-ink)" }}>
+                {beslist.regel}
+              </p>
+              <ul className="mt-10 grid gap-6 border-t pt-6 sm:grid-cols-2" style={{ borderColor: "var(--white-15)" }}>
+                {beslist.rollen.map((r, i) => (
+                  <li key={r.wie} style={{ color: "var(--on-ink)" }}>
+                    <Icoon naam={rolIconen[i]} />
+                    <p className="mt-3 font-semibold">{r.wie}</p>
+                    <p className="mt-0.5 text-[16px]" style={{ color: "var(--on-ink-soft)" }}>
+                      {r.wat}
+                    </p>
                   </li>
                 ))}
               </ul>
@@ -84,84 +151,55 @@ export default function Home() {
         </Container>
       </section>
 
-      {/* Taakkaart met schakelaar */}
-      <section className="bg-wolk py-16 sm:py-24">
+      {/* Wie wij zijn: Hugo en Nick in dezelfde duotoon, met hetzelfde gewicht */}
+      <section className="pb-20 sm:pb-28">
         <Container>
-          <Taakkaart />
+          <SectieKop titel={wie.kop} />
+          <div className="mt-12 grid gap-x-10 gap-y-14 md:grid-cols-2">
+            {(["hugo", "nick"] as const).map((k) => (
+              <figure key={k}>
+                <Foto
+                  src={mensen[k].portret}
+                  alt={`Portret van ${mensen[k].naam}`}
+                  ratio="4/5"
+                  sizes="(min-width: 1152px) 524px, (min-width: 768px) 46vw, 100vw"
+                  positie={mensen[k].positie}
+                  duotoon
+                />
+                <figcaption className="mt-6">
+                  <h3 className="text-[20px]">{mensen[k].naam}</h3>
+                  <p className="mt-3 max-w-[32ch] font-display text-[22px] font-medium leading-[1.3] text-nachtblauw sm:text-[24px]">
+                    {metNadruk(oprichtersKort[k], homeBeeld.nadruk[k])}
+                  </p>
+                </figcaption>
+              </figure>
+            ))}
+          </div>
+          <PijlLink href="/over-ons" className="mt-12">
+            {wie.link}
+          </PijlLink>
         </Container>
       </section>
 
-      {/* Afdelingsdeuren */}
-      <section className="py-16 sm:py-24">
+      {/* Aanpak: vijf stops op één koers, alleen de namen */}
+      <section className="bg-creme py-20 sm:py-28" style={{ ["--zp-vlak" as string]: "var(--creme)" }}>
         <Container>
-          <Kop titel="Kies uw afdeling" />
-          <div className="mt-8 sm:mt-10">
-            <Afdelingsdeuren />
-          </div>
+          <SectieKop titel={aanpak.kop} />
+          <ol className="zp-koers-rij mt-14" data-liggend="true">
+            {aanpak.stappen.map((s, i) => (
+              <li key={s.naam}>
+                <span className="zp-stop" data-doel={i === aanpak.stappen.length - 1} aria-hidden="true" />
+                <h3 className="text-[22px]">{s.naam}</h3>
+              </li>
+            ))}
+          </ol>
+          <PijlLink href="/aanpak" className="mt-12">
+            {aanpak.link}
+          </PijlLink>
         </Container>
       </section>
 
-      {/* Drie praktijkproblemen */}
-      <section className="bg-wolk py-16 sm:py-24">
-        <Container>
-          <Kop titel="Herkent u dit?" intro="Kies wat het meest op uw situatie lijkt." />
-          <div className="mt-8 sm:mt-10">
-            <Praktijkproblemen />
-          </div>
-        </Container>
-      </section>
-
-      {/* Tijdvreter-meter */}
-      <section id="tijdvreter-meter" className="scroll-mt-20 py-16 sm:py-24">
-        <Container>
-          <Kop titel="Wat kost één taak per jaar?" intro="Vul uw eigen cijfers in." />
-          <div className="mt-8 sm:mt-10">
-            <Tijdvretermeter />
-          </div>
-        </Container>
-      </section>
-
-      {/* De koerslijn */}
-      <section className="bg-wolk py-16 sm:py-24">
-        <Container>
-          <Kop titel="Zo verloopt een samenwerking" intro="Vier stappen, van gesprek tot een team dat het zelf kan." />
-          <div className="mt-8 sm:mt-10">
-            <KoerslijnStappen />
-          </div>
-        </Container>
-      </section>
-
-      {/* De ene call-to-action-band op hemel-zacht */}
-      <section className="relative overflow-hidden bg-hemel-zacht pt-16 sm:py-20">
-        <Container className="relative">
-          <div className="grid items-center gap-10 md:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] md:gap-12">
-            <div className="max-w-xl">
-              <div className="flex -space-x-3">
-                <Portret src="/fotos/hugo-portret.jpg" naam="Hugo van den Berk" initialen="HB" grootte={56} rand="hemel-zacht" />
-                <Portret src="/fotos/nick-portret-nick.jpg" naam="Nick Wildeboer" initialen="NW" grootte={56} rand="hemel-zacht" />
-              </div>
-              <h2 className="mt-5 text-[30px] sm:text-[40px]">Begin bij één taak die te veel tijd kost</h2>
-              <p className="mt-3 text-[17px] text-nachtblauw sm:text-lg">In 45 minuten kiest u met Hugo en Nick één taak en rekent die samen door.</p>
-              <div className="mt-7">
-                <Knop href={taakgesprekHref()}>Plan een taakgesprek</Knop>
-              </div>
-            </div>
-
-            <div className="relative pb-10 md:pb-0">
-              <Zon className="pointer-events-none absolute -right-6 bottom-0 w-[62%] md:-bottom-20" />
-              <Wolk className="pointer-events-none absolute -left-4 top-6 h-4 w-24" kleur="var(--wolk)" />
-              <Foto
-                src="/fotos/nick-workshop-presentatie-2026.jpg"
-                alt="Nick Wildeboer presenteert voor een groep"
-                ratio="3/2"
-                positie="80% 40%"
-                sizes="(min-width: 768px) 560px, 100vw"
-                className="relative"
-              />
-            </div>
-          </div>
-        </Container>
-      </section>
+      <AfsluitBand kop={cta.kop} tekst={metMinuten(cta.tekst)} knop={cta.knop} href={kennismakingHref()} />
     </>
   );
 }

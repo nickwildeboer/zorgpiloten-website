@@ -2,7 +2,8 @@
 
 import { useState } from "react";
 import { kopieerTekst } from "@/components/over-ons/kopieer";
-import { Icoon } from "@/components/over-ons/Iconen";
+import { Icoon } from "@/components/home/Iconen";
+import { VeiligIcoon } from "./Iconen";
 
 type Antwoord = "ja" | "nee" | "weet-niet";
 
@@ -115,30 +116,25 @@ export function GeletterdheidCheck() {
   }
 
   return (
-    <div className="grid gap-8 lg:grid-cols-[minmax(0,1.4fr)_minmax(0,1fr)] lg:gap-12">
-      <ol className="space-y-3">
+    <div className="grid gap-10 lg:grid-cols-[minmax(0,1.4fr)_minmax(0,1fr)] lg:gap-14">
+      <ol className="border-t border-lijn-koel">
         {vragen.map((v, i) => {
           const gekozen = antwoorden[i];
           return (
-            <li key={v.vraag} className="flex gap-4 rounded-kaart border border-lijn bg-wolk p-4 sm:p-5">
-              <span
-                aria-hidden="true"
-                className={`grid h-9 w-9 flex-none place-items-center rounded-full font-display text-[15px] font-bold transition-colors ${
-                  gekozen ? "bg-zandgeel text-nachtblauw" : "bg-hemel-zacht text-nachtblauw"
-                }`}
-              >
-                {gekozen ? <Icoon naam="vink" className="h-4 w-4" /> : i + 1}
+            <li key={v.vraag} className="flex gap-4 border-b border-lijn-koel py-6 sm:gap-5">
+              <span aria-hidden="true" className="grid h-7 w-7 flex-none place-items-center pt-0.5 font-display text-[18px] font-semibold text-hemel-diep">
+                {gekozen ? <Icoon naam="vink" /> : i + 1}
               </span>
               <fieldset className="min-w-0 flex-1">
-                <legend className="pt-1 text-[17px] font-semibold leading-snug text-nachtblauw">{v.vraag}</legend>
-                <div className="mt-3 flex flex-wrap gap-2">
+                <legend className="text-[18px] font-semibold leading-snug text-nachtblauw">{v.vraag}</legend>
+                <div className="mt-4 flex flex-wrap gap-2">
                   {(Object.keys(antwoordLabels) as Antwoord[]).map((a) => {
                     const actief = gekozen === a;
                     return (
                       <label
                         key={a}
-                        className={`inline-flex min-h-[44px] cursor-pointer items-center rounded-full border px-4 text-[15px] transition-colors has-[:focus-visible]:outline-2 has-[:focus-visible]:outline-offset-2 has-[:focus-visible]:outline-hemel-diep ${
-                          actief ? "border-nachtblauw bg-nachtblauw font-semibold text-creme" : "border-lijn-sterk text-nachtblauw hover:bg-hemel-zacht"
+                        className={`inline-flex min-h-[44px] cursor-pointer items-center rounded-full border px-5 text-[15px] transition-colors has-[:focus-visible]:outline-2 has-[:focus-visible]:outline-offset-2 has-[:focus-visible]:outline-hemel-diep ${
+                          actief ? "border-nachtblauw bg-nachtblauw font-semibold text-creme" : "border-lijn-koel bg-wolk text-nachtblauw hover:border-nachtblauw/40"
                         }`}
                       >
                         <input type="radio" name={`geletterdheid-${i}`} value={a} checked={actief} onChange={() => kies(i, a)} className="sr-only" />
@@ -147,7 +143,7 @@ export function GeletterdheidCheck() {
                     );
                   })}
                 </div>
-                <div aria-live="polite">{gekozen && <p className="mt-3 text-[15px] text-nachtblauw">{v.reactie[gekozen]}</p>}</div>
+                <div aria-live="polite">{gekozen && <p className="mt-3 text-[16px] text-nachtblauw">{v.reactie[gekozen]}</p>}</div>
               </fieldset>
             </li>
           );
@@ -155,21 +151,22 @@ export function GeletterdheidCheck() {
       </ol>
 
       <aside className="lg:sticky lg:top-24 lg:self-start" aria-label="Overzicht">
-        <div className="rounded-[var(--radius-lg)] bg-nachtblauw p-6 sm:p-7" style={{ color: "var(--on-ink-soft)" }}>
-          <div className="flex items-center justify-between gap-4">
-            <p className="text-[15px] font-semibold text-creme" aria-live="polite">
-              {klaar ? "Uw overzicht is klaar" : `${aantal} van ${vragen.length} beantwoord`}
-            </p>
-            <span className="flex items-center gap-1.5" aria-hidden="true">
-              {vragen.map((v, i) => (
-                <span key={v.vraag} className={`h-2.5 w-6 rounded-full transition-colors ${antwoorden[i] ? "bg-zandgeel" : "bg-[var(--white-15)]"}`} />
-              ))}
-            </span>
+        <div className="rounded-[var(--radius-lg)] bg-nachtblauw p-6 sm:p-8" style={{ color: "var(--on-ink-soft)" }}>
+          <p className="text-[15px] font-semibold text-creme" aria-live="polite">
+            {klaar ? "Uw overzicht is klaar" : `${aantal} van ${vragen.length} beantwoord`}
+          </p>
+          <div aria-hidden="true" className="mt-3 h-1 overflow-hidden rounded-full bg-[var(--white-15)]">
+            <div
+              className="h-full origin-left rounded-full bg-zandgeel motion-safe:transition-transform motion-safe:duration-300"
+              style={{ transform: `scaleX(${aantal / vragen.length})` }}
+            />
           </div>
 
           {klaar ? (
             <div>
-              <h3 className="mt-6 text-[22px]" style={{ color: "var(--on-ink)" }}>Volgende stappen</h3>
+              <h3 className="mt-7 text-[22px]" style={{ color: "var(--on-ink)" }}>
+                Volgende stappen
+              </h3>
               <ol className="mt-3 list-decimal space-y-2 pl-5 text-[15px]">
                 {vragen.map((v, i) => {
                   const s = v.stap?.[antwoorden[i] as Antwoord];
@@ -180,9 +177,9 @@ export function GeletterdheidCheck() {
               <button
                 type="button"
                 onClick={kopieer}
-                className="mt-6 inline-flex min-h-[48px] w-full items-center justify-center gap-2 rounded-full bg-koraal px-5 py-3 text-center text-[15px] font-semibold text-nachtblauw hover:bg-zandgeel"
+                className="mt-7 inline-flex min-h-[48px] w-full items-center justify-center gap-2 rounded-full bg-creme px-5 py-3 text-center text-[15px] font-semibold text-nachtblauw transition-colors hover:bg-wolk focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-creme"
               >
-                <Icoon naam={status === "gekopieerd" ? "vink" : "kopieer"} className="h-5 w-5" />
+                {status === "gekopieerd" ? <Icoon naam="vink" grootte={20} /> : <VeiligIcoon naam="kopieer" grootte={20} />}
                 Kopieer de samenvatting voor FG, ICT of MT
               </button>
               <p role="status" className="mt-3 min-h-[1.5em] text-[15px] text-creme">
@@ -204,11 +201,13 @@ export function GeletterdheidCheck() {
             </div>
           ) : (
             <div>
-              <h3 className="mt-6 text-[22px]" style={{ color: "var(--on-ink)" }}>Wat vaststaat</h3>
+              <h3 className="mt-7 text-[22px]" style={{ color: "var(--on-ink)" }}>
+                Wat vaststaat
+              </h3>
               <ul className="mt-4 space-y-3 text-[15px] leading-snug">
                 {feiten.map((f) => (
                   <li key={f} className="flex gap-3">
-                    <Icoon naam="vink" className="mt-0.5 h-4 w-4 text-zandgeel" />
+                    <Icoon naam="vink" grootte={20} className="text-zandgeel" />
                     <span>{f}</span>
                   </li>
                 ))}
