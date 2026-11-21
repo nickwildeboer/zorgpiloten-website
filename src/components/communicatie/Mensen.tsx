@@ -1,35 +1,37 @@
-import { Bovenkop, Container } from "@/components/ui";
+import { Container } from "@/components/ui";
 import { Foto } from "@/components/Foto";
+import { Portret } from "@/components/home/Portret";
+import { communicatiePagina } from "@/content/paginas";
+import { mensen } from "@/content/site";
 
-/** Wie er aan tafel zit: Hugo op het podium, Nick die bouwt. */
+/** Hugo op het podium, in de merkduotoon, met Nick klein ernaast. Vraagt <DuotoonFilter /> op de pagina. */
 export function Mensen() {
+  const { hugo } = communicatiePagina;
   return (
-    <section className="py-16 sm:py-24" aria-labelledby="mensen-kop">
+    <section className="py-20 sm:py-28" aria-labelledby="hugo-kop">
       <Container>
-        <div className="grid items-center gap-12 lg:grid-cols-[minmax(0,7fr)_minmax(0,5fr)] lg:gap-16">
-          <div className="relative">
-            <Foto src="/fotos/hugo-keynote.jpg" alt="Hugo van den Berk geeft een keynote" ratio="3/2" sizes="(min-width: 1024px) 55vw, 100vw" />
-          </div>
+        <div className="grid items-center gap-x-16 gap-y-10 lg:grid-cols-[minmax(0,7fr)_minmax(0,5fr)]">
+          <Foto
+            src="/fotos/hugo-keynote.jpg"
+            alt="Hugo van den Berk spreekt op een podium tijdens een keynote"
+            ratio="3/2"
+            positie="40% 45%"
+            sizes="(min-width: 1152px) 640px, (min-width: 1024px) 56vw, 100vw"
+            duotoon
+          />
 
           <div>
-            <Bovenkop>Wie er aan tafel zit</Bovenkop>
-            <h2 id="mensen-kop" className="mt-3 text-[30px] sm:text-[40px]">
-              Hugo weet waar een communicatieafdeling tijd verliest.
+            <h2 id="hugo-kop" className="text-[32px] leading-[1.1] sm:text-[42px]">
+              {hugo.kop}
             </h2>
-
-            <ul className="mt-8 space-y-5">
-              <li>
-                <p className="font-medium text-nachtblauw">Hugo van den Berk, MSc</p>
-                <p className="mt-1 text-[15px] leading-snug">Ruim 15 jaar Directeur Marketing & Communicatie en MT-lid, Catharina Ziekenhuis.</p>
-              </li>
-              <li className="flex items-center gap-4">
-                <Foto src="/fotos/nick-portret-nick.jpg" alt="Nick Wildeboer" ratio="1/1" sizes="80px" positie="center 25%" className="w-16 shrink-0 sm:w-20" />
-                <div>
-                  <p className="font-medium text-nachtblauw">Nick Wildeboer, MSc</p>
-                  <p className="mt-1 text-[15px] leading-snug">Bouwt het voorwerk veilig in uw eigen omgeving.</p>
-                </div>
-              </li>
-            </ul>
+            <p className="mt-5 max-w-[30rem] text-[18px] leading-[1.6] text-nachtblauw">{hugo.zin}</p>
+            <div className="mt-10 flex items-center gap-4 border-t border-lijn-koel pt-6">
+              <Portret src={mensen.nick.portret} naam={mensen.nick.naam} initialen="NW" grootte={56} rand="wit" />
+              <p className="text-[15px] leading-snug text-nachtblauw-zacht">
+                <span className="block font-semibold text-nachtblauw">{mensen.nick.naam}</span>
+                Bouwt het voorwerk veilig in uw eigen omgeving.
+              </p>
+            </div>
           </div>
         </div>
       </Container>

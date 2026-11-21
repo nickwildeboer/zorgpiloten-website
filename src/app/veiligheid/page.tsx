@@ -1,101 +1,81 @@
 import type { Metadata } from "next";
-import { Container, Knop, Sectie, SectieKop } from "@/components/ui";
-import { Foto } from "@/components/Foto";
+import { AfsluitBand, Container, Knop, PijlLink, SectieKop } from "@/components/ui";
+import { Icoon } from "@/components/home/Iconen";
+import { VeiligIcoon } from "@/components/veiligheid/Iconen";
 import { RolWisselaar } from "@/components/veiligheid/RolWisselaar";
 import { GeletterdheidCheck } from "@/components/veiligheid/GeletterdheidCheck";
-import { Icoon, type IcoonNaam } from "@/components/over-ons/Iconen";
-import { kennismaking, kennismakingHref } from "@/lib/navigatie";
+import { kennismaking, kennismakingHref, metMinuten } from "@/lib/navigatie";
+import { veiligheidPagina } from "@/content/paginas";
 
 export const metadata: Metadata = {
-  title: "Veiligheid, AVG en AI-geletterdheid",
-  description:
-    "Antwoorden voor de FG, ICT, het MT en het hoofd van de afdeling over datastromen, eigen omgeving en toezicht. Plus een korte check op AI-geletterdheid volgens artikel 4 van de AI-verordening.",
+  title: veiligheidPagina.meta.titel,
+  description: veiligheidPagina.meta.beschrijving,
+  alternates: { canonical: "/veiligheid" },
 };
 
-const uitgangspunten: { icoon: IcoonNaam; titel: string; tekst: string }[] = [
-  { icoon: "klembord", titel: "Voorwerk, geen besluiten", tekst: "Een medewerker beslist en tekent af." },
-  { icoon: "slot", titel: "Eerst zonder persoonsgegevens", tekst: "Bijvoorbeeld cao-vragen of een B1-folder." },
-  { icoon: "huis", titel: "In uw eigen omgeving", tekst: "Waar het kan, zoals Microsoft 365." },
-  { icoon: "weegschaal", titel: "Uw FG of jurist beoordeelt", tekst: "Wij zijn transparant, u oordeelt." },
-];
-
 export default function VeiligheidPagina() {
+  const { hero, principes, rollen, check, cta } = veiligheidPagina;
   return (
     <>
-      {/* Hero: rustig, met de ochtendgang */}
-      <section className="pb-16 pt-12 sm:pb-24 sm:pt-16">
+      {/* Hero: de belofte links, de vier uitgangspunten als checklist rechts */}
+      <section className="pb-16 pt-10 sm:pb-24 lg:pt-12">
         <Container>
-          <div className="grid gap-6 lg:grid-cols-[minmax(0,1.25fr)_minmax(0,0.75fr)] lg:items-end lg:gap-16">
+          <div className="grid items-center gap-x-12 gap-y-12 lg:grid-cols-[minmax(0,5fr)_minmax(0,6fr)]">
             <div>
-              <p className="zp-eyebrow">Veiligheid en FG</p>
-              <h1 className="mt-4 text-[38px] sm:text-[52px] lg:text-[56px]">Rust voor de FG, ICT en het MT. Duidelijkheid voor de werkvloer.</h1>
+              <h1 className="max-w-[13ch] text-[clamp(2.6rem,4.8vw,3.9rem)] leading-[1.03]">{hero.kop}</h1>
+              <p className="mt-6 max-w-[30rem] text-[20px] leading-[1.5] text-nachtblauw">{hero.zin}</p>
+              <div className="mt-8 flex flex-wrap items-center gap-x-8 gap-y-4">
+                <Knop href={kennismakingHref()}>{kennismaking.knop}</Knop>
+                <PijlLink href="#ai-geletterdheid">Doe de check</PijlLink>
+              </div>
             </div>
-            <p className="text-lg lg:pb-2">Eerlijke antwoorden per rol, over gegevens en wie beslist.</p>
-          </div>
 
-          <div className="relative mt-10 sm:mt-12">
-            <Foto
-              src="/fotos/sfeer/zorg-gang-ochtend.jpg"
-              alt="Een lege ziekenhuisgang in het eerste ochtendlicht, met een bank en een plant bij het raam"
-              ratio="21/9"
-              priority
-              sizes="(min-width: 1152px) 1104px, 100vw"
-              positie="40% 55%"
-              className="max-sm:!aspect-[4/3]"
-            />
+            <div className="relative overflow-hidden rounded-[var(--radius-lg)] bg-creme px-3 pb-3 pt-14 sm:px-8 sm:pb-8 sm:pt-20 lg:px-10 lg:pb-10">
+              <span aria-hidden="true" className="absolute right-8 top-6 aspect-[2/1] w-[180px] rounded-t-full bg-zandgeel sm:right-14 sm:w-[240px]" />
+              <div className="relative rounded-kaart border border-lijn-koel bg-wolk px-5 py-1 sm:px-7">
+                <p className="flex items-center gap-3 border-b border-lijn-koel py-4 font-semibold text-nachtblauw">
+                  <VeiligIcoon naam="schild" className="text-hemel-diep" />
+                  Vier uitgangspunten
+                </p>
+                <ul>
+                  {principes.map((p, i) => (
+                    <li key={p.titel} className={`flex gap-4 py-5 ${i < principes.length - 1 ? "border-b border-lijn-koel" : ""}`}>
+                      <Icoon naam="vink" className="mt-0.5 text-hemel-diep" />
+                      <div>
+                        <p className="font-display text-[19px] font-semibold leading-snug text-nachtblauw">{p.titel}</p>
+                        <p className="mt-1 text-[16px] leading-[1.5]">{p.regel}</p>
+                      </div>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </div>
           </div>
-
-          <ul className="relative mx-auto -mt-10 grid gap-px overflow-hidden rounded-[var(--radius-lg)] border border-lijn bg-lijn shadow-kaart sm:-mt-16 sm:w-[94%] sm:grid-cols-2 lg:grid-cols-4">
-            {uitgangspunten.map((u) => (
-              <li key={u.titel} className="bg-wolk p-5 sm:p-6">
-                <span className="grid h-11 w-11 place-items-center rounded-full bg-hemel-zacht text-hemel-diep">
-                  <Icoon naam={u.icoon} className="h-5 w-5" />
-                </span>
-                <p className="mt-4 font-semibold leading-snug text-nachtblauw">{u.titel}</p>
-                <p className="mt-1 text-[15px] leading-snug">{u.tekst}</p>
-              </li>
-            ))}
-          </ul>
         </Container>
       </section>
 
-      {/* Per rol */}
-      <Sectie toon="wolk" id="rollen" className="border-y border-lijn">
-        <SectieKop bovenkop="Per rol" titel="Elke rol heeft eigen vragen" intro="Kies uw rol, of die van een collega." />
-        <div className="mt-10">
-          <RolWisselaar />
-        </div>
-        <p className="mt-8 max-w-2xl text-sm">
-          Geen juridisch advies en geen garantie dat iets aan de AVG voldoet. Uw FG of jurist beoordeelt.
-        </p>
-      </Sectie>
-
-      {/* AI-geletterdheid */}
-      <Sectie id="ai-geletterdheid" className="scroll-mt-16">
-        <SectieKop
-          bovenkop="AI-geletterdheid"
-          titel="Hoe staat het met AI-geletterdheid bij u?"
-          intro="Artikel 4 van de AI-verordening vraagt organisaties die AI inzetten om AI-geletterdheid te ondersteunen. Vier vragen, één samenvatting."
-        />
-        <div className="mt-10">
-          <GeletterdheidCheck />
-        </div>
-      </Sectie>
-
-      {/* Call-to-action-band */}
-      <section className="bg-hemel-zacht py-14 sm:py-20">
+      {/* Per rol: dezelfde vragen, door de bril van de lezer */}
+      <section id="rollen" className="scroll-mt-16 border-t border-lijn-koel py-20 sm:py-28">
         <Container>
-          <div className="flex flex-col gap-6 md:flex-row md:items-center md:justify-between">
-            <div className="max-w-xl">
-              <h2 className="text-[32px] sm:text-[40px]">Neem uw FG of ICT mee naar het gesprek</h2>
-              <p className="mt-3 text-lg">In {kennismaking.minuten} minuten kijken we ook naar de gegevens in de taak.</p>
-            </div>
-            <Knop href={kennismakingHref()} className="self-start md:self-auto">
-              {kennismaking.knop}
-            </Knop>
+          <SectieKop titel={rollen.kop} intro={rollen.zin} />
+          <div className="mt-12">
+            <RolWisselaar />
+          </div>
+          <p className="mt-10 max-w-2xl text-sm">Geen juridisch advies en geen garantie dat iets aan de AVG voldoet. Uw FG of jurist beoordeelt.</p>
+        </Container>
+      </section>
+
+      {/* AI-geletterdheid: vier vragen en een samenvatting om door te sturen */}
+      <section id="ai-geletterdheid" className="scroll-mt-16 bg-creme py-20 sm:py-28">
+        <Container>
+          <SectieKop titel={check.kop} intro={check.zin} />
+          <div className="mt-12">
+            <GeletterdheidCheck />
           </div>
         </Container>
       </section>
+
+      <AfsluitBand kop={cta.kop} tekst={metMinuten(cta.tekst)} knop={kennismaking.knop} href={kennismakingHref()} />
     </>
   );
 }

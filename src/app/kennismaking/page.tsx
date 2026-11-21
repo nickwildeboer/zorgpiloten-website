@@ -14,15 +14,15 @@ export const metadata: Metadata = {
 export default function KennismakingPagina() {
   const { hero } = kennismakingPagina;
   return (
-    <section className="bg-hemel-zacht pb-20 pt-14 sm:pb-28 sm:pt-20">
+    <section className="pb-20 pt-10 sm:pb-28 lg:pt-12">
       <Container>
-        <div className="max-w-2xl">
-          <h1 className="text-[clamp(2.3rem,4.4vw,3.4rem)] leading-[1.05]">{hero.kop}</h1>
-          <p className="mt-6 text-[19px] leading-[1.6] text-nachtblauw">{metMinuten(hero.intro)}</p>
-          <ol className="mt-8 flex flex-wrap gap-x-7 gap-y-3 text-[15px] text-nachtblauw">
+        <div className="max-w-[40rem]">
+          <h1 className="max-w-[16ch] text-[clamp(2.6rem,4.8vw,3.9rem)] leading-[1.03]">{hero.kop}</h1>
+          <p className="mt-6 max-w-[34rem] text-[20px] leading-[1.5] text-nachtblauw">{metMinuten(hero.intro)}</p>
+          <ol className="mt-8 flex flex-wrap gap-x-8 gap-y-3 text-[15px] text-nachtblauw">
             {hero.stappen.map((stap, i) => (
-              <li key={stap} className="flex items-center gap-2.5">
-                <span aria-hidden="true" className="grid h-6 w-6 place-items-center rounded-full bg-wolk text-[13px] font-semibold">
+              <li key={stap} className="flex items-center gap-3">
+                <span aria-hidden="true" className="grid h-7 w-7 flex-none place-items-center rounded-full border border-lijn-koel bg-wolk text-[13px] font-semibold">
                   {i + 1}
                 </span>
                 {stap}

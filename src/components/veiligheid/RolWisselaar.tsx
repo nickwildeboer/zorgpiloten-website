@@ -1,12 +1,12 @@
 "use client";
 
 import { useState } from "react";
-import { Icoon, type IcoonNaam } from "@/components/over-ons/Iconen";
+import { VeiligIcoon, type VeiligIcoonNaam } from "./Iconen";
 
 type Rol = "afdeling" | "bestuur" | "fg" | "ict";
 type Vraag = { vraag: string; antwoord: string };
 
-const rollen: { waarde: Rol; label: string; icoon: IcoonNaam; zorg: string; vragen: Vraag[] }[] = [
+const rollen: { waarde: Rol; label: string; icoon: VeiligIcoonNaam; zorg: string; vragen: Vraag[] }[] = [
   {
     waarde: "afdeling",
     label: "Hoofd HR of Communicatie",
@@ -112,24 +112,19 @@ export function RolWisselaar() {
   return (
     <div>
       <fieldset>
-        <legend className="mb-3 text-[15px] font-semibold text-nachtblauw">Kijk mee door de bril van</legend>
-        <div className="grid grid-cols-1 gap-2 min-[420px]:grid-cols-2 lg:grid-cols-4 [&>*]:min-w-0">
+        <legend className="mb-4 text-[15px] text-nachtblauw">Kies uw rol</legend>
+        <div className="grid grid-cols-1 gap-3 min-[420px]:grid-cols-2 lg:grid-cols-4 [&>*]:min-w-0">
           {rollen.map((r) => {
             const actief = r.waarde === rol;
             return (
               <label
                 key={r.waarde}
-                className={`flex min-h-[56px] cursor-pointer items-center gap-3 rounded-kaart border px-3 py-3 text-[15px] leading-snug transition-colors sm:px-4 has-[:focus-visible]:outline-2 has-[:focus-visible]:outline-offset-2 has-[:focus-visible]:outline-hemel-diep ${
-                  actief ? "border-nachtblauw bg-nachtblauw font-semibold text-creme" : "border-lijn bg-creme text-nachtblauw hover:border-lijn-sterk hover:bg-hemel-zacht"
+                className={`flex min-h-[60px] cursor-pointer items-center gap-3 rounded-kaart border px-4 py-3 text-[15px] leading-snug transition-colors has-[:focus-visible]:outline-2 has-[:focus-visible]:outline-offset-2 has-[:focus-visible]:outline-hemel-diep ${
+                  actief ? "border-nachtblauw bg-nachtblauw font-semibold text-creme" : "border-lijn-koel bg-wolk text-nachtblauw hover:border-nachtblauw/40"
                 }`}
               >
                 <input type="radio" name="rol" value={r.waarde} checked={actief} onChange={() => setRol(r.waarde)} className="sr-only" />
-                <span
-                  aria-hidden="true"
-                  className={`grid h-9 w-9 flex-none place-items-center rounded-full ${actief ? "bg-zandgeel text-nachtblauw" : "bg-hemel-zacht text-hemel-diep"}`}
-                >
-                  <Icoon naam={r.icoon} className="h-[18px] w-[18px]" />
-                </span>
+                <VeiligIcoon naam={r.icoon} grootte={20} className={actief ? "" : "text-hemel-diep"} />
                 {r.label}
               </label>
             );
@@ -141,19 +136,20 @@ export function RolWisselaar() {
         Vragen en antwoorden voor {huidig.label}
       </p>
 
-      <div className="mt-8 grid gap-6 lg:grid-cols-[minmax(0,0.7fr)_minmax(0,1.3fr)] lg:gap-10">
-        <div className="lg:pt-2">
-          <span aria-hidden="true" className="grid h-16 w-16 place-items-center rounded-full bg-zandgeel text-nachtblauw">
-            <Icoon naam={huidig.icoon} className="h-7 w-7" />
-          </span>
-          <h3 className="mt-5 text-[26px] sm:text-[30px]">{huidig.label}</h3>
-          <p className="mt-2 text-nachtblauw">{huidig.zorg}</p>
+      <div
+        key={huidig.waarde}
+        className="mt-10 grid gap-x-12 gap-y-8 border-t border-lijn-koel pt-10 starting:opacity-0 motion-safe:transition-opacity motion-safe:duration-300 lg:grid-cols-[minmax(0,4fr)_minmax(0,8fr)]"
+      >
+        <div>
+          <VeiligIcoon naam={huidig.icoon} grootte={32} className="text-nachtblauw" />
+          <h3 className="mt-5 text-[26px] leading-[1.15] sm:text-[30px]">{huidig.label}</h3>
+          <p className="mt-3 max-w-[28ch] text-[18px] leading-[1.5] text-nachtblauw">{huidig.zorg}</p>
         </div>
-        <dl className="grid gap-3 sm:grid-cols-2">
+        <dl className="grid gap-x-10 sm:grid-cols-2">
           {huidig.vragen.map((v) => (
-            <div key={v.vraag} className="rounded-kaart border border-lijn bg-creme p-5">
+            <div key={v.vraag} className="border-t border-lijn-koel py-5 first:border-t-0 first:pt-0 sm:[&:nth-child(2)]:border-t-0 sm:[&:nth-child(2)]:pt-0">
               <dt className="font-semibold leading-snug text-nachtblauw">{v.vraag}</dt>
-              <dd className="mt-2 text-[15px] leading-relaxed">{v.antwoord}</dd>
+              <dd className="mt-2 text-[16px] leading-relaxed">{v.antwoord}</dd>
             </div>
           ))}
         </dl>

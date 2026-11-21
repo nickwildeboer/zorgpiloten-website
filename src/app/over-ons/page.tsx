@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
-import { AfsluitBand, Container } from "@/components/ui";
-import { Foto } from "@/components/Foto";
+import { AfsluitBand, Container, Knop } from "@/components/ui";
+import { DuotoonFilter, Foto } from "@/components/Foto";
 import { Profiel } from "@/components/over-ons/Profielen";
 import { Portret } from "@/components/home/Portret";
 import { kennismakingHref, metMinuten } from "@/lib/navigatie";
@@ -16,21 +16,34 @@ export default function OverOnsPagina() {
   const { hero, verhaal, cta } = over;
   return (
     <>
-      {/* Hero: wie er aan tafel zit */}
-      <section className="pb-20 pt-14 sm:pb-28 sm:pt-20">
+      <DuotoonFilter />
+
+      {/* Hero: wie er aan tafel zit, Hugo en Nick in dezelfde duotoon */}
+      <section className="pb-20 pt-10 sm:pb-28 lg:pt-12">
         <Container>
-          <div className="grid items-center gap-x-16 gap-y-12 lg:grid-cols-[minmax(0,1.05fr)_minmax(0,1fr)]">
+          <div className="grid items-center gap-x-14 gap-y-12 lg:grid-cols-[minmax(0,5fr)_minmax(0,6fr)]">
             <div>
-              <h1 className="text-[clamp(2.4rem,4.8vw,3.75rem)] leading-[1.05]">{hero.kop}</h1>
-              <p className="mt-6 max-w-[36rem] text-[19px] leading-[1.6]">{hero.intro}</p>
+              <h1 className="max-w-[14ch] text-[clamp(2.6rem,4.8vw,3.9rem)] leading-[1.03]">{hero.kop}</h1>
+              <p className="mt-6 max-w-[34rem] text-[19px] leading-[1.6] text-nachtblauw">{hero.intro}</p>
+              <div className="mt-8">
+                <Knop href={kennismakingHref()}>{cta.knop}</Knop>
+              </div>
             </div>
-            <ul className="grid grid-cols-2 items-start gap-4 sm:gap-5">
-              {(["hugo", "nick"] as const).map((k, i) => (
-                <li key={k} className={i === 1 ? "mt-10 sm:mt-14" : ""}>
+            <ul className="grid grid-cols-2 gap-4 sm:gap-6">
+              {(["hugo", "nick"] as const).map((k) => (
+                <li key={k}>
                   <a href={`#${k}`} className="group block rounded-[var(--radius-lg)]">
-                    <Foto src={mensen[k].portret} alt={`Portret van ${mensen[k].naam}`} ratio="4/5" priority sizes="(min-width: 1024px) 270px, 46vw" positie={mensen[k].positie} />
-                    <span className="mt-4 block text-[15px] font-semibold text-nachtblauw group-hover:text-hemel-diep">{mensen[k].naam}</span>
-                    <span className="mt-1 block text-[14px] leading-snug">{over[k].rol}</span>
+                    <Foto
+                      src={mensen[k].portret}
+                      alt={`Portret van ${mensen[k].naam}`}
+                      ratio="4/5"
+                      priority
+                      sizes="(min-width: 1152px) 290px, (min-width: 1024px) 25vw, 46vw"
+                      positie={mensen[k].positie}
+                      duotoon
+                    />
+                    <span className="mt-4 block font-display text-[18px] font-semibold text-nachtblauw group-hover:text-hemel-diep">{mensen[k].naam}</span>
+                    <span className="mt-1 block text-[15px] leading-snug">{over[k].rol}</span>
                   </a>
                 </li>
               ))}
@@ -40,7 +53,7 @@ export default function OverOnsPagina() {
       </section>
 
       {/* Ons verhaal, met het beeldmerk dat de naam uitlegt */}
-      <section className="border-y border-lijn-koel bg-creme py-20 sm:py-28">
+      <section className="bg-creme py-20 sm:py-28">
         <Container>
           <div className="grid gap-x-14 gap-y-10 lg:grid-cols-12">
             <div className="lg:col-span-4">
@@ -67,7 +80,7 @@ export default function OverOnsPagina() {
         </Container>
       </section>
 
-      <section className="border-t border-lijn-koel bg-creme py-20 sm:py-28">
+      <section className="bg-creme py-20 sm:py-28">
         <Container>
           <Profiel wie="nick" spiegel />
         </Container>

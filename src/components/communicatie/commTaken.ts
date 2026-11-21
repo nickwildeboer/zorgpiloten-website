@@ -4,8 +4,8 @@ import type { VoorNaData } from "./VoorNa";
 export type CommSlug = "patientenfolders-b1" | "intranet-nieuwsbrief" | "arbeidsmarktcommunicatie" | "website-faq" | "crisiscommunicatie";
 
 export type CommTaak = TabTaak<CommSlug> & {
-  /** Eén korte zin boven de demo. */
-  intro: string;
+  /** Eén korte zin boven de demo. Bij de B1-brief niet nodig: de sectiezin zegt het al. */
+  intro?: string;
   /** Wie het laatste woord heeft, voor het gegevenslabel. */
   tekentAf: string;
   /** Korte tekst op het gegevenslabel. */
@@ -22,7 +22,6 @@ export const commTaken: CommTaak[] = [
     slug: "patientenfolders-b1",
     titel: "Folders en brieven naar B1",
     pill: "Folders naar B1",
-    intro: "Zet de schakelaar om. De medische feiten blijven letterlijk staan.",
     tekentAf: "adviseur en afdeling",
     gegevens: "Geen persoonsgegevens",
     demo: "b1",

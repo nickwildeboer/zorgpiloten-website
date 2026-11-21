@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, type KeyboardEvent } from "react";
+import { useRef, type KeyboardEvent } from "react";
 
 export type TabTaak<S extends string> = {
   slug: S;
@@ -13,8 +13,9 @@ export const tabId = (prefix: string, slug: string) => `${prefix}-tab-${slug}`;
 export const paneelId = (prefix: string) => `${prefix}-paneel`;
 
 /**
- * Taakkeuze als tablist. Op een smal scherm een horizontaal scrollende rij pillen,
- * vanaf lg een verticale koerslijn met een stop per taak.
+ * Taakkeuze als tablist, in de vorm van de tabs in het werkblad op de homepage:
+ * de actieve taak wit met een koele haarlijn op het zachte vlak.
+ * Op een smal scherm een rij pillen die omloopt, vanaf lg een rustige lijst onder elkaar.
  * Pijltjestoetsen, Home en End verplaatsen de keuze (automatische activatie).
  */
 export function TaakTabs<S extends string>({
@@ -31,19 +32,6 @@ export function TaakTabs<S extends string>({
   idPrefix: string;
 }) {
   const refs = useRef<(HTMLButtonElement | null)[]>([]);
-  const lijst = useRef<HTMLDivElement>(null);
-
-  // Houd op een smal scherm de actieve pil in beeld, zonder de pagina zelf te scrollen.
-  useEffect(() => {
-    const rij = lijst.current;
-    const knop = refs.current[taken.findIndex((t) => t.slug === actief)];
-    if (!rij || !knop || rij.scrollWidth <= rij.clientWidth) return;
-    const links = knop.offsetLeft - rij.offsetLeft;
-    const rechts = links + knop.offsetWidth;
-    if (links < rij.scrollLeft || rechts > rij.scrollLeft + rij.clientWidth) {
-      rij.scrollTo({ left: Math.max(links - 16, 0) });
-    }
-  }, [actief, taken]);
 
   function opToets(e: KeyboardEvent<HTMLButtonElement>, i: number) {
     const laatste = taken.length - 1;
@@ -63,14 +51,7 @@ export function TaakTabs<S extends string>({
   }
 
   return (
-    <div
-      ref={lijst}
-      role="tablist"
-      aria-label={label}
-      className="relative -mx-4 flex lg:self-start snap-x gap-2 overflow-x-auto px-4 pb-2 sm:-mx-6 sm:px-6 lg:mx-0 lg:flex-col lg:gap-0 lg:overflow-visible lg:px-0 lg:pb-0"
-    >
-      {/* De koerslijn achter de stops, alleen op groot scherm */}
-      <span aria-hidden="true" className="absolute bottom-6 left-[17px] top-6 hidden w-[2px] bg-lijn lg:block" />
+    <div role="tablist" aria-label={label} className="flex flex-wrap gap-1.5 lg:flex-col lg:gap-1 lg:self-start">
       {taken.map((t, i) => {
         const isActief = t.slug === actief;
         return (
@@ -87,21 +68,14 @@ export function TaakTabs<S extends string>({
             tabIndex={isActief ? 0 : -1}
             onClick={() => onKies(t.slug)}
             onKeyDown={(e) => opToets(e, i)}
-            className={`relative min-h-11 shrink-0 snap-start rounded-full border px-4 py-2 text-left text-[15px] transition-colors lg:flex lg:items-center lg:gap-4 lg:border-0 lg:bg-transparent lg:px-3 lg:py-3 ${
+            className={`min-h-11 rounded-full px-4 py-2 text-left text-[15px] font-semibold leading-snug transition-colors lg:px-5 lg:py-3 ${
               isActief
-                ? "border-nachtblauw bg-nachtblauw font-medium text-creme"
-                : "border-lijn bg-wolk text-nachtblauw-zacht hover:text-nachtblauw"
+                ? "bg-wolk text-nachtblauw shadow-[inset_0_0_0_1px_var(--lijn-koel)]"
+                : "text-nachtblauw-zacht hover:bg-wolk/60 hover:text-nachtblauw max-lg:shadow-[inset_0_0_0_1px_var(--lijn-koel)]"
             }`}
           >
-            <span className="koers-stop hidden lg:block" data-actief={isActief} aria-hidden="true" />
             <span className="lg:hidden">{t.pill}</span>
-            <span
-              className={`hidden leading-snug lg:block ${
-                isActief ? "font-display text-[19px] font-bold tracking-[-0.01em] text-nachtblauw" : "text-nachtblauw-zacht hover:text-nachtblauw"
-              }`}
-            >
-              {t.titel}
-            </span>
+            <span className="hidden lg:inline">{t.titel}</span>
           </button>
         );
       })}
