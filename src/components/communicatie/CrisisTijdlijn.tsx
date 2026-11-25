@@ -25,10 +25,10 @@ const kernzinnen = [
   { zin: "Door noodweer is vannacht water binnengekomen op [afdeling] van [locatie].", herkomst: "Uit de melding" },
   { zin: "Alle patiënten zijn veilig en liggen tijdelijk op [andere afdeling].", herkomst: "Uit de melding" },
   { zin: "Ze worden verzorgd door hun eigen team.", herkomst: "Te bevestigen" },
-  { zin: "Familie en naasten krijgen vandaag persoonlijk bericht van de afdeling.", herkomst: "Uit uw protocol" },
+  { zin: "Familie en naasten krijgen vandaag persoonlijk bericht van de afdeling.", herkomst: "Uit jullie protocol" },
   { zin: "Bezoek is welkom via [ingang], de bezoektijden blijven hetzelfde.", herkomst: "Te bevestigen" },
   { zin: "We verwachten dat de afdeling [verwachting van het MT] weer open is.", herkomst: "Invullen door MT" },
-  { zin: "Hebt u vragen, bel dan [telefoonnummer].", herkomst: "Uit uw protocol" },
+  { zin: "Hebt u vragen, bel dan [telefoonnummer].", herkomst: "Uit jullie protocol" },
 ];
 
 const MAX = handmatig.length;

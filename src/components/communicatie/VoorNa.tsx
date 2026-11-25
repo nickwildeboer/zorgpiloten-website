@@ -83,7 +83,7 @@ export function VoorNa({ data }: { data: VoorNaData }) {
       </p>
 
       <p className="sr-only" aria-live="polite">
-        {kant === "na" ? `U ziet nu wat klaarligt: ${data.naTitel}.` : "U ziet nu wat er binnenkomt."}
+        {kant === "na" ? `Je ziet nu wat klaarligt: ${data.naTitel}.` : "Je ziet nu wat er binnenkomt."}
       </p>
     </div>
   );

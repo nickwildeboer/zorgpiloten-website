@@ -7,8 +7,8 @@ export const navigatie = [
 
 /** Voorbeelden uit de praktijk: de twee afdelingspagina's met de demo's. */
 export const voorbeelden = [
-  { href: "/hr", label: "HR & P&O" },
   { href: "/communicatie", label: "Communicatie" },
+  { href: "/hr", label: "HR & P&O" },
 ] as const;
 
 /**
@@ -19,6 +19,13 @@ export const kennismaking = {
   minuten: 30,
   calLink: "nick-wildeboer/30min",
   knop: "Plan een kennismaking",
+} as const;
+
+/**
+ * De gratis webinar. Zet hier de aanmeldlink zodra die er is: zonder link toont de site de data zonder knop.
+ */
+export const webinar = {
+  aanmeldLink: "",
 } as const;
 
 /** Link naar de pagina waar de bezoeker de kennismaking samenstelt en inplant, optioneel met afdeling en onderwerp vooringevuld. */

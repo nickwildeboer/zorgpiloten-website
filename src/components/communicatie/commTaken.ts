@@ -58,7 +58,7 @@ export const commTaken: CommTaak[] = [
     demo: {
       voor: [
         { label: "Vraag van de recruiter", tekst: "We hebben structureel nachtdiensten open in de wijkverpleging. Kunnen we hier een campagne voor maken?" },
-        { label: "Uit uw werkgeversmerk", tekst: "Toon: persoonlijk, nuchter, geen superlatieven." },
+        { label: "Uit jullie werkgeversmerk", tekst: "Toon: persoonlijk, nuchter, geen superlatieven." },
       ],
       naTitel: "Campagneset, eerste versie",
       na: [

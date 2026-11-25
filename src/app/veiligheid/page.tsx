@@ -61,7 +61,7 @@ export default function VeiligheidPagina() {
           <div className="mt-12">
             <RolWisselaar />
           </div>
-          <p className="mt-10 max-w-2xl text-sm">Geen juridisch advies en geen garantie dat iets aan de AVG voldoet. Uw FG of jurist beoordeelt.</p>
+          <p className="mt-10 max-w-2xl text-sm">Geen juridisch advies en geen garantie dat iets aan de AVG voldoet. Jullie FG of jurist beoordeelt.</p>
         </Container>
       </section>
 

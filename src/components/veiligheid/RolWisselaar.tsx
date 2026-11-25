@@ -23,7 +23,7 @@ const rollen: { waarde: Rol; label: string; icoon: VeiligIcoonNaam; zorg: string
       },
       {
         vraag: "Collega's gebruiken al hun eigen ChatGPT. Wat nu?",
-        antwoord: "De training maakt duidelijk wat mag. Daarna bouwen we een route in uw eigen omgeving.",
+        antwoord: "De training maakt duidelijk wat mag. Daarna bouwen we een route in jullie eigen omgeving.",
       },
       {
         vraag: "Hoeveel tijd kost het mijn team?",
@@ -39,11 +39,11 @@ const rollen: { waarde: Rol; label: string; icoon: VeiligIcoonNaam; zorg: string
     vragen: [
       {
         vraag: "Wie beslist over de inzet van AI?",
-        antwoord: "U. Het MT stelt kaders, de medewerker beslist per taak. Wij adviseren en bouwen.",
+        antwoord: "Jij. Het MT stelt kaders, de medewerker beslist per taak. Wij adviseren en bouwen.",
       },
       {
         vraag: "Wie houdt toezicht?",
-        antwoord: "Intern uw FG, en per workflow een vaste eigenaar. Extern onder meer de Autoriteit Persoonsgegevens voor de AVG.",
+        antwoord: "Intern jullie FG, en per workflow een vaste eigenaar. Extern onder meer de Autoriteit Persoonsgegevens voor de AVG.",
       },
       {
         vraag: "Wat vraagt de AI-verordening van ons?",
@@ -63,19 +63,19 @@ const rollen: { waarde: Rol; label: string; icoon: VeiligIcoonNaam; zorg: string
     vragen: [
       {
         vraag: "Welke gegevens gaan waar heen?",
-        antwoord: "Per workflow krijgt u de datastroom op papier, voordat we bouwen.",
+        antwoord: "Per workflow krijg je de datastroom op papier, voordat we bouwen.",
       },
       {
         vraag: "Is er een verwerkersovereenkomst nodig?",
-        antwoord: "Dat beoordeelt u. Wij leveren de informatie, ook voor een DPIA.",
+        antwoord: "Dat beoordeel je. Wij leveren de informatie, ook voor een DPIA.",
       },
       {
         vraag: "Gaan er persoonsgegevens naar een AI-dienst?",
-        antwoord: "Bij voorkeur niet. Zitten ze erin, dan bouwen we pas na uw akkoord.",
+        antwoord: "Bij voorkeur niet. Zitten ze erin, dan bouwen we pas na je akkoord.",
       },
       {
-        vraag: "Garandeert u dat het aan de AVG voldoet?",
-        antwoord: "Nee. Wij maken de opzet transparant, u of uw jurist oordeelt.",
+        vraag: "Garandeer je dat het aan de AVG voldoet?",
+        antwoord: "Nee. Wij maken de opzet transparant, jij of jullie jurist oordeelt.",
       },
     ],
   },
@@ -83,11 +83,11 @@ const rollen: { waarde: Rol; label: string; icoon: VeiligIcoonNaam; zorg: string
     waarde: "ict",
     label: "ICT en informatiebeveiliging",
     icoon: "server",
-    zorg: "Geen schaduw-IT, wel een opstelling die u zelf beheert.",
+    zorg: "Geen schaduw-IT, wel een opstelling die je zelf beheert.",
     vragen: [
       {
         vraag: "Waar draait het?",
-        antwoord: "Waar het kan in uw eigen omgeving. Een externe dienst staat vooraf beschreven.",
+        antwoord: "Waar het kan in jullie eigen omgeving. Een externe dienst staat vooraf beschreven.",
       },
       {
         vraag: "Wie heeft toegang?",
@@ -99,7 +99,7 @@ const rollen: { waarde: Rol; label: string; icoon: VeiligIcoonNaam; zorg: string
       },
       {
         vraag: "Wat blijft er achter na de overdracht?",
-        antwoord: "Workflow, werkinstructie en technische beschrijving. U bent eigenaar.",
+        antwoord: "Workflow, werkinstructie en technische beschrijving. Je bent eigenaar.",
       },
     ],
   },
@@ -112,7 +112,7 @@ export function RolWisselaar() {
   return (
     <div>
       <fieldset>
-        <legend className="mb-4 text-[15px] text-nachtblauw">Kies uw rol</legend>
+        <legend className="mb-4 text-[15px] text-nachtblauw">Kies je rol</legend>
         <div className="grid grid-cols-1 gap-3 min-[420px]:grid-cols-2 lg:grid-cols-4 [&>*]:min-w-0">
           {rollen.map((r) => {
             const actief = r.waarde === rol;

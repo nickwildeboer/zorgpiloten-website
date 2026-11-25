@@ -246,7 +246,7 @@ function HrTaaksimulator({ slug, onKies }: { slug: HrSlug; onKies: (s: HrSlug) =
               ) : (
                 <div className="flex h-full min-h-44 flex-col justify-center gap-6">
                   <p className="max-w-[18rem] text-[15px] text-nachtblauw-zacht">
-                    {fase === "bezig" ? "Het voorwerk wordt klaargezet." : "Hier verschijnt het voorwerk. Niets gaat weg zonder uw akkoord."}
+                    {fase === "bezig" ? "Het voorwerk wordt klaargezet." : "Hier verschijnt het voorwerk. Niets gaat weg zonder je akkoord."}
                   </p>
                   <Balkjes className={`max-w-[22rem] transition-opacity duration-500 ${fase === "bezig" ? "opacity-100" : "opacity-60"}`} />
                 </div>

@@ -3,7 +3,7 @@ import Link from "next/link";
 import { AfsluitBand, Container, PijlLink, SectieKop } from "@/components/ui";
 import { Icoon, type IcoonNaam } from "@/components/home/Iconen";
 import { VoorbeeldBeeld } from "@/components/diensten/Voorbeeld";
-import { kennismaking, kennismakingHref, metMinuten } from "@/lib/navigatie";
+import { kennismaking, kennismakingHref, metMinuten, webinar } from "@/lib/navigatie";
 import { dienstSlugs, diensten, home, pijlerIndeling, plannerOnderwerp } from "@/content/site";
 
 export const metadata: Metadata = {
@@ -12,7 +12,7 @@ export const metadata: Metadata = {
   alternates: { canonical: "/diensten" },
 };
 
-const pijlerIconen: IcoonNaam[] = ["lamp", "muts", "kompas", "bot"];
+const pijlerIconen: IcoonNaam[] = ["lamp", "muts", "bot", "kompas"];
 const label = "text-[13px] font-semibold text-nachtblauw-zacht";
 
 /** Alleen de eerste zin van een tekst, zonder iets te herschrijven. */
@@ -21,10 +21,10 @@ function eersteZin(tekst: string) {
 }
 
 export default function DienstenPagina() {
-  const { hero, pijlers, lijst, voorbeelden, cta } = diensten;
+  const { hero, pijlers, lijst, sharepoint, voorbeelden, cta } = diensten;
   return (
     <>
-      {/* Hero: de belofte links, de vier ingangen als tegels rechts */}
+      {/* Hero: de belofte links, de vier stappen van de route als tegels rechts */}
       <section className="pb-16 pt-10 sm:pb-24 lg:pt-12">
         <Container>
           <div className="grid items-center gap-x-12 gap-y-12 lg:grid-cols-[minmax(0,5fr)_minmax(0,7fr)]">
@@ -52,7 +52,7 @@ export default function DienstenPagina() {
         </Container>
       </section>
 
-      {/* Per pijler: links de naam en intro, rechts per dienst één kaart */}
+      {/* Per stap: links de naam en intro, rechts per onderdeel één kaart */}
       {pijlers.map((p, i) => {
         const opCreme = i % 2 === 0;
         return (
@@ -96,9 +96,17 @@ export default function DienstenPagina() {
                             <dd className="mt-1.5 text-[15.5px]">{d.vorm}</dd>
                           </div>
                         </dl>
-                        <PijlLink href={kennismakingHref(undefined, plannerOnderwerp[slug])} className="mt-7">
-                          {kennismaking.knop}
-                        </PijlLink>
+                        {slug === "webinar" ? (
+                          webinar.aanmeldLink && (
+                            <PijlLink href={webinar.aanmeldLink} className="mt-7">
+                              {diensten.webinarKnop}
+                            </PijlLink>
+                          )
+                        ) : (
+                          <PijlLink href={kennismakingHref(undefined, plannerOnderwerp[slug])} className="mt-7">
+                            {kennismaking.knop}
+                          </PijlLink>
+                        )}
                       </article>
                     );
                   })}
@@ -109,6 +117,30 @@ export default function DienstenPagina() {
         );
       })}
 
+      {/* Apart traject naast de route: informatie op SharePoint op orde */}
+      <section id="sharepoint" className="scroll-mt-20 py-20 sm:py-24">
+        <Container>
+          <div className="grid gap-x-14 gap-y-10 rounded-[var(--radius-lg)] bg-creme p-7 sm:p-10 lg:grid-cols-12 lg:p-14">
+            <div className="lg:col-span-7">
+              <Icoon naam="document" grootte={32} className="text-nachtblauw" />
+              <h2 className="mt-5 max-w-[18ch] text-[32px] leading-[1.08] sm:text-[40px]">{sharepoint.kop}</h2>
+              <p className="mt-5 max-w-[36rem] text-[17px] leading-[1.55] text-nachtblauw">{sharepoint.tekst}</p>
+              <PijlLink href={kennismakingHref(undefined, "sharepoint")} className="mt-7">
+                {kennismaking.knop}
+              </PijlLink>
+            </div>
+            <ul className="space-y-4 self-center text-[17px] text-nachtblauw lg:col-span-5">
+              {sharepoint.punten.map((p) => (
+                <li key={p} className="flex gap-3">
+                  <Icoon naam="vink" grootte={20} className="mt-1 text-hemel-diep" />
+                  {p}
+                </li>
+              ))}
+            </ul>
+          </div>
+        </Container>
+      </section>
+
       {/* Voorbeelden: de twee afdelingspagina's, elk met een stukje uit de demo */}
       <section className="border-t border-lijn-koel py-20 sm:py-28">
         <Container>
@@ -116,8 +148,8 @@ export default function DienstenPagina() {
           <div className="mt-12 grid gap-x-10 gap-y-14 md:grid-cols-2">
             {(
               [
-                { href: "/hr", titel: "HR & P&O", tekst: voorbeelden.hr, soort: "hr" },
                 { href: "/communicatie", titel: "Communicatie", tekst: voorbeelden.communicatie, soort: "communicatie" },
+                { href: "/hr", titel: "HR & P&O", tekst: voorbeelden.hr, soort: "hr" },
               ] as const
             ).map((v) => (
               <Link key={v.href} href={v.href} className="group block rounded-[var(--radius-lg)]">

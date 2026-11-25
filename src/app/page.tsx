@@ -15,8 +15,8 @@ export const metadata: Metadata = {
   alternates: { canonical: "/" },
 };
 
-const herkenningIconen: IcoonNaam[] = ["aan", "plakken", "document"];
-const pijlerIconen: IcoonNaam[] = ["lamp", "muts", "kompas", "bot"];
+const herkenningIconen: IcoonNaam[] = ["aan", "assistent", "plakken", "document"];
+const pijlerIconen: IcoonNaam[] = ["lamp", "muts", "bot", "kompas"];
 const rolIconen: IcoonNaam[] = ["assistent", "aftekenen"];
 
 /** Zet één deel van een zin zwaarder, zonder de tekst zelf te veranderen. */
@@ -67,22 +67,22 @@ export default function Home() {
         </Container>
       </section>
 
-      {/* Herkenning: drie situaties, elk met een icoon */}
+      {/* Herkenning: vier situaties, elk met een icoon */}
       <section className="pb-20 pt-4 sm:pb-28">
         <Container>
           <SectieKop titel={herkenning.kop} />
-          <ul className="mt-12 grid gap-x-10 gap-y-10 md:grid-cols-3">
+          <ul className="mt-12 grid gap-x-10 gap-y-10 sm:grid-cols-2 lg:grid-cols-4">
             {herkenning.situaties.map((s, i) => (
-              <li key={s.situatie} className="border-t border-lijn-koel pt-7 text-nachtblauw">
+              <li key={s} className="border-t border-lijn-koel pt-7 text-nachtblauw">
                 <Icoon naam={herkenningIconen[i]} grootte={32} />
-                <p className="mt-5 max-w-[24ch] font-display text-[21px] font-semibold leading-snug">{s.situatie}</p>
+                <p className="mt-5 max-w-[24ch] font-display text-[21px] font-semibold leading-snug">{s}</p>
               </li>
             ))}
           </ul>
         </Container>
       </section>
 
-      {/* Wat wij doen: vier pijlers, met de diensten eronder */}
+      {/* De route: vier stappen, met de onderdelen eronder */}
       <section className="bg-creme py-20 sm:py-28">
         <Container>
           <SectieKop titel={doen.kop} />

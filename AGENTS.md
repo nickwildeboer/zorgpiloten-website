@@ -3,19 +3,20 @@
 Website van Zorgpiloten, het bureau van Hugo van den Berk en Nick Wildeboer: Copilot en AI in de zorg. Next.js 16 (App Router), Tailwind v4, TypeScript.
 
 ## Wat de site zegt
-- Zorgpiloten inspireert, traint, helpt kiezen en bouwt agents voor de zorg. Vaste regel: AI doet het voorwerk, de professional beslist.
-- Lezers: bestuur en directie, hoofden van stafafdelingen, CIO's en programmamanagers.
-- Trainen gaat over Microsoft 365 Copilot en veilig AI-gebruik. Bouwen is leveranciersvrij, in de eigen omgeving van de organisatie.
-- De voordeur is de kennismaking (`/kennismaking`, duur en Cal.com-link in `src/lib/navigatie.ts`).
+- Zorgpiloten zorgt dat Copilot in zorginstellingen echt gebruikt wordt (propositie van Hugo, 24 november 2026, Nick akkoord op 25 november). Vaste regel: AI neemt routinewerk over, de professional beslist.
+- Lezer: het afdelingshoofd van een ondersteunende afdeling, te beginnen bij communicatie. Bestuur en directie lezen mee.
+- De route: Ontdekken (gratis webinar, een van de ingangen), Instap (inspiratiesessie of teamtraining), Agent-pakket, Abonnement. Apart: SharePoint op orde.
+- De belofte gaat over Copilot. Agents bouwen we in de eigen omgeving van de instelling, in wat het best en veiligst werkt.
+- De voordeur is de kennismaking (`/kennismaking`, duur en Cal.com-link in `src/lib/navigatie.ts`). De aanmeldlink van de webinar staat daar ook (`webinar.aanmeldLink`).
 - Eigen aanpak in vijf stappen (Luisteren, Koers kiezen, Bouwen, Oefenen, Borgen). Digital Lemon staat alleen in de bio van Hugo.
 
 ## Pagina's
-`/` home, `/diensten` (vier pijlers, zeven diensten), `/aanpak`, `/veiligheid`, `/over-ons`, `/kennismaking`. `/hr` en `/communicatie` zijn voorbeelden met demo's en staan niet in het hoofdmenu. `/taakgesprek` en `/werkwijze` verwijzen door (`next.config.ts`).
+`/` home, `/diensten` (de route in vier stappen: Ontdekken, Instap, Agent-pakket, Abonnement, plus het aparte SharePoint-traject), `/aanpak`, `/veiligheid`, `/over-ons`, `/kennismaking`. `/hr` en `/communicatie` zijn voorbeelden met demo's en staan niet in het hoofdmenu. `/taakgesprek` en `/werkwijze` verwijzen door (`next.config.ts`).
 
 ## Tekst
 - Alle tekst van de nieuwe pagina's staat in `src/content/site.ts`. ChatGPT schrijft de copy (skill `chatgpt-tekst`), Claude zet opdracht en feiten klaar en zet de tekst woord voor woord terug.
 - Eis van Nick: simpel en duidelijk, iedereen begrijpt het en de waarde is direct duidelijk.
-- U-vorm, kort, zonder gedachtestreepjes, puntkomma's of uitroeptekens. Koppen in zinsvorm.
+- Je-vorm (besluit 25 november 2026, patiëntenbrieven in de voorbeelden houden u), kort, zonder gedachtestreepjes, puntkomma's of uitroeptekens. Koppen in zinsvorm.
 
 ## Grenzen
 - Geen prijzen op de site.

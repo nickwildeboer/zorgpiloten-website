@@ -26,7 +26,7 @@ export const takenPerAfdeling: Record<AfdelingSlug, Taak[]> = {
   hr: [
     { slug: "cao-loket", label: "Cao-loket", kort: "Vragen over ORT, verlof en inschaling" },
     { slug: "verzuim-poortwachter", label: "Verzuim en Poortwachter", kort: "Welke stap wanneer, en welke brief klaar moet staan" },
-    { slug: "vacatureteksten", label: "Vacatureteksten", kort: "Van functieprofiel naar tekst in uw eigen toon" },
+    { slug: "vacatureteksten", label: "Vacatureteksten", kort: "Van functieprofiel naar tekst in jullie eigen toon" },
     { slug: "onboarding", label: "Onboarding per functie", kort: "Inwerkschema en documenten klaarzetten" },
     { slug: "big-herregistratie", label: "BIG-registratie en diploma's", kort: "Tijdig signaleren en herinneren" },
   ],
@@ -49,7 +49,7 @@ export const takenPerAfdeling: Record<AfdelingSlug, Taak[]> = {
 export const algemeneTaken: Taak[] = planner.onderwerpen.map((o) => ({ slug: o.slug, label: o.label, kort: o.kort }));
 
 /** Onderwerpen die over een sessie of verkenning gaan en niet over één taak doorrekenen. */
-export const SESSIE_ONDERWERPEN: readonly string[] = ["keynote", "koerssessie", "teamtraining", "masterclass", "kansenoverzicht"];
+export const SESSIE_ONDERWERPEN: readonly string[] = ["inspiratiesessie", "teamtraining", "agentpakket", "sharepoint"];
 
 export const EIGEN_TAAK = "eigen";
 

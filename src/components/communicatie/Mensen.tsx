@@ -29,7 +29,7 @@ export function Mensen() {
               <Portret src={mensen.nick.portret} naam={mensen.nick.naam} initialen="NW" grootte={56} rand="wit" />
               <p className="text-[15px] leading-snug text-nachtblauw-zacht">
                 <span className="block font-semibold text-nachtblauw">{mensen.nick.naam}</span>
-                Bouwt het voorwerk veilig in uw eigen omgeving.
+                Bouwt het voorwerk veilig in jullie eigen omgeving.
               </p>
             </div>
           </div>

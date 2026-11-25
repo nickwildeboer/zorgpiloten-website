@@ -29,8 +29,8 @@ const vragen: Vraag[] = [
     vraag: "Zijn de spelregels over persoonsgegevens vastgelegd?",
     reactie: {
       ja: "Goed. Check of ze ook op de werkvloer bekend zijn.",
-      nee: "Dan is dit een goed eerste gesprek met uw FG.",
-      "weet-niet": "Uw FG weet het. Vraag het na.",
+      nee: "Dan is dit een goed eerste gesprek met jullie FG.",
+      "weet-niet": "Jullie FG weet het. Vraag het na.",
     },
     stap: {
       ja: "Check of de spelregels over persoonsgegevens bekend zijn bij medewerkers die AI gebruiken.",
@@ -55,7 +55,7 @@ const vragen: Vraag[] = [
     vraag: "Is vastgelegd welke maatregelen de organisatie neemt voor AI-geletterdheid?",
     reactie: {
       ja: "Goed. Houd het bij. Een certificaat is niet nodig.",
-      nee: "Begin klein. Een certificaat is niet nodig, u legt zelf vast.",
+      nee: "Begin klein. Een certificaat is niet nodig, je legt zelf vast.",
       "weet-niet": "Vraag het na bij de FG of het MT.",
     },
     stap: {
@@ -68,7 +68,7 @@ const vragen: Vraag[] = [
 
 const feiten = [
   "Artikel 4 van de AI-verordening geldt sinds 2 februari 2025 voor organisaties die AI inzetten.",
-  "Een certificaat is niet nodig. U legt zelf vast welke maatregelen u neemt.",
+  "Een certificaat is niet nodig. Je legt zelf vast welke maatregelen je neemt.",
   "Sinds de Digital Omnibus, in werking sinds 27 juli 2026, gaat het om maatregelen die AI-geletterdheid ondersteunen.",
   "Nationale toezichthouders houden sinds 2 augustus 2026 toezicht.",
 ];
@@ -153,7 +153,7 @@ export function GeletterdheidCheck() {
       <aside className="lg:sticky lg:top-24 lg:self-start" aria-label="Overzicht">
         <div className="rounded-[var(--radius-lg)] bg-nachtblauw p-6 sm:p-8" style={{ color: "var(--on-ink-soft)" }}>
           <p className="text-[15px] font-semibold text-creme" aria-live="polite">
-            {klaar ? "Uw overzicht is klaar" : `${aantal} van ${vragen.length} beantwoord`}
+            {klaar ? "Je overzicht is klaar" : `${aantal} van ${vragen.length} beantwoord`}
           </p>
           <div aria-hidden="true" className="mt-3 h-1 overflow-hidden rounded-full bg-[var(--white-15)]">
             <div
